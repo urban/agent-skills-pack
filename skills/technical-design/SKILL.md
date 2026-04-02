@@ -18,7 +18,7 @@ metadata:
 ## Rules
 
 - Keep this role focused on technical design because approved scope, actors, and success criteria belong in the charter, requirements own product obligations, and execution sequencing belongs in planning.
-- Use `artifact-naming` to resolve and preserve `<project-name>` because spec-pack file paths must stay aligned.
+- Use `artifact-naming` to resolve and preserve `<project-name>` because skill-pack file paths must stay aligned.
 - Use `document-traceability` to stamp canonical provenance plus `source_artifacts.charter`, `source_artifacts.user_stories`, and `source_artifacts.requirements` because design depends on the approved upstream specification.
 - Use the `write-technical-design` contract for section order and content boundaries because downstream planning expects that canonical shape.
 - Use `visual-diagramming` to choose Mermaid diagrams when architecture, interactions, behavior, or data relationships will be understood faster visually than through prose alone.

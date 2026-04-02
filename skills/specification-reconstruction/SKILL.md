@@ -16,6 +16,7 @@ metadata:
 - Treat repository evidence as the primary source of truth because this workflow reconstructs implemented reality, not intended history.
 - Keep this workflow at the orchestration layer because expertise skills own artifact-specific reconstruction methods and validation.
 - Use default research output locations unless the user provides explicit destinations.
+- Establish `generated_by.root_skill` as `specification-reconstruction` for every artifact emitted from this workflow.
 - Keep uncertainty explicit with `TODO: Confirm` whenever the codebase cannot prove original intent.
 - Run reconstruction in order because derived charter captures recoverable framing, derived stories capture user-visible behavior, derived requirements capture the contract, and derived design explains the implementation.
 - Use local gray-box routing only when repository evidence suggests an architectural seam that needs bounded follow-on analysis outside this workflow.
@@ -26,6 +27,7 @@ metadata:
 - Final output must include reconstructed charter, user stories, requirements, and technical design.
 - Orchestration dependencies stay limited to expertise entry skills; do not name foundational contract skills here.
 - If a user asks for a reconstructed execution plan, frame it as current-state guidance rather than pretending to recover the original authored plan.
+- Every reconstructed artifact must carry deterministic provenance rooted in this workflow plus artifact-specific `source_artifacts` lineage.
 
 ## Requirements
 
@@ -54,6 +56,7 @@ In scope:
 - orchestrating expertise entry skills for reconstruction
 - preserving consistent `<project-name>` defaults across derived artifacts
 - checking that derived artifacts support each other
+- establishing root workflow provenance for every reconstructed artifact
 - routing bounded gray-box follow-on discovery when needed
 
 Out of scope:
@@ -67,19 +70,21 @@ Out of scope:
 
 1. Confirm the repository scope to analyze, defaulting to the whole repository when the user does not narrow it.
 2. Resolve one stable `<project-name>` for default output locations unless the user provides explicit destinations.
-3. Inspect repository evidence relevant to the chosen scope, prioritizing source, tests, configs, and existing docs.
-4. Run `derive-charter` and review whether the inferred goals, non-goals, personas, and success criteria stay within what the codebase can plausibly support.
+3. Establish `root_skill = specification-reconstruction` for all reconstructed artifacts in this run.
+4. Inspect repository evidence relevant to the chosen scope, prioritizing source, tests, configs, and existing docs.
+5. Run `derive-charter` and review whether the inferred goals, non-goals, personas, and success criteria stay within what the codebase can plausibly support.
 5. Run `derive-user-stories` and review whether the inferred outcomes reflect observable behavior rather than desired future behavior.
 6. Run `derive-requirements` and confirm the reconstructed contract stays supported by repository evidence and does not silently re-own charter content.
 7. Run `derive-technical-design` and confirm the as-built design explains the derived requirements without speculating beyond the codebase.
 8. Read [`references/gray-box-routing.md`](./references/gray-box-routing.md) only when the reconstruction pass finds a probable architectural seam that needs bounded follow-on analysis.
-9. Perform a cross-artifact consistency pass:
+10. Perform a cross-artifact consistency pass:
    - derived charter is supported by observable behavior and constraints
    - derived stories fit the derived personas and implied scope boundaries
    - derived requirements are supported by repository evidence and align to derived stories
    - derived technical design explains the implemented system
+   - every reconstructed artifact carries canonical provenance and the correct `source_artifacts` roles
    - weakly supported conclusions remain marked `TODO: Confirm`
-10. Deliver the reconstructed pack for documentation recovery, planning, or future implementation work.
+11. Deliver the reconstructed pack for documentation recovery, planning, or future implementation work.
 
 ## Gotchas
 
@@ -97,6 +102,7 @@ Out of scope:
 
 - one reconstructed specification pack grounded in repository evidence
 - charter, user stories, requirements, and technical design artifacts written to the chosen destinations
+- deterministic provenance and source-artifact lineage on every reconstructed artifact
 - explicit `TODO: Confirm` markers for unsupported or weakly supported conclusions
 - a pack ready for documentation recovery, planning, or downstream change work
 
@@ -108,6 +114,7 @@ Out of scope:
 
 - default workflow output paths match the reconstruction role defaults when the user does not override them
 - derived charter, user stories, requirements, and technical design artifacts all exist at the chosen destinations
+- every reconstructed artifact records `generated_by.root_skill = specification-reconstruction`
 - orchestration dependencies stay limited to expertise entry skills
 - derived charter and stories reflect observed behavior rather than desired future intent
 - derived requirements and design are supported by repository evidence

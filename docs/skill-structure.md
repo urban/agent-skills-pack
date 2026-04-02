@@ -12,7 +12,7 @@ Every package skill lives under `skills/`. Use `metadata.layer` to declare wheth
 
 Choose one layer only:
 
-- foundational for reusable contracts, templates, validators, and naming rules
+- foundational for reusable contracts, templates, validators, naming rules, and provenance-and-traceability rules
 - expertise for one expertise-specific entry skill that applies foundational contracts
 - orchestration for a coordinating skill that depends on expertise skills only
 
@@ -41,6 +41,8 @@ Every `SKILL.md` must define:
 - `metadata.layer`
 
 Add `metadata.dependencies` when the skill composes other skills or relies on shared contracts.
+
+If a skill creates or validates a skill-pack artifact, prefer an explicit dependency on `document-traceability` unless the skill is purely orchestration-level and delegates provenance stamping to lower-layer skills.
 
 Add `metadata.archetype` and `metadata.domain` only for expertise skills.
 
@@ -71,4 +73,5 @@ If you add or change a skill:
 - verify the `SKILL.md` is internally consistent
 - verify every linked asset, script, or reference path exists
 - run any deterministic validator scripts you introduce
+- verify created artifacts use canonical provenance and the correct `source_artifacts` roles when the skill emits skill-pack artifacts
 - keep examples and output paths aligned with package terminology

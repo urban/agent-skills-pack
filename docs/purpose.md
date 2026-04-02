@@ -21,6 +21,7 @@ Each skill declares its layer with `metadata.layer`.
 The pack focuses on the skills needed to create, reconstruct, and operationalize specification artifacts:
 
 - canonical contracts for charter, user stories, requirements, technical design, execution plans, and task tracking
+- canonical provenance and source-artifact lineage for created artifacts
 - authoring workflows for new work
 - derivation workflows for existing systems
 - planning workflows that turn an approved spec pack into implementable work
@@ -35,4 +36,6 @@ Without stable specification artifacts, an implementation agent has to infer mis
 - weaker traceability from intent to code
 - weaker follow-on work on existing systems
 
-This pack reduces that ambiguity by making artifact contracts explicit, reusable, and machine-friendly across both the authoring and reconstruction paths.
+This pack reduces that ambiguity by making artifact contracts explicit, reusable, traceable, and machine-friendly across both the authoring and reconstruction paths.
+
+Provenance and traceability are part of the contract, not optional add-ons. Created artifacts should explain both how they were produced and which upstream artifacts shaped them so later review, reconstruction, planning, and implementation can trust the chain of custody.

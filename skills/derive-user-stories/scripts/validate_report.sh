@@ -22,6 +22,16 @@ resolve_story_validator() {
   return 1
 }
 
+resolve_provenance_validator() {
+  local validator="${script_dir}/../../document-traceability/scripts/validate_frontmatter_provenance.sh"
+  if [[ -x "${validator}" ]]; then
+    printf '%s\n' "${validator}"
+    return 0
+  fi
+
+  return 1
+}
+
 if [[ -z "${report_path}" ]]; then
   echo "Usage: scripts/validate_report.sh <report-path>"
   exit 1
@@ -35,6 +45,12 @@ fi
 story_validator="$(resolve_story_validator || true)"
 if [[ -z "${story_validator}" ]]; then
   echo "Error: write-user-stories validator not found"
+  exit 1
+fi
+
+provenance_validator="$(resolve_provenance_validator || true)"
+if [[ -z "${provenance_validator}" ]]; then
+  echo "Error: document-traceability validator not found"
   exit 1
 fi
 
@@ -58,9 +74,18 @@ section_block() {
   ' "$report_path"
 }
 
-first_non_empty_line="$(awk 'NF { print; exit }' "$report_path")"
-if [[ ! "${first_non_empty_line}" =~ ^#\ .+\ Derived\ User\ Stories$ ]]; then
-  fail "First non-empty line must be '# {actual project name} Derived User Stories'"
+if ! bash "${provenance_validator}" user-stories "$report_path" >/dev/null; then
+  fail "Canonical provenance validation failed"
+fi
+
+first_heading_line="$(awk '
+  BEGIN { in_frontmatter = 0 }
+  NR == 1 && $0 == "---" { in_frontmatter = 1; next }
+  in_frontmatter && $0 == "---" { in_frontmatter = 0; next }
+  !in_frontmatter && NF { print; exit }
+' "$report_path")"
+if [[ ! "${first_heading_line}" =~ ^#\ .+\ Derived\ User\ Stories$ ]]; then
+  fail "First non-frontmatter heading must be '# {actual project name} Derived User Stories'"
 fi
 
 prev_line=0

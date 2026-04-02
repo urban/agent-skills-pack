@@ -7,12 +7,14 @@ metadata:
   archetype: research
   domain: specification-reconstruction
   dependencies:
+    - document-traceability
     - write-requirements
 ---
 
 ## Rules
 
 - Treat repository code and tests as the primary evidence because this role documents implemented reality, not remembered intent.
+- Use `document-traceability` to stamp canonical provenance plus `source_artifacts.charter` and `source_artifacts.user_stories` so reconstructed requirements remain reusable as downstream inputs.
 - Use the `write-requirements` contract so the derived artifact stays compatible with authored requirements.
 - Prefer user-visible behavior and explicit constraints over internal plumbing because the output is still a requirements artifact.
 - Keep evidence traceable to concrete file paths and line references when support is thin or disputed.
@@ -22,6 +24,7 @@ metadata:
 
 - Output must be one Markdown report at the user-specified destination or, by default, `docs/research/<project-name>/requirements.md`.
 - The artifact must stay compatible with the `write-requirements` contract.
+- When produced through the canonical reconstruction workflow, the artifact must record `generated_by.root_skill = specification-reconstruction`, `generated_by.producing_skill = derive-requirements`, `source_artifacts.charter`, and `source_artifacts.user_stories`.
 - If the destination file already exists, create a timestamped backup before overwrite.
 - Do not claim original product framing that is not supported by repository evidence.
 - Do not turn technical plumbing into fake user-facing requirements just to fill sections.
@@ -42,6 +45,7 @@ Output:
 In scope:
 
 - reconstructing implemented requirements, constraints, and dependencies
+- stamping deterministic provenance plus required source-artifact lineage
 - preserving explicit uncertainty where business rationale cannot be proved
 - backing up an existing report before overwrite
 
@@ -59,10 +63,12 @@ Out of scope:
 3. Infer missing rationale only as far as the evidence supports and mark weak points as `TODO: Confirm`.
 4. Resolve the destination path from user input when provided; otherwise resolve `<project-name>` from the nearest package or repository name and use `docs/research/<project-name>/requirements.md`.
 5. If the destination report already exists, create a timestamped backup in the same directory before overwrite.
-6. Draft the chosen destination with the `write-requirements` contract.
-7. Add evidence-aware `TODO: Confirm` markers anywhere actor intent, benefit, or scope rationale remains unprovable.
-8. Validate with `bash ../write-requirements/scripts/validate_requirements.sh <destination-path>`.
-9. Deliver the report as reconstructed implemented requirements, not as speculative product history.
+6. Capture `root_skill` from the active reconstruction workflow and set `producing_skill = derive-requirements`.
+7. Draft the chosen destination with the `write-requirements` contract.
+8. Stamp canonical provenance with `source_artifacts.charter` and `source_artifacts.user_stories`.
+9. Add evidence-aware `TODO: Confirm` markers anywhere actor intent, benefit, or scope rationale remains unprovable.
+10. Validate with `bash ../write-requirements/scripts/validate_requirements.sh <destination-path>`.
+11. Deliver the report as reconstructed implemented requirements, not as speculative product history.
 
 ## Gotchas
 
@@ -78,6 +84,7 @@ Out of scope:
 - the chosen requirements report destination
 - a timestamped backup when overwriting an existing report
 - evidence-based reconstructed requirements with explicit uncertainty handling
+- deterministic provenance plus `source_artifacts.charter` and `source_artifacts.user_stories`
 - validation passing via the shared requirements validator
 
 ## Validation Checklist
@@ -85,6 +92,7 @@ Out of scope:
 - report path is the user-specified destination or the default `docs/research/<project-name>/requirements.md`
 - existing report backup is created before overwrite when needed
 - section order and numbering follow the `write-requirements` contract
+- canonical provenance is present and required source-artifact roles are recorded
 - requirements describe implemented behavior rather than guessed original intent
 - unresolved high-impact details are marked `TODO: Confirm`
 - validation passes with the shared script

@@ -31,7 +31,7 @@ That constraint keeps the system reversible:
 
 - authored artifacts can guide implementation
 - derived artifacts can guide later changes to existing systems
-- downstream execution skills can consume either spec-pack variant
+- downstream execution skills can consume either skill-pack variant
 
 If the contracts drift, the reverse path stops being useful because reconstructed artifacts no longer behave like first-class inputs.
 

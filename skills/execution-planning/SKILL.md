@@ -17,7 +17,7 @@ metadata:
 Turn an approved specification pack into an execution-oriented plan.
 
 - Treat approved charter, user stories, requirements, and technical design as the source of truth because this role coordinates implementation rather than redefining scope.
-- Use `artifact-naming` to resolve and preserve `<project-name>` because the plan must align with the companion spec-pack artifacts.
+- Use `artifact-naming` to resolve and preserve `<project-name>` because the plan must align with the companion skill-pack artifacts.
 - Use `document-traceability` to stamp canonical provenance plus `source_artifacts.charter`, `source_artifacts.user_stories`, `source_artifacts.requirements`, and `source_artifacts.technical_design`.
 - Use the `write-execution-plan` contract for section order, traceability, runtime-edge preservation, and validation because downstream task tracking depends on that shape.
 - Group work into meaningful implementation streams because flat work lists hide sequencing and dependency structure.

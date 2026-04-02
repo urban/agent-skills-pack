@@ -34,6 +34,7 @@ If the skill participates in a shared artifact type, confirm:
 - section order matches the canonical contract
 - naming rules match the canonical contract
 - validation rules match the canonical contract
+- canonical provenance and `source_artifacts` lineage are applied when the artifact is created
 - uncertainty handling is explicit where reconstruction is involved
 
 Prefer building or reusing a `write-*` contract skill instead of duplicating rules.
@@ -54,6 +55,7 @@ Do not use `metadata.dependencies` to force runtime composition. Runtime composi
 Prefer:
 
 - deterministic filenames
+- canonical artifact frontmatter when the skill creates artifacts
 - explicit headings
 - concise instructions
 - direct workflow order

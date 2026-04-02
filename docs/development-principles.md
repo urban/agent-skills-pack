@@ -60,11 +60,14 @@ Artifacts should be easy for an implementation agent to load, compare, and act o
 Prefer:
 
 - deterministic filenames
+- canonical provenance and source-artifact lineage on created artifacts
 - explicit section headings
 - concise language
 - direct traceability between artifacts
 
 Avoid prose that sounds good to humans but hides the actual contract.
+
+If a skill creates a skill-pack artifact, make provenance and traceability explicit. Use the shared `document-traceability` contract or a foundational contract that requires its canonical frontmatter and validation.
 
 ## Prefer Explicit Uncertainty
 

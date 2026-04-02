@@ -7,6 +7,7 @@ metadata:
   archetype: research
   domain: specification-reconstruction
   dependencies:
+    - document-traceability
     - write-user-stories
 ---
 
@@ -14,6 +15,7 @@ metadata:
 
 - Treat repository code as the primary evidence and use tests to strengthen confidence because this role reconstructs implemented outcomes, not roadmap intent.
 - Focus on user-visible behavior because technical plumbing without user value belongs in coverage gaps, not in stories.
+- Use `document-traceability` to stamp canonical provenance and `source_artifacts.charter` because reconstructed user-story artifacts still depend on the reconstructed charter context for their lineage.
 - Use the canonical user-story sentence contract for every derived story because the output must stay compatible with downstream story consumers.
 - Keep evidence traceable to concrete file paths and line references because confidence must be reviewable.
 - Use `TODO: Confirm` for unsupported actor, action, or benefit fields instead of guessing.
@@ -23,6 +25,7 @@ metadata:
 
 - Output must be one Markdown report at the user-specified destination or, by default, `docs/research/<project-name>/user-stories.md`.
 - Always draft from `./assets/report-template.md`.
+- When produced through the canonical reconstruction workflow, the artifact must record `generated_by.root_skill = specification-reconstruction`, `generated_by.producing_skill = derive-user-stories`, and `source_artifacts.charter`.
 - If the destination file already exists, create a timestamped backup before overwrite.
 - Do not use PR descriptions, commit history, issue trackers, or external docs as primary evidence.
 - Do not omit ambiguous stories when they still reflect likely user-visible behavior; include them with lower confidence and `TODO: Confirm` markers.
@@ -62,6 +65,7 @@ In scope:
 - inferring implemented user-visible outcomes
 - grouping stories into evidence-based epics or features
 - documenting coverage gaps for code areas without clear user-facing mapping
+- stamping deterministic provenance and `source_artifacts.charter`
 - backing up an existing report before overwrite
 
 Out of scope:
@@ -83,8 +87,10 @@ Out of scope:
 9. Record non-mapped code areas in `Coverage Gaps` and unresolved ambiguity in `Additional Notes`.
 10. Resolve the destination path from user input when provided; otherwise resolve `<project-name>` from user input, the nearest relevant `package.json`, or the repository directory name, normalize it to lowercase kebab-case, and use `docs/research/<project-name>/user-stories.md`.
 11. If the destination report already exists, create a timestamped backup in the same directory before overwrite.
-12. Validate with `bash ./scripts/validate_report.sh <destination-path>`.
-13. Deliver the report as reconstructed implemented user outcomes, not as speculative product strategy.
+12. Capture `root_skill` from the active reconstruction workflow and set `producing_skill = derive-user-stories`.
+13. Stamp canonical provenance with `source_artifacts.charter`, pointing to the reconstructed or user-provided charter artifact for the same analysis run.
+14. Validate with `bash ./scripts/validate_report.sh <destination-path>`.
+15. Deliver the report as reconstructed implemented user outcomes, not as speculative product strategy.
 
 ## Gotchas
 
@@ -101,13 +107,15 @@ Out of scope:
 - the chosen user-stories report destination
 - a timestamped backup when overwriting an existing report
 - stakeholder narratives, epic map, coverage gaps, and additional notes
-- user stories with confidence, rationale, and evidence references
+- user stories with confidence, rationale, evidence references, and canonical frontmatter
+- deterministic provenance plus `source_artifacts.charter`
 - validation passing via `./scripts/validate_report.sh`
 
 ## Validation Checklist
 
 - report path is the user-specified destination or the default `docs/research/<project-name>/user-stories.md`
 - existing report backup is created before overwrite when needed
+- canonical provenance is present and `source_artifacts.charter` points to the reconstructed or supplied charter artifact
 - all five required sections exist in order
 - every story follows the canonical actor-action-benefit contract
 - every story includes confidence, rationale, and evidence references

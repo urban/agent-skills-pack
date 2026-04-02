@@ -4,9 +4,18 @@ This package contains a contract-first skill pack for software specification wor
 
 It provides:
 
-- foundational skills for shared artifact contracts, templates, validators, and naming
+- foundational skills for shared artifact contracts, templates, validators, naming, and provenance-and-traceability rules
 - expertise skills that apply those contracts within one authoring, planning, design, or reconstruction responsibility
 - orchestration skills that orchestrate multiple expertise skills into a full specification flow
+
+A core package concept is artifact provenance and traceability. Every created skill-pack artifact should carry canonical frontmatter that records:
+
+- when it was created and last updated
+- which workflow and producing skill generated it
+- which skill branch participated in producing it
+- which upstream source artifacts it depends on
+
+The foundational `document-traceability` skill defines that contract so artifact lineage stays deterministic, machine-checkable, and reversible across authored, planned, and reconstructed outputs.
 
 ## Package Boundary
 
@@ -33,6 +42,8 @@ Dependency direction for the layer model:
 
 - `artifact-naming`
   Deterministic artifact-name resolution reused across authored and planning artifacts.
+- `document-traceability`
+  Canonical artifact frontmatter, deterministic provenance, source-artifact lineage, and shared validation.
 - `write-charter`
   Canonical charter artifact contract, template, and validator.
 - `write-user-stories`
@@ -47,6 +58,10 @@ Dependency direction for the layer model:
   Canonical task-tracking contract, template, and validator.
 - `gray-box-modules`
   Canonical bounded-capability contract for reusable module seams in technical design artifacts.
+- `visual-diagramming`
+  Canonical diagram-selection guidance for Mermaid-backed visual explanations.
+- `effect-technical-design`
+  Effect-specific technical-design guidance for TypeScript systems.
 
 ### Expertise
 
@@ -94,6 +109,8 @@ Each layer has one job:
   Coordinate multiple expertise skills without restating foundational rules.
 
 Reversibility depends on authoring and reconstruction expertise skills targeting the same foundational contracts for shared artifact types.
+
+Provenance and traceability are part of that reversibility contract. Artifacts are only safely reusable when they carry canonical provenance and explicit `source_artifacts` lineage instead of relying on conversational memory or implicit workflow context.
 
 ## Artifact Flow
 
@@ -145,11 +162,39 @@ Typical reverse-engineering workflow:
 3. Use `specification-to-execution` if you want the full execution-coordination pack, or `execution-planning` if you only need a fresh plan for follow-on work.
 4. Use `task-generation` directly only when an approved execution plan already exists and only local task tracking needs to be refreshed.
 
+## Traceability And Provenance
+
+Created skill-pack artifacts should begin with canonical frontmatter defined by `document-traceability`, including:
+
+- `name`
+- `created_at`
+- `updated_at`
+- `generated_by`
+  - `root_skill`
+  - `producing_skill`
+  - `skills_used`
+  - `skill_graph`
+- `source_artifacts`
+
+Use `generated_by` for skill provenance and `source_artifacts` for input lineage. Keep those concerns separate.
+
+Examples:
+
+- charter uses `source_artifacts: {}`
+- user stories use `source_artifacts.charter`
+- requirements use `source_artifacts.charter` and `source_artifacts.user_stories`
+- technical design uses `source_artifacts.charter`, `source_artifacts.user_stories`, and `source_artifacts.requirements`
+- plan uses `source_artifacts.charter`, `source_artifacts.user_stories`, `source_artifacts.requirements`, and `source_artifacts.technical_design`
+- tasks use `source_artifacts.plan`
+
+For the detailed contract, see [`docs/provenance.md`](./docs/provenance.md).
+
 ## Authoring Guidance
 
 Read these docs when changing the pack:
 
 - [`docs/purpose.md`](./docs/purpose.md)
+- [`docs/provenance.md`](./docs/provenance.md)
 - [`docs/design-rationale.md`](./docs/design-rationale.md)
 - [`docs/development-principles.md`](./docs/development-principles.md)
 - [`docs/skill-expertise-selection.md`](./docs/skill-expertise-selection.md)

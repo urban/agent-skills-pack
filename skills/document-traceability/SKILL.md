@@ -1,6 +1,6 @@
 ---
 name: document-traceability
-description: Define canonical authored-document frontmatter, deterministic skill provenance, source artifact lineage, and shared provenance validation for authored spec-pack artifacts. Use when a skill writes or validates charter, user stories, requirements, technical design, execution plans, or task-tracking artifacts.
+description: Define canonical authored-document frontmatter, deterministic skill provenance, source artifact lineage, and shared provenance validation for authored skill-pack artifacts. Use when a skill writes or validates charter, user stories, requirements, technical design, execution plans, or task-tracking artifacts.
 metadata:
   version: 0.1.0
   layer: foundational
@@ -8,7 +8,7 @@ metadata:
 
 ## Rules
 
-- Use one canonical frontmatter contract for authored spec-pack artifacts because downstream validation and feedback depend on deterministic metadata.
+- Use one canonical frontmatter contract for authored skill-pack artifacts because downstream validation and feedback depend on deterministic metadata.
 - Keep skill provenance separate from source artifact lineage because one explains how the artifact was produced and the other explains what approved inputs it used.
 - Compute provenance only from the artifact-producing skill branch because sibling orchestration branches are not part of one artifact's generation path.
 - Treat provenance failures as hard failures because partial or guessed metadata breaks traceability.
@@ -16,7 +16,7 @@ metadata:
 
 ## Canonical Frontmatter
 
-Every authored spec-pack artifact must begin with:
+Every authored skill-pack artifact must begin with:
 
 ```yaml
 ---

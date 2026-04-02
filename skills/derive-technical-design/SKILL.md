@@ -7,6 +7,7 @@ metadata:
   archetype: research
   domain: specification-reconstruction
   dependencies:
+    - document-traceability
     - gray-box-modules
     - visual-diagramming
     - write-technical-design
@@ -15,6 +16,7 @@ metadata:
 ## Rules
 
 - Treat code, tests, configuration, and repository structure as the primary evidence because this role documents the system that exists today.
+- Use `document-traceability` to stamp canonical provenance plus `source_artifacts.charter`, `source_artifacts.user_stories`, and `source_artifacts.requirements` so reconstructed technical design remains reusable downstream.
 - Use the `write-technical-design` contract so the derived artifact stays compatible with authored technical design.
 - Use `visual-diagramming` to choose Mermaid diagrams when observed architecture, interactions, behavior, or data relationships will be understood faster visually than through prose alone.
 - Distinguish observed architecture from inferred rationale because code often shows structure more clearly than intent.
@@ -25,6 +27,7 @@ metadata:
 
 - Output must be one Markdown report at the user-specified destination or, by default, `docs/research/<project-name>/technical-design.md`.
 - The artifact must stay compatible with the `write-technical-design` contract.
+- When produced through the canonical reconstruction workflow, the artifact must record `generated_by.root_skill = specification-reconstruction`, `generated_by.producing_skill = derive-technical-design`, and the required upstream `source_artifacts` roles.
 - The artifact must explicitly address the four required diagram slots from `write-technical-design`: context flowchart, behavior state diagram, entity relationship diagram, and interaction diagram.
 - Diagrams must stay evidence-based and support the observed system instead of proposing a cleaner future state.
 - If the destination file already exists, create a timestamped backup before overwrite.
@@ -50,6 +53,7 @@ In scope:
 - reconstructing architecture, subsystem responsibilities, interfaces, data flow, and operational concerns
 - describing implementation strategy and testing strategy implied by the codebase
 - documenting evidence-backed gray-box modules when the seam is real
+- stamping deterministic provenance plus required source-artifact lineage
 - backing up an existing report before overwrite
 
 Out of scope:
@@ -68,10 +72,12 @@ Out of scope:
 6. Load `references/diagram-evidence.md` when diagram wording, slot applicability, or evidence thresholds are unclear.
 7. Resolve the destination path from user input when provided; otherwise resolve `<project-name>` from the nearest package or repository name and use `docs/research/<project-name>/technical-design.md`.
 8. If the destination report already exists, create a timestamped backup in the same directory before overwrite.
-9. Draft the chosen destination with the `write-technical-design` contract.
-10. Mark inferred rationale, weak seams, or ambiguous ownership as `TODO: Confirm` rather than upgrading them to confident design facts.
-11. Validate with `bash ../write-technical-design/scripts/validate_technical_design.sh <destination-path>`.
-12. Deliver the report as as-built architecture documentation, not as a cleanup proposal.
+9. Capture `root_skill` from the active reconstruction workflow and set `producing_skill = derive-technical-design`.
+10. Draft the chosen destination with the `write-technical-design` contract.
+11. Stamp canonical provenance with `source_artifacts.charter`, `source_artifacts.user_stories`, and `source_artifacts.requirements`.
+12. Mark inferred rationale, weak seams, or ambiguous ownership as `TODO: Confirm` rather than upgrading them to confident design facts.
+13. Validate with `bash ../write-technical-design/scripts/validate_technical_design.sh <destination-path>`.
+14. Deliver the report as as-built architecture documentation, not as a cleanup proposal.
 
 ## Gotchas
 
@@ -88,6 +94,7 @@ Out of scope:
 - the chosen technical-design report destination
 - a timestamped backup when overwriting an existing report
 - as-built architecture, implementation-strategy, and testing-strategy documentation
+- deterministic provenance plus required source-artifact lineage
 - the four required diagram slots completed with evidence-backed Mermaid diagrams, `Not needed:` rationales, or `TODO: Confirm`
 - validation passing via the shared technical-design validator
 
@@ -101,6 +108,7 @@ Out of scope:
 - report path is the user-specified destination or the default `docs/research/<project-name>/technical-design.md`
 - existing report backup is created before overwrite when needed
 - section order follows the `write-technical-design` contract
+- canonical provenance is present and required source-artifact roles are recorded
 - named components, interfaces, testing strategy, and risks/tradeoffs are explicit
 - all four required diagram slots are present and completed without overstating certainty
 - gray-box module claims are tied to concrete repository evidence

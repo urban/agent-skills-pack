@@ -7,12 +7,14 @@ metadata:
   archetype: research
   domain: specification-reconstruction
   dependencies:
+    - document-traceability
     - write-charter
 ---
 
 ## Rules
 
 - Treat repository code and tests as the primary evidence because this role documents implemented reality, not remembered product strategy.
+- Use `document-traceability` to stamp canonical provenance and `source_artifacts: {}` so reconstructed charter artifacts remain machine-checkable even though they are not historically approved source documents.
 - Use the `write-charter` contract so the derived artifact stays compatible with authored charter artifacts while remaining explicit that it is reconstructed, not historically approved.
 - Infer goals, non-goals, personas, and success criteria only as far as repository evidence supports them because business framing is often only partially observable in code.
 - Keep evidence traceable to concrete file paths and line references when support is thin or disputed.
@@ -22,6 +24,7 @@ metadata:
 
 - Output must be one Markdown report at the user-specified destination or, by default, `docs/research/<project-name>/charter.md`.
 - The artifact must stay compatible with the `write-charter` contract.
+- The artifact must record deterministic provenance with `generated_by.root_skill = specification-reconstruction`, `generated_by.producing_skill = derive-charter`, and `source_artifacts: {}` when produced through the canonical reconstruction workflow.
 - If the destination file already exists, create a timestamped backup before overwrite.
 - Do not claim original intent, non-goals, or success measures that are not supportable from repository evidence.
 - Do not turn low-level implementation details into fake goals or personas just to fill sections.
@@ -42,6 +45,7 @@ Output:
 In scope:
 
 - reconstructing plausible goals, non-goals, personas, and success criteria from implemented behavior and constraints
+- stamping deterministic provenance and canonical authored-document frontmatter on the derived artifact
 - preserving explicit uncertainty where business framing cannot be proved confidently
 - backing up an existing report before overwrite
 
@@ -58,9 +62,11 @@ Out of scope:
 3. Infer candidate goals, non-goals, personas, and success criteria only as far as the evidence supports and mark weak conclusions as `TODO: Confirm`.
 4. Resolve the destination path from user input when provided; otherwise resolve `<project-name>` from the nearest package or repository name and use `docs/research/<project-name>/charter.md`.
 5. If the destination report already exists, create a timestamped backup in the same directory before overwrite.
-6. Draft the chosen destination with the `write-charter` contract.
-7. Add evidence-aware `TODO: Confirm` markers anywhere framing remains weakly supported.
-8. Validate with `bash ../write-charter/scripts/validate_charter.sh <destination-path>`.
+6. Capture `root_skill` from the active reconstruction workflow and set `producing_skill = derive-charter`.
+7. Draft the chosen destination with the `write-charter` contract.
+8. Stamp canonical provenance with `source_artifacts: {}`.
+9. Add evidence-aware `TODO: Confirm` markers anywhere framing remains weakly supported.
+10. Validate with `bash ../write-charter/scripts/validate_charter.sh <destination-path>`.
 9. Deliver the report as reconstructed charter-form scope grounded in implemented evidence, not as speculative product history or proof of historical approval.
 
 ## Gotchas
@@ -77,6 +83,7 @@ Out of scope:
 - the chosen charter report destination
 - a timestamped backup when overwriting an existing report
 - evidence-based reconstructed framing with explicit uncertainty handling
+- deterministic provenance with `source_artifacts: {}`
 - validation passing via the shared charter validator
 
 ## Validation Checklist
@@ -84,6 +91,7 @@ Out of scope:
 - report path is the user-specified destination or the default `docs/research/<project-name>/charter.md`
 - existing report backup is created before overwrite when needed
 - section order follows the `write-charter` contract
+- canonical provenance is present and `source_artifacts: {}` is used
 - goals, non-goals, personas, and success criteria are derived from observable evidence rather than guessed product history
 - unresolved high-impact details are marked `TODO: Confirm`
 - validation passes with the shared script
