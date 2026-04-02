@@ -1,0 +1,13 @@
+{
+  "name": "@urban/agent-skills-pack",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI agent skills for authoring and reconstructing software project artifacts",
+  "type": "module",
+  "scripts": {
+    "lint": "oxlint --fix && oxfmt"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
