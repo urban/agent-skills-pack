@@ -24,6 +24,12 @@ Skills live under `skills/` and fit one layer:
 
 Each skill declares its layer in `metadata.layer`.
 
+Within that split:
+
+- foundational naming resolves stable artifact basenames such as `<project-name>`
+- orchestration coordinates spec-pack root placement for a workflow and may use selected foundational leaf contracts for workflow-wide concerns such as naming
+- expertise produces artifact-specific outputs within that spec pack
+
 ## Why it matters
 
 Without stable artifacts, agents infer too much from prompts and repository clues. That leads to:

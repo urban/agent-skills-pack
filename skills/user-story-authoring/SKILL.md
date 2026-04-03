@@ -7,7 +7,6 @@ metadata:
   archetype: planning
   domain: specification-authoring
   dependencies:
-    - artifact-naming
     - document-traceability
     - visual-diagramming
     - write-user-stories
@@ -16,19 +15,19 @@ metadata:
 ## Rules
 
 - Keep this role focused on user-visible outcomes because requirements, design, and planning belong downstream.
-- Use `artifact-naming` to resolve and preserve `<project-name>` because the rest of the spec pack depends on stable paths.
+- Produce the artifact as `user-stories.md`.
 - Use `document-traceability` to stamp canonical provenance and `source_artifacts.charter` because this artifact depends on the approved charter.
 - Use the `write-user-stories` contract for artifact frontmatter, sentence shape, and uncertainty handling because downstream skills rely on canonical stories.
-- Use approved charter context when it exists because goals, actors, and success criteria should shape the story set.
+- Use approved charter context from `./charter.md` when it exists because goals, actors, and success criteria should shape the story set.
 - Use `visual-diagramming` when persona journeys, actor touchpoints, or branching user paths will communicate story context faster than prose alone.
 - Ask for clarification when missing detail changes actor, action, benefit, or scope; otherwise continue and mark `TODO: Confirm`.
 - Inspect repository context only when existing behavior or integrations materially shape the stories.
 
 ## Constraints
 
-- Output must be one Markdown artifact at `.specs/<project-name>/user-stories.md`.
+- Output must be one Markdown artifact named `user-stories.md`.
 - Every final story must stay compatible with the `write-user-stories` contract.
-- The artifact must record `source_artifacts.charter = .specs/<project-name>/charter.md`.
+- The artifact must record `source_artifacts.charter` for the approved charter.
 - Keep grouping concise and readable, but do not replace story sentences with summaries.
 - When diagrams are used, keep the stories canonical and use the diagram to add actor context rather than replace the story contract.
 - Do not mix charter-level scope framing, detailed requirements, architecture, task breakdowns, or implementation notes into the artifact.
@@ -44,7 +43,7 @@ Inputs:
 
 Output:
 
-- one complete user-story artifact at `.specs/<project-name>/user-stories.md`
+- one complete user-story artifact named `user-stories.md`
 
 In scope:
 
@@ -52,7 +51,7 @@ In scope:
 - writing canonical actor-action-benefit stories
 - grouping related stories under concise headings when useful
 - adding persona or actor diagrams when they clarify stages, touchpoints, or branching paths
-- stamping deterministic authored-document provenance and source-artifact lineage
+- stamping deterministic provenance and source-artifact lineage
 - preserving explicit uncertainty markers where story fields are unresolved
 
 Out of scope:
@@ -65,17 +64,15 @@ Out of scope:
 ## Workflow
 
 1. Confirm the user wants user stories authored after product framing and before detailed requirements, design, or implementation work.
-2. Resolve `<project-name>` with `artifact-naming` and keep it stable for the run.
-3. Capture `root_skill` from the active authored workflow and set `producing_skill = user-story-authoring`.
-4. Gather the approved charter context, outcomes, actors, goals, non-goals, and scope boundaries.
-5. Inspect the repository only when existing behavior, integrations, or constraints materially shape user-visible outcomes.
-6. Identify distinct user-visible outcomes and split bundled requests into separate stories when needed.
-7. Use `visual-diagramming` to decide whether a journey or flowchart would clarify personas, actor touchpoints, or branching user paths.
-8. Draft `.specs/<project-name>/user-stories.md` using the `write-user-stories` contract.
-9. Stamp canonical provenance with `source_artifacts.charter`.
-10. Mark unresolved actor, action, or benefit fields as `TODO: Confirm` instead of guessing.
-11. Validate the artifact with `bash ../write-user-stories/scripts/validate_user_stories.sh .specs/<project-name>/user-stories.md` and use `bash ../write-user-stories/scripts/validate_story.sh '<story>'` for sentence-level debugging when needed.
-12. Deliver the draft and request approval before requirements, design, or planning proceeds.
+2. Gather approved charter context, outcomes, actors, goals, non-goals, and scope boundaries from available inputs and `./charter.md` when present.
+3. Inspect the repository only when existing behavior, integrations, or constraints materially shape user-visible outcomes.
+4. Identify distinct user-visible outcomes and split bundled requests into separate stories when needed.
+5. Use `visual-diagramming` to decide whether a journey or flowchart would clarify personas, actor touchpoints, or branching user paths.
+6. Draft `user-stories.md` using the `write-user-stories` contract.
+7. Stamp canonical provenance with `source_artifacts.charter`.
+8. Mark unresolved actor, action, or benefit fields as `TODO: Confirm` instead of guessing.
+9. Validate the artifact with `bash ../write-user-stories/scripts/validate_user_stories.sh <resolved-user-stories-path>` and use `bash ../write-user-stories/scripts/validate_story.sh '<story>'` for sentence-level debugging when needed.
+10. Deliver the draft and request approval before requirements, design, or planning proceeds.
 
 ## Gotchas
 
@@ -91,7 +88,7 @@ Out of scope:
 
 ## Deliverables
 
-- `.specs/<project-name>/user-stories.md`
+- `user-stories.md`
 - canonical user stories aligned to the shared actor-action-benefit contract
 - explicit `TODO: Confirm` markers for unresolved story fields
 - deterministic provenance plus `source_artifacts.charter`
@@ -100,7 +97,7 @@ Out of scope:
 
 ## Validation Checklist
 
-- artifact path is `.specs/<project-name>/user-stories.md`
+- artifact filename is `user-stories.md`
 - every final story uses the canonical actor-action-benefit contract
 - `source_artifacts.charter` points to the approved charter
 - unresolved story fields are marked `TODO: Confirm`
@@ -109,4 +106,4 @@ Out of scope:
 
 ## Deterministic Validation
 
-- `bash ../write-user-stories/scripts/validate_user_stories.sh .specs/<project-name>/user-stories.md`
+- `bash ../write-user-stories/scripts/validate_user_stories.sh <resolved-user-stories-path>`

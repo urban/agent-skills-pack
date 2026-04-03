@@ -16,18 +16,20 @@ metadata:
 ## Rules
 
 - Treat code, tests, configuration, and repository structure as the primary evidence because this role documents the system that exists today.
+- Produce the artifact as `technical-design.md`.
 - Use `document-traceability` to stamp canonical provenance plus `source_artifacts.charter`, `source_artifacts.user_stories`, and `source_artifacts.requirements` so reconstructed technical design remains reusable downstream.
 - Use the `write-technical-design` contract so the derived artifact stays compatible with authored technical design.
 - Use `visual-diagramming` to choose Mermaid diagrams when observed architecture, interactions, behavior, or data relationships will be understood faster visually than through prose alone.
 - Distinguish observed architecture from inferred rationale because code often shows structure more clearly than intent.
+- Use context from `./charter.md`, `./user-stories.md`, and `./requirements.md` when they exist because reconstructed design should stay aligned to reconstructed framing, outcomes, and obligations.
 - Apply `gray-box-modules` only when repository evidence supports a real bounded capability with a caller-visible seam.
 - Use `TODO: Confirm` when rationale, ownership, or boundary strength cannot be proved from the repository.
 
 ## Constraints
 
-- Output must be one Markdown report at the user-specified destination or, by default, `.specs/<project-name>-research/technical-design.md`.
+- Output must be one Markdown artifact named `technical-design.md`.
 - The artifact must stay compatible with the `write-technical-design` contract.
-- When produced through the canonical reconstruction workflow, the artifact must record `generated_by.root_skill = specification-reconstruction`, `generated_by.producing_skill = derive-technical-design`, and the required upstream `source_artifacts` roles.
+- The artifact must record the required upstream `source_artifacts` roles.
 - The artifact must explicitly address the four required diagram slots from `write-technical-design`: context flowchart, behavior state diagram, entity relationship diagram, and interaction diagram.
 - Diagrams must stay evidence-based and support the observed system instead of proposing a cleaner future state.
 - If the destination file already exists, create a timestamped backup before overwrite.
@@ -46,7 +48,7 @@ Inputs:
 
 Output:
 
-- one derived technical design report at the user-specified destination or, when no destination is provided, `.specs/<project-name>-research/technical-design.md`
+- one derived technical design artifact named `technical-design.md`
 
 In scope:
 
@@ -70,14 +72,13 @@ Out of scope:
 4. Evaluate whether any bounded capability meets the gray-box evidence threshold before documenting it as a module boundary.
 5. Use `visual-diagramming` to fill the four required diagram slots with either the expected Mermaid diagram, a `Not needed:` rationale, or `TODO: Confirm` when applicability is unresolved, while avoiding claims the evidence cannot support.
 6. Load `references/diagram-evidence.md` when diagram wording, slot applicability, or evidence thresholds are unclear.
-7. Resolve the destination path from user input when provided; otherwise resolve `<project-name>` from the nearest package or repository name and use `.specs/<project-name>-research/technical-design.md`.
-8. If the destination report already exists, create a timestamped backup in the same directory before overwrite.
-9. Capture `root_skill` from the active reconstruction workflow and set `producing_skill = derive-technical-design`.
-10. Draft the chosen destination with the `write-technical-design` contract.
-11. Stamp canonical provenance with `source_artifacts.charter`, `source_artifacts.user_stories`, and `source_artifacts.requirements`.
-12. Mark inferred rationale, weak seams, or ambiguous ownership as `TODO: Confirm` rather than upgrading them to confident design facts.
-13. Validate with `bash ../write-technical-design/scripts/validate_technical_design.sh <destination-path>`.
-14. Deliver the report as as-built architecture documentation, not as a cleanup proposal.
+7. Write `technical-design.md` to the chosen destination.
+8. If the destination artifact already exists, create a timestamped backup in the same directory before overwrite.
+9. Draft the chosen destination with the `write-technical-design` contract.
+10. Stamp canonical provenance with `source_artifacts.charter`, `source_artifacts.user_stories`, and `source_artifacts.requirements`.
+11. Mark inferred rationale, weak seams, or ambiguous ownership as `TODO: Confirm` rather than upgrading them to confident design facts.
+12. Validate with `bash ../write-technical-design/scripts/validate_technical_design.sh <resolved-technical-design-path>`.
+13. Deliver the artifact as as-built architecture documentation, not as a cleanup proposal.
 
 ## Gotchas
 
@@ -91,8 +92,8 @@ Out of scope:
 
 ## Deliverables
 
-- the chosen technical-design report destination
-- a timestamped backup when overwriting an existing report
+- `technical-design.md`
+- a timestamped backup when overwriting an existing artifact
 - as-built architecture, implementation-strategy, and testing-strategy documentation
 - deterministic provenance plus required source-artifact lineage
 - the four required diagram slots completed with evidence-backed Mermaid diagrams, `Not needed:` rationales, or `TODO: Confirm`
@@ -105,8 +106,8 @@ Out of scope:
 
 ## Validation Checklist
 
-- report path is the user-specified destination or the default `.specs/<project-name>-research/technical-design.md`
-- existing report backup is created before overwrite when needed
+- artifact filename is `technical-design.md`
+- existing artifact backup is created before overwrite when needed
 - section order follows the `write-technical-design` contract
 - canonical provenance is present and required source-artifact roles are recorded
 - named components, interfaces, testing strategy, and risks/tradeoffs are explicit
@@ -117,4 +118,4 @@ Out of scope:
 
 ## Deterministic Validation
 
-- `bash ../write-technical-design/scripts/validate_technical_design.sh <destination-path>`
+- `bash ../write-technical-design/scripts/validate_technical_design.sh <resolved-technical-design-path>`

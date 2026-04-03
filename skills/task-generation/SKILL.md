@@ -14,19 +14,20 @@ metadata:
 ## Rules
 
 - Treat the parent execution plan as the coordination source of truth because this role decomposes approved work rather than redefining it.
+- Produce the artifact as `execution-tasks.md`.
 - Use `document-traceability` to stamp canonical provenance plus `source_artifacts.plan`.
 - Use the `write-task-tracking` contract for section order, task fields, runtime-edge preservation, and validation because local tracking must stay stable across turns.
 - Keep each task tracer-bullet shaped: thin, end-to-end, independently verifiable, and production-bound.
 - Group tasks by implementation stream because stream context preserves the plan's sequencing logic.
 - Record dependencies in terms of working behavior, not architecture-layer order.
-- If the plan carries runtime-edge obligations, preserve those obligations in tasks and include both structural and behavior-verifying acceptance criteria.
+- If the plan in `./execution-plan.md` carries runtime-edge obligations, preserve those obligations in tasks and include both structural and behavior-verifying acceptance criteria.
 - Use `TODO: Confirm` when ambiguity changes task boundaries or dependency shape.
 
 ## Constraints
 
-- Output must be one Markdown artifact at `.specs/<project-name>/execution-tasks.md`.
+- Output must be one Markdown artifact named `execution-tasks.md`.
 - The artifact must stay compatible with the `write-task-tracking` contract.
-- The artifact must record `source_artifacts.plan = .specs/<project-name>/execution-plan.md`.
+- The artifact must record `source_artifacts.plan`.
 - Every task must include a stable identifier, status, dependency field, and plan references.
 - Tasks must remain local tracking artifacts; do not create GitHub issues or external tickets.
 - Do not create layer-only tasks that deliver no verifiable end-to-end behavior.
@@ -35,13 +36,13 @@ metadata:
 
 Inputs:
 
-- an approved execution plan at `.specs/<project-name>/execution-plan.md` or equivalent
+- an approved execution plan or equivalent
 - companion charter, user stories, requirements, and technical design when needed to clarify task boundaries
 - repository context when needed to find real seams or sequencing constraints
 
 Output:
 
-- one local task-tracking artifact at `.specs/<project-name>/execution-tasks.md`
+- one local task-tracking artifact named `execution-tasks.md`
 
 In scope:
 
@@ -60,18 +61,17 @@ Out of scope:
 ## Workflow
 
 1. Confirm the user wants local implementation tasks created from an approved execution plan.
-2. Load the parent plan, then read [`references/tracer-bullets.md`](./references/tracer-bullets.md).
-3. Capture `root_skill` from the active execution workflow and set `producing_skill = task-generation`.
-4. Extract implementation streams, work breakdown items, sequencing constraints, validation checkpoints, and runtime-edge obligations from the plan.
-5. Use companion specification artifacts only when task boundaries or dependencies need clarification.
-6. Slice the work into thin tracer-bullet tasks grouped by stream.
-7. Assign stable task IDs, explicit dependencies, statuses, and plan references.
-8. For runtime-edge work, include both structural and behavior-verifying acceptance criteria instead of only bootstrap steps.
-9. Draft `.specs/<project-name>/execution-tasks.md` using the `write-task-tracking` contract.
-10. Stamp canonical provenance with `source_artifacts.plan`.
-11. Mark unresolved high-impact task-boundary or dependency ambiguity as `TODO: Confirm`.
-12. Validate with `bash ../write-task-tracking/scripts/validate_tasks.sh .specs/<project-name>/execution-tasks.md`.
-13. Deliver the local task-tracking artifact for execution.
+2. Load the parent plan from `./execution-plan.md`, then read [`references/tracer-bullets.md`](./references/tracer-bullets.md).
+3. Extract implementation streams, work breakdown items, sequencing constraints, validation checkpoints, and runtime-edge obligations from the plan.
+4. Use companion specification artifacts only when task boundaries or dependencies need clarification.
+5. Slice the work into thin tracer-bullet tasks grouped by stream.
+6. Assign stable task IDs, explicit dependencies, statuses, and plan references.
+7. For runtime-edge work, include both structural and behavior-verifying acceptance criteria instead of only bootstrap steps.
+8. Draft `execution-tasks.md` using the `write-task-tracking` contract.
+9. Stamp canonical provenance with `source_artifacts.plan`.
+10. Mark unresolved high-impact task-boundary or dependency ambiguity as `TODO: Confirm`.
+11. Validate with `bash ../write-task-tracking/scripts/validate_tasks.sh <resolved-execution-tasks-path>`.
+12. Deliver the local task-tracking artifact for execution.
 
 ## Gotchas
 
@@ -85,7 +85,7 @@ Out of scope:
 
 ## Deliverables
 
-- `.specs/<project-name>/execution-tasks.md`
+- `execution-tasks.md`
 - grouped tracer-bullet tasks with stable identifiers, statuses, dependencies, and plan references
 - explicit `source_artifacts.plan` lineage and deterministic provenance
 - local tracking structure suitable for iterative implementation updates
@@ -97,7 +97,7 @@ Out of scope:
 
 ## Validation Checklist
 
-- artifact path is `.specs/<project-name>/execution-tasks.md`
+- artifact filename is `execution-tasks.md`
 - parent execution plan was used as the source of truth
 - `source_artifacts.plan` points to the approved plan
 - at least one implementation stream group exists
@@ -108,4 +108,4 @@ Out of scope:
 
 ## Deterministic Validation
 
-- `bash ../write-task-tracking/scripts/validate_tasks.sh .specs/<project-name>/execution-tasks.md`
+- `bash ../write-task-tracking/scripts/validate_tasks.sh <resolved-execution-tasks-path>`

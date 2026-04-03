@@ -61,13 +61,37 @@ Choose exactly one layer:
 
 - **foundational** — reusable contracts, templates, validators, naming, provenance
 - **expertise** — one bounded skill built on foundational contracts
-- **orchestration** — a coordinating skill that depends on expertise skills only
+- **orchestration** — a coordinating skill built on expertise skills and, when needed, selected foundational leaf contracts for workflow-wide coordination
 
 Dependency direction is strict:
 
 - foundational must not depend on other skills
 - expertise may depend only on foundational skills
-- orchestration may depend only on expertise skills
+- orchestration must depend on expertise skills for artifact-producing work
+- orchestration may also depend on selected foundational leaf contracts only when they serve workflow-wide coordination concerns such as naming, spec-pack root selection, or provenance assembly support
+- orchestration must not use foundational dependencies to replace expertise artifact contracts
+
+## Path ownership
+
+Treat artifact location as three separate concerns:
+
+- **artifact basename** — `<project-name>`
+  Owned by foundational naming contracts.
+- **spec-pack root** — workflow-level artifact directory such as `.specs/<project-name>/` or `.specs/<project-name>-research/`
+  Owned by orchestration.
+- **artifact filename** — artifact-specific file such as `charter.md` or `requirements.md`
+  Owned by expertise.
+
+Apply these rules:
+
+- foundational skills may define naming and normalization rules for `<project-name>`, but not workflow-specific spec-pack roots
+- orchestration skills may choose or override one spec-pack root for a run, but should not redefine expertise-owned artifact filenames
+- expertise skills should define the filename of the artifact they produce
+- when expertise skills refer to sibling artifacts in the same spec pack, they should use pack-relative paths such as `./charter.md`
+- validators may still operate on fully resolved runtime paths, but the skill contract should describe pack-local placement when appropriate
+
+Use this split when writing or revising path guidance in `SKILL.md` files.
+Prefer filename and pack-relative dependency guidance in expertise skills over repeating full workflow paths in every expertise contract.
 
 ## Validation checklist
 
@@ -77,4 +101,4 @@ When you add or change a skill:
 - verify linked assets, scripts, and references exist
 - run any validator scripts you add
 - verify emitted artifacts use canonical provenance and the correct `source_artifacts` roles
-- keep examples and output paths aligned with package terminology
+- keep examples and output paths aligned with package terminology and layer ownership

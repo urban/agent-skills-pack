@@ -58,6 +58,8 @@ Keep these separate:
 - `generated_by` — how the artifact was produced
 - `source_artifacts` — which upstream artifacts shaped it
 
+Skill contracts may describe same-pack dependencies using pack-relative paths, but canonical provenance must continue recording resolved artifact paths in `source_artifacts`.
+
 ## Required lineage by artifact kind
 
 Use exactly these `source_artifacts` roles:

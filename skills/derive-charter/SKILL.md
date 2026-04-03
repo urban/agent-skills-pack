@@ -14,6 +14,7 @@ metadata:
 ## Rules
 
 - Treat repository code and tests as the primary evidence because this role documents implemented reality, not remembered product strategy.
+- Produce the artifact as `charter.md`.
 - Use `document-traceability` to stamp canonical provenance and `source_artifacts: {}` so reconstructed charter artifacts remain machine-checkable even though they are not historically approved source documents.
 - Use the `write-charter` contract so the derived artifact stays compatible with authored charter artifacts while remaining explicit that it is reconstructed, not historically approved.
 - Infer goals, non-goals, personas, and success criteria only as far as repository evidence supports them because business framing is often only partially observable in code.
@@ -22,9 +23,9 @@ metadata:
 
 ## Constraints
 
-- Output must be one Markdown report at the user-specified destination or, by default, `.specs/<project-name>-research/charter.md`.
+- Output must be one Markdown artifact named `charter.md`.
 - The artifact must stay compatible with the `write-charter` contract.
-- The artifact must record deterministic provenance with `generated_by.root_skill = specification-reconstruction`, `generated_by.producing_skill = derive-charter`, and `source_artifacts: {}` when produced through the canonical reconstruction workflow.
+- The artifact must record canonical provenance with `source_artifacts: {}` when produced through the reconstruction workflow.
 - If the destination file already exists, create a timestamped backup before overwrite.
 - Do not claim original intent, non-goals, or success measures that are not supportable from repository evidence.
 - Do not turn low-level implementation details into fake goals or personas just to fill sections.
@@ -40,7 +41,7 @@ Inputs:
 
 Output:
 
-- one derived charter report at the user-specified destination or, when no destination is provided, `.specs/<project-name>-research/charter.md`
+- one derived charter artifact named `charter.md`
 
 In scope:
 
@@ -60,14 +61,13 @@ Out of scope:
 1. Confirm analysis scope, defaulting to the full repository when the user does not narrow it.
 2. Inventory user-visible surfaces, constraints, role boundaries, and measurable outcomes from code and tests.
 3. Infer candidate goals, non-goals, personas, and success criteria only as far as the evidence supports and mark weak conclusions as `TODO: Confirm`.
-4. Resolve the destination path from user input when provided; otherwise resolve `<project-name>` from the nearest package or repository name and use `.specs/<project-name>-research/charter.md`.
-5. If the destination report already exists, create a timestamped backup in the same directory before overwrite.
-6. Capture `root_skill` from the active reconstruction workflow and set `producing_skill = derive-charter`.
-7. Draft the chosen destination with the `write-charter` contract.
-8. Stamp canonical provenance with `source_artifacts: {}`.
-9. Add evidence-aware `TODO: Confirm` markers anywhere framing remains weakly supported.
-10. Validate with `bash ../write-charter/scripts/validate_charter.sh <destination-path>`.
-9. Deliver the report as reconstructed charter-form scope grounded in implemented evidence, not as speculative product history or proof of historical approval.
+4. Write `charter.md` to the chosen destination.
+5. If the destination artifact already exists, create a timestamped backup in the same directory before overwrite.
+6. Draft the chosen destination with the `write-charter` contract.
+7. Stamp canonical provenance with `source_artifacts: {}`.
+8. Add evidence-aware `TODO: Confirm` markers anywhere framing remains weakly supported.
+9. Validate with `bash ../write-charter/scripts/validate_charter.sh <resolved-charter-path>`.
+10. Deliver the artifact as reconstructed charter-form scope grounded in implemented evidence, not as speculative product history or proof of historical approval.
 
 ## Gotchas
 
@@ -80,16 +80,16 @@ Out of scope:
 
 ## Deliverables
 
-- the chosen charter report destination
-- a timestamped backup when overwriting an existing report
+- `charter.md`
+- a timestamped backup when overwriting an existing artifact
 - evidence-based reconstructed framing with explicit uncertainty handling
 - deterministic provenance with `source_artifacts: {}`
 - validation passing via the shared charter validator
 
 ## Validation Checklist
 
-- report path is the user-specified destination or the default `.specs/<project-name>-research/charter.md`
-- existing report backup is created before overwrite when needed
+- artifact filename is `charter.md`
+- existing artifact backup is created before overwrite when needed
 - section order follows the `write-charter` contract
 - canonical provenance is present and `source_artifacts: {}` is used
 - goals, non-goals, personas, and success criteria are derived from observable evidence rather than guessed product history
@@ -98,4 +98,4 @@ Out of scope:
 
 ## Deterministic Validation
 
-- `bash ../write-charter/scripts/validate_charter.sh <destination-path>`
+- `bash ../write-charter/scripts/validate_charter.sh <resolved-charter-path>`

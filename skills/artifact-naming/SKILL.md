@@ -1,6 +1,6 @@
 ---
 name: artifact-naming
-description: Resolve and normalize stable artifact basenames for specification and planning files. Use when a task creates, revises, links, or validates artifact filenames and needs deterministic cross-skill naming.
+description: Resolve and normalize stable artifact basenames. Use when a task needs deterministic naming for related artifacts without mixing naming into placement, authoring, or workflow logic.
 metadata:
   version: 0.1.0
   layer: foundational
@@ -8,7 +8,7 @@ metadata:
 
 ## Rules
 
-- Resolve one stable `<project-name>` per artifact lifecycle and reuse it across revisions because rename drift breaks cross-artifact linking.
+- Resolve one stable basename per artifact family and reuse it across revisions because rename drift breaks cross-artifact linking.
 - Prefer explicit user-provided slugs first because caller intent outranks inferred naming.
 - Reuse an existing related basename when continuing prior work because revisions should not fork naming history.
 - Derive a new name from the approved problem statement only when no stronger source exists because derived names are fallback behavior.
@@ -17,7 +17,8 @@ metadata:
 
 ## Constraints
 
-- This skill owns basename resolution, not full path selection or artifact authoring.
+- This skill owns basename resolution only.
+- It does not own path selection, artifact placement, artifact filename selection, or artifact authoring.
 - Output must stay filesystem-safe: lowercase letters, numbers, and single hyphens only.
 - Do not silently rename published or already-linked artifacts.
 - Do not derive names from implementation details, branch names, or transient ticket text when an approved problem statement exists.
@@ -34,9 +35,9 @@ Inputs the caller should provide when available:
 
 Output contract:
 
-- one documented `<project-name>` basename
+- one documented basename
 - source of that name: explicit, reused, or derived
-- normalized result ready for skill-specific filename composition
+- normalized result ready for caller-owned composition
 
 Resolution order:
 
@@ -54,11 +55,11 @@ Normalization requirements:
 
 ## Workflow
 
-1. Check for an explicit artifact slug or basename from the user or calling workflow.
+1. Check for an explicit artifact slug or basename from the user or caller.
 2. If none exists, inspect related artifacts and reuse the established basename when the task is a continuation or revision.
 3. If no prior basename exists, derive a concise name from the approved problem statement.
 4. Normalize the chosen value to lowercase kebab-case.
-5. Return the basename plus its source so the caller can compose the final filename with the correct artifact suffix.
+5. Return the basename plus its source so the caller can compose the final artifact name according to its own contract.
 6. Reuse that same basename for future revisions of the same artifact family.
 
 ## Gotchas
@@ -68,18 +69,18 @@ Normalization requirements:
 - If you strip too aggressively, distinct artifacts collapse into the same basename and later files overwrite each other semantically. Keep disambiguating tokens that carry intent.
 - If you let each caller normalize differently, one artifact becomes `foo_bar`, another `foo-bar`, and a third `FooBar`. Normalize once with this contract before any suffix is added.
 - If you silently rename an established artifact because a newer title sounds better, downstream references break and reviewers lose history. Preserve published names unless the user explicitly requests a rename migration.
-- If you mix basename resolution with path decisions, callers start treating this skill as a document-placement workflow and duplicate naming logic elsewhere. Return the basename only; let the caller own directory and suffix rules.
+- If you mix basename resolution with path, placement, or authoring decisions, callers start treating this skill as a document-placement workflow and duplicate naming logic elsewhere. Return the basename only.
 
 ## Deliverables
 
-- A deterministic `<project-name>` basename.
+- A deterministic basename.
 - A short note naming the source used: explicit, reused, or derived.
-- A normalized value suitable for downstream filename composition.
+- A normalized value suitable for caller-owned composition.
 
 ## Validation Checklist
 
 - Higher-precedence naming sources were checked before fallback derivation.
 - The returned basename is lowercase kebab-case.
 - Existing artifact basenames were preserved for revisions.
-- The basename remains stable across the same artifact lifecycle.
-- No path, suffix, or authoring rules were mixed into this contract.
+- The basename remains stable across the same artifact family.
+- No path, placement, filename-selection, suffix, or authoring rules were mixed into this contract.

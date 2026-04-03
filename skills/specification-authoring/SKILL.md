@@ -5,6 +5,7 @@ metadata:
   version: 0.1.0
   layer: orchestration
   dependencies:
+    - artifact-naming
     - charter
     - user-story-authoring
     - requirements
@@ -14,21 +15,23 @@ metadata:
 ## Rules
 
 - Keep this workflow at the orchestration layer because expertise skills own artifact-specific contracts and validation.
-- Resolve one stable `<project-name>` early and preserve it across every authored artifact because path drift breaks downstream alignment.
+- Use `artifact-naming` to resolve one stable `<project-name>` for the workflow because the authored spec-pack root must stay consistent across all artifacts.
+- Resolve one stable authored spec-pack root early and preserve it across every authored artifact because placement drift breaks downstream alignment.
+- Use `.specs/<project-name>/` as the default authored spec-pack root unless the user provides an explicit destination.
 - Establish `generated_by.root_skill` as `specification-authoring` for every artifact emitted from this workflow.
 - Run expertise entry skills in order because charter sets scope and success, stories define user-visible outcomes, requirements define product obligations, and design explains the solution.
-- Do not start `user-story-authoring` until the user explicitly approves `.specs/<project-name>/charter.md`.
-- Do not start `requirements` until the user explicitly approves `.specs/<project-name>/user-stories.md`.
-- Do not start `technical-design` until the user explicitly approves `.specs/<project-name>/requirements.md`.
-- Do not start the final cross-artifact consistency pass or final pack delivery until the user explicitly approves `.specs/<project-name>/technical-design.md`.
+- Do not start `user-story-authoring` until the user explicitly approves `charter.md`.
+- Do not start `requirements` until the user explicitly approves `user-stories.md`.
+- Do not start `technical-design` until the user explicitly approves `requirements.md`.
+- Do not start the final cross-artifact consistency pass or final pack delivery until the user explicitly approves `technical-design.md`.
 - Keep cross-artifact review explicit because workflow value comes from alignment, not from merely invoking four skills.
 - If missing detail changes scope or artifact shape, ask or mark `TODO: Confirm` instead of letting downstream artifacts invent certainty.
 
 ## Constraints
 
 - This workflow coordinates artifacts; it does not replace underlying expertise or foundational contracts.
-- Final output must include charter, user stories, requirements, and technical design.
-- Orchestration dependencies stay limited to expertise entry skills; do not name foundational contract skills here.
+- Final output must include `charter.md`, `user-stories.md`, `requirements.md`, and `technical-design.md` in one authored spec pack.
+- Orchestration must use expertise skills for artifact-producing work and may use `artifact-naming` only for workflow-wide naming and placement coordination.
 - Every authored artifact must carry deterministic provenance rooted in this workflow plus artifact-specific `source_artifacts` lineage.
 - Never author the full specification pack in one uninterrupted pass unless the user explicitly waives stage-by-stage approval.
 - Do not start downstream coordination or implementation from this workflow unless the user explicitly asks for that next phase.
@@ -40,6 +43,8 @@ Inputs:
 - product idea, feature request, or approved problem statement
 - desired outcomes, goals, and scope boundaries
 - repository context when existing code, integrations, or constraints matter
+- optional explicit authored destination root
+- optional explicit artifact slug or preferred basename
 - clarification on unknowns that would materially change the artifact set
 
 Outputs:
@@ -48,12 +53,14 @@ Outputs:
 - `.specs/<project-name>/user-stories.md`
 - `.specs/<project-name>/requirements.md`
 - `.specs/<project-name>/technical-design.md`
-- one authored spec pack with a stable `<project-name>` reused across all artifacts
+- one authored spec pack rooted at the chosen authored spec-pack root
 
 In scope:
 
+- resolving one workflow-wide `<project-name>` with `artifact-naming`
+- selecting and preserving one authored spec-pack root for the workflow
 - orchestrating expertise entry skills in authored order
-- preserving pack-wide naming and scope consistency
+- preserving pack-wide placement and scope consistency
 - establishing root workflow provenance for every authored artifact
 - checking that artifacts map cleanly from charter through design
 
@@ -67,28 +74,29 @@ Out of scope:
 ## Workflow
 
 1. Confirm the user wants a specification pack authored before downstream coordination or implementation.
-2. Resolve `<project-name>` once and preserve it for the full run.
-3. Establish `root_skill = specification-authoring` for all authored artifacts in this run.
-4. Co-create or confirm the core outcomes, goals, non-goals, personas / actors, success criteria, and scope boundaries.
-5. Run `charter`, draft `.specs/<project-name>/charter.md`, present it to the user, and wait for explicit approval before continuing.
-6. If the user does not approve the charter, revise it or mark unresolved points as `TODO: Confirm`, then present the updated artifact again and wait for explicit approval.
-7. Run `user-story-authoring`, draft `.specs/<project-name>/user-stories.md`, present it to the user, and wait for explicit approval before continuing.
-8. If the user does not approve the story set, revise stories or mark unresolved points as `TODO: Confirm`, then present the updated artifact again and wait for explicit approval.
-9. Run `requirements`, draft `.specs/<project-name>/requirements.md`, present it to the user, and wait for explicit approval before continuing.
-10. If the user does not approve the requirements, revise requirements or mark unresolved points as `TODO: Confirm`, then present the updated artifact again and wait for explicit approval.
-11. Run `technical-design`, draft `.specs/<project-name>/technical-design.md`, present it to the user, and wait for explicit approval before continuing.
-12. If the user does not approve the technical design, revise design or mark unresolved points as `TODO: Confirm`, then present the updated artifact again and wait for explicit approval.
-13. Perform a cross-artifact consistency pass:
+2. Resolve `<project-name>` once with `artifact-naming`, honoring an explicit artifact slug or preferred basename when provided.
+3. Resolve the authored spec-pack root once for the full run, defaulting to `.specs/<project-name>/` unless the user provides an explicit destination.
+4. Establish `root_skill = specification-authoring` for all authored artifacts in this run.
+5. Co-create or confirm the core outcomes, goals, non-goals, personas / actors, success criteria, and scope boundaries.
+6. Run `charter`, write the result to `<spec-pack-root>/charter.md`, present it to the user, and wait for explicit approval before continuing.
+7. If the user does not approve the charter, revise it or mark unresolved points as `TODO: Confirm`, then present the updated artifact again and wait for explicit approval.
+8. Run `user-story-authoring`, write the result to `<spec-pack-root>/user-stories.md`, present it to the user, and wait for explicit approval before continuing.
+9. If the user does not approve the story set, revise stories or mark unresolved points as `TODO: Confirm`, then present the updated artifact again and wait for explicit approval.
+10. Run `requirements`, write the result to `<spec-pack-root>/requirements.md`, present it to the user, and wait for explicit approval before continuing.
+11. If the user does not approve the requirements, revise requirements or mark unresolved points as `TODO: Confirm`, then present the updated artifact again and wait for explicit approval.
+12. Run `technical-design`, write the result to `<spec-pack-root>/technical-design.md`, present it to the user, and wait for explicit approval before continuing.
+13. If the user does not approve the technical design, revise design or mark unresolved points as `TODO: Confirm`, then present the updated artifact again and wait for explicit approval.
+14. Perform a cross-artifact consistency pass:
 
-- charter scope, actors, and success criteria support the story set
-- stories stay within approved charter scope
+- `charter.md` scope, actors, and success criteria support the story set
+- `user-stories.md` stays within approved charter scope
 - user-visible requirements map to approved stories
-- requirements do not re-own goals, non-goals, personas, or success criteria from the charter
-- requirements map to design
+- `requirements.md` does not re-own goals, non-goals, personas, or success criteria from `charter.md`
+- `requirements.md` maps to `technical-design.md`
 - every artifact carries canonical provenance and the correct `source_artifacts` roles
 - unresolved items stay explicit as `TODO: Confirm`
 
-14. Deliver the authored specification pack for approval or downstream coordination.
+15. Deliver the authored specification pack for approval or downstream coordination.
 
 ## Approval Contract
 
@@ -99,7 +107,8 @@ Out of scope:
 
 ## Gotchas
 
-- If you let each role pick its own artifact name, the pack looks complete but downstream links and review context split across multiple directories. Resolve `<project-name>` once before any artifact is written.
+- If the workflow does not preserve one authored spec-pack root, the pack looks complete but downstream links and review context split across multiple directories. Resolve placement once before any artifact is written.
+- If `<project-name>` is re-derived mid-workflow, the pack can fork into multiple roots even when the artifact content is consistent. Resolve naming once and preserve it for the full run.
 - If user stories start before the charter is stable, actors and success checks drift and later requirements look aligned only because they copied the drift forward. Fix the charter first, then author stories from it.
 - If requirements start before the stories are stable, product obligations get formalized around behavior the user has not approved yet. Fix story coverage first, then derive requirements from it.
 - If you produce `user-stories.md` before `charter.md` is explicitly approved, produce `requirements.md` before `user-stories.md` is explicitly approved, or produce `technical-design.md` before `requirements.md` is explicitly approved, you have violated the workflow even if the documents are high quality. Stop, return to the last approved artifact, and re-enter the gated review flow.
@@ -111,22 +120,23 @@ Out of scope:
 
 ## Deliverables
 
-- one authored specification pack under `.specs/<project-name>/`
-- aligned charter, user stories, requirements, and technical design artifacts
+- one authored specification pack under the chosen authored spec-pack root
+- aligned `charter.md`, `user-stories.md`, `requirements.md`, and `technical-design.md`
 - deterministic provenance and source-artifact lineage on every authored artifact
 - explicit `TODO: Confirm` markers for unresolved decisions
 - a pack ready for approval or downstream coordination
 
 ## Validation Checklist
 
-- one stable `<project-name>` is reused across the full pack
-- charter, user stories, requirements, and technical design artifacts all exist
+- one stable `<project-name>` is used to resolve the authored spec-pack root
+- one stable authored spec-pack root is reused across the full pack
+- `charter.md`, `user-stories.md`, `requirements.md`, and `technical-design.md` all exist in the chosen authored spec-pack root
 - every authored artifact records `generated_by.root_skill = specification-authoring`
 - every authored artifact records the correct `source_artifacts` roles for its kind
-- the user explicitly approved `.specs/<project-name>/charter.md` before `.specs/<project-name>/user-stories.md` was authored, unless the user explicitly waived stage-by-stage approval
-- the user explicitly approved `.specs/<project-name>/user-stories.md` before `.specs/<project-name>/requirements.md` was authored, unless the user explicitly waived stage-by-stage approval
-- the user explicitly approved `.specs/<project-name>/requirements.md` before `.specs/<project-name>/technical-design.md` was authored, unless the user explicitly waived stage-by-stage approval
-- the user explicitly approved `.specs/<project-name>/technical-design.md` before the final cross-artifact consistency pass and final pack delivery, unless the user explicitly waived stage-by-stage approval
+- the user explicitly approved `charter.md` before `user-stories.md` was authored, unless the user explicitly waived stage-by-stage approval
+- the user explicitly approved `user-stories.md` before `requirements.md` was authored, unless the user explicitly waived stage-by-stage approval
+- the user explicitly approved `requirements.md` before `technical-design.md` was authored, unless the user explicitly waived stage-by-stage approval
+- the user explicitly approved `technical-design.md` before the final cross-artifact consistency pass and final pack delivery, unless the user explicitly waived stage-by-stage approval
 - charter scope, actors, and success criteria map to stories
 - user-visible requirements map to stories and requirements map to design
 - unresolved issues are marked explicitly instead of guessed

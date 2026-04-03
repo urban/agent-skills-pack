@@ -14,17 +14,19 @@ metadata:
 ## Rules
 
 - Treat repository code and tests as the primary evidence because this role documents implemented reality, not remembered intent.
+- Produce the artifact as `requirements.md`.
 - Use `document-traceability` to stamp canonical provenance plus `source_artifacts.charter` and `source_artifacts.user_stories` so reconstructed requirements remain reusable as downstream inputs.
 - Use the `write-requirements` contract so the derived artifact stays compatible with authored requirements.
 - Prefer user-visible behavior and explicit constraints over internal plumbing because the output is still a requirements artifact.
 - Keep evidence traceable to concrete file paths and line references when support is thin or disputed.
+- Use context from `./charter.md` and `./user-stories.md` when they exist because reconstructed requirements should stay aligned to reconstructed framing and outcomes.
 - Use `TODO: Confirm` when the repository cannot prove the actor, rationale, or intended scope boundary.
 
 ## Constraints
 
-- Output must be one Markdown report at the user-specified destination or, by default, `.specs/<project-name>-research/requirements.md`.
+- Output must be one Markdown artifact named `requirements.md`.
 - The artifact must stay compatible with the `write-requirements` contract.
-- When produced through the canonical reconstruction workflow, the artifact must record `generated_by.root_skill = specification-reconstruction`, `generated_by.producing_skill = derive-requirements`, `source_artifacts.charter`, and `source_artifacts.user_stories`.
+- The artifact must record `source_artifacts.charter` and `source_artifacts.user_stories`.
 - If the destination file already exists, create a timestamped backup before overwrite.
 - Do not claim original product framing that is not supported by repository evidence.
 - Do not turn technical plumbing into fake user-facing requirements just to fill sections.
@@ -40,7 +42,7 @@ Inputs:
 
 Output:
 
-- one derived requirements report at the user-specified destination or, when no destination is provided, `.specs/<project-name>-research/requirements.md`
+- one derived requirements artifact named `requirements.md`
 
 In scope:
 
@@ -61,14 +63,13 @@ Out of scope:
 1. Confirm analysis scope, defaulting to the full repository when the user does not narrow it.
 2. Inventory user-visible behaviors, interfaces, constraints, and dependencies from code and tests.
 3. Infer missing rationale only as far as the evidence supports and mark weak points as `TODO: Confirm`.
-4. Resolve the destination path from user input when provided; otherwise resolve `<project-name>` from the nearest package or repository name and use `.specs/<project-name>-research/requirements.md`.
-5. If the destination report already exists, create a timestamped backup in the same directory before overwrite.
-6. Capture `root_skill` from the active reconstruction workflow and set `producing_skill = derive-requirements`.
-7. Draft the chosen destination with the `write-requirements` contract.
-8. Stamp canonical provenance with `source_artifacts.charter` and `source_artifacts.user_stories`.
-9. Add evidence-aware `TODO: Confirm` markers anywhere actor intent, benefit, or scope rationale remains unprovable.
-10. Validate with `bash ../write-requirements/scripts/validate_requirements.sh <destination-path>`.
-11. Deliver the report as reconstructed implemented requirements, not as speculative product history.
+4. Write `requirements.md` to the chosen destination.
+5. If the destination artifact already exists, create a timestamped backup in the same directory before overwrite.
+6. Draft the chosen destination with the `write-requirements` contract.
+7. Stamp canonical provenance with `source_artifacts.charter` and `source_artifacts.user_stories`.
+8. Add evidence-aware `TODO: Confirm` markers anywhere actor intent, benefit, or scope rationale remains unprovable.
+9. Validate with `bash ../write-requirements/scripts/validate_requirements.sh <resolved-requirements-path>`.
+10. Deliver the artifact as reconstructed implemented requirements, not as speculative product history.
 
 ## Gotchas
 
@@ -81,16 +82,16 @@ Out of scope:
 
 ## Deliverables
 
-- the chosen requirements report destination
-- a timestamped backup when overwriting an existing report
+- `requirements.md`
+- a timestamped backup when overwriting an existing artifact
 - evidence-based reconstructed requirements with explicit uncertainty handling
 - deterministic provenance plus `source_artifacts.charter` and `source_artifacts.user_stories`
 - validation passing via the shared requirements validator
 
 ## Validation Checklist
 
-- report path is the user-specified destination or the default `.specs/<project-name>-research/requirements.md`
-- existing report backup is created before overwrite when needed
+- artifact filename is `requirements.md`
+- existing artifact backup is created before overwrite when needed
 - section order and numbering follow the `write-requirements` contract
 - canonical provenance is present and required source-artifact roles are recorded
 - requirements describe implemented behavior rather than guessed original intent
@@ -99,4 +100,4 @@ Out of scope:
 
 ## Deterministic Validation
 
-- `bash ../write-requirements/scripts/validate_requirements.sh <destination-path>`
+- `bash ../write-requirements/scripts/validate_requirements.sh <resolved-requirements-path>`

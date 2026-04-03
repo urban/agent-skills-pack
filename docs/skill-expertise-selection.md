@@ -37,6 +37,8 @@ Examples:
 - `write-task-tracking`
 - `gray-box-modules`
 
+Foundational skills may own shared naming and normalization such as `<project-name>` resolution, but not workflow-specific spec-pack roots.
+
 ### Expertise
 
 Use this layer when the skill applies foundational contracts within one bounded responsibility.
@@ -60,6 +62,8 @@ Expertise skills must:
 - declare `metadata.archetype` and `metadata.domain`
 - keep optional routing guidance in local `references/`
 
+Expertise skills should own the artifact filename for that output and describe same-pack dependency expectations relative to the spec-pack root when appropriate.
+
 ### Orchestration
 
 Use this layer when the skill coordinates multiple expertise skills into one larger flow.
@@ -72,9 +76,19 @@ Examples:
 
 Orchestration skills must:
 
-- depend only on expertise skills
+- depend on expertise skills for artifact-producing work
 - preserve one end-to-end flow
 - avoid restating foundational contract rules
+
+Orchestration skills may also depend on selected foundational leaf contracts when the concern is workflow-wide coordination rather than artifact-specific authoring.
+Examples include:
+
+- naming needed to resolve one workflow-wide `<project-name>`
+- spec-pack root selection
+- provenance assembly support
+
+Orchestration skills must not use foundational dependencies to replace expertise artifact contracts.
+Orchestration skills may own workflow-wide spec-pack root selection and destination overrides for a run, but should not redefine expertise-owned artifact filenames.
 
 ## Selection checks
 

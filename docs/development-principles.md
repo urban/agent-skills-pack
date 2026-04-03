@@ -33,6 +33,7 @@ Prefer:
 - stable naming
 - explicit validation
 - explicit uncertainty for reconstructed outputs
+- spec-pack-relative artifact contracts over repeated full workflow paths in every expertise skill
 
 Avoid silent drift between create and derive paths.
 
@@ -44,14 +45,27 @@ Do not blur these roles:
 - expertise skills own one bounded job
 - orchestration skills coordinate expertise skills only
 
+For path ownership:
+
+- foundational owns `<project-name>` derivation and normalization
+- orchestration owns spec-pack root selection
+- expertise owns artifact filenames and same-pack dependency guidance
+
 ## Keep dependency direction strict
 
 Follow these rules:
 
 - foundational -> no required skill dependencies
 - expertise -> foundational only
-- orchestration -> expertise only
+- orchestration -> expertise required for artifact-producing work; selected foundational leaf contracts allowed only for workflow-wide coordination concerns
 
+Examples of allowed orchestration-level foundational use include:
+
+- naming needed to resolve one workflow-wide `<project-name>`
+- spec-pack root selection
+- provenance assembly support
+
+Do not use foundational dependencies in orchestration to replace expertise artifact contracts.
 Prefer local references over required dependencies for optional follow-on guidance.
 
 ## Optimize for agent use
@@ -65,6 +79,9 @@ Prefer:
 - explicit headings
 - concise language
 - direct traceability
+- relocatable spec packs when workflows need alternate output roots
+
+Do not duplicate `<project-name>` derivation outside foundational naming contracts.
 
 ## Prefer explicit uncertainty
 

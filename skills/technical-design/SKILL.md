@@ -7,7 +7,6 @@ metadata:
   archetype: design
   domain: specification-authoring
   dependencies:
-    - artifact-naming
     - document-traceability
     - effect-technical-design
     - gray-box-modules
@@ -18,18 +17,19 @@ metadata:
 ## Rules
 
 - Keep this role focused on technical design because approved scope, actors, and success criteria belong in the charter, requirements own product obligations, and execution sequencing belongs in planning.
-- Use `artifact-naming` to resolve and preserve `<project-name>` because skill-pack file paths must stay aligned.
+- Produce the artifact as `technical-design.md`.
 - Use `document-traceability` to stamp canonical provenance plus `source_artifacts.charter`, `source_artifacts.user_stories`, and `source_artifacts.requirements` because design depends on the approved upstream specification.
 - Use the `write-technical-design` contract for section order and content boundaries because downstream planning expects that canonical shape.
 - Use `visual-diagramming` to choose Mermaid diagrams when architecture, interactions, behavior, or data relationships will be understood faster visually than through prose alone.
 - Ground the design in approved charter, approved requirements, approved stories, and repository evidence because architecture without scope alignment becomes speculative.
+- Use approved upstream context from `./charter.md`, `./user-stories.md`, and `./requirements.md`.
 - Apply `gray-box-modules` only when the system exposes meaningful bounded capabilities with durable caller-visible seams.
 - If the target system uses Effect, load `../effect-technical-design/SKILL.md` and apply its decomposition, recomposition, and abstraction-selection guidance instead of inventing ad hoc Effect architecture rules.
 - Mark unresolved high-impact design choices as `TODO: Confirm` instead of smoothing them over.
 
 ## Constraints
 
-- Output must be one Markdown artifact at `.specs/<project-name>/technical-design.md`.
+- Output must be one Markdown artifact named `technical-design.md`.
 - The artifact must stay compatible with the `write-technical-design` contract.
 - The artifact must record `source_artifacts.charter`, `source_artifacts.user_stories`, and `source_artifacts.requirements`.
 - Include architecture, interfaces, data flow, operational concerns, implementation strategy, and testing strategy.
@@ -50,7 +50,7 @@ Inputs:
 
 Output:
 
-- one complete technical design artifact at `.specs/<project-name>/technical-design.md`
+- one complete technical design artifact named `technical-design.md`
 
 In scope:
 
@@ -59,7 +59,7 @@ In scope:
 - capturing implementation strategy, testing strategy, risks, and tradeoffs
 - using gray-box module descriptions when evidence supports them
 - using the Effect-specific foundational guidance when the target system is built with Effect
-- stamping deterministic authored-document provenance and source-artifact lineage
+- stamping deterministic provenance and source-artifact lineage
 
 Out of scope:
 
@@ -70,18 +70,16 @@ Out of scope:
 ## Workflow
 
 1. Confirm the user wants a technical design artifact and gather the approved charter, user stories, and requirements context.
-2. Resolve `<project-name>` with `artifact-naming` and keep it stable for the run.
-3. Capture `root_skill` from the active authored workflow and set `producing_skill = technical-design`.
-4. Inspect repository structure, code, and integration boundaries when existing implementation constrains the design.
-5. Identify major components, responsibilities, interfaces, operational seams, and runtime surfaces needed to satisfy the approved scope.
-6. If the target system uses Effect, load `../effect-technical-design/SKILL.md` before finalizing boundaries so decomposition, recomposition, and abstraction choices stay consistent with the shared Effect guidance.
-7. Use `visual-diagramming` to fill the four required diagram slots with either the expected Mermaid diagram, a `Not needed:` rationale, or `TODO: Confirm` when applicability is unresolved.
-8. Apply `gray-box-modules` only to capabilities with durable caller-visible boundaries; otherwise describe the observed structure without forcing the pattern.
-9. Draft `.specs/<project-name>/technical-design.md` using the `write-technical-design` contract.
-10. Stamp canonical provenance with `source_artifacts.charter`, `source_artifacts.user_stories`, and `source_artifacts.requirements`.
-11. Record implementation strategy, testing strategy, risks, tradeoffs, and `TODO: Confirm` markers for unresolved high-impact design decisions.
-12. Validate with `bash ../write-technical-design/scripts/validate_technical_design.sh .specs/<project-name>/technical-design.md`.
-13. Deliver the draft and request approval before implementation proceeds.
+2. Inspect repository structure, code, and integration boundaries when existing implementation constrains the design.
+3. Identify major components, responsibilities, interfaces, operational seams, and runtime surfaces needed to satisfy the approved scope.
+4. If the target system uses Effect, load `../effect-technical-design/SKILL.md` before finalizing boundaries so decomposition, recomposition, and abstraction choices stay consistent with the shared Effect guidance.
+5. Use `visual-diagramming` to fill the four required diagram slots with either the expected Mermaid diagram, a `Not needed:` rationale, or `TODO: Confirm` when applicability is unresolved.
+6. Apply `gray-box-modules` only to capabilities with durable caller-visible boundaries; otherwise describe the observed structure without forcing the pattern.
+7. Draft `technical-design.md` using the `write-technical-design` contract.
+8. Stamp canonical provenance with `source_artifacts.charter`, `source_artifacts.user_stories`, and `source_artifacts.requirements`.
+9. Record implementation strategy, testing strategy, risks, tradeoffs, and `TODO: Confirm` markers for unresolved high-impact design decisions.
+10. Validate with `bash ../write-technical-design/scripts/validate_technical_design.sh <resolved-technical-design-path>`.
+11. Deliver the draft and request approval before implementation proceeds.
 
 ## Gotchas
 
@@ -96,7 +94,7 @@ Out of scope:
 
 ## Deliverables
 
-- `.specs/<project-name>/technical-design.md`
+- `technical-design.md`
 - architecture aligned to approved charter, user stories, and requirements
 - explicit components, interfaces, data flow, implementation strategy, testing strategy, risks, and tradeoffs
 - deterministic provenance plus required source-artifact lineage
@@ -105,7 +103,7 @@ Out of scope:
 
 ## Validation Checklist
 
-- artifact path is `.specs/<project-name>/technical-design.md`
+- artifact filename is `technical-design.md`
 - section order follows the `write-technical-design` contract
 - required source-artifact roles are present
 - architecture and implementation strategy are both present
@@ -116,4 +114,4 @@ Out of scope:
 
 ## Deterministic Validation
 
-- `bash ../write-technical-design/scripts/validate_technical_design.sh .specs/<project-name>/technical-design.md`
+- `bash ../write-technical-design/scripts/validate_technical_design.sh <resolved-technical-design-path>`
