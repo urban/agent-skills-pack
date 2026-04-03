@@ -1,69 +1,52 @@
-# Design Rationale
+# Design rationale
 
-The skill pack uses a contract-first layer model because the same artifact shapes need to work across authoring, reconstruction, and downstream planning.
+This pack is contract-first because the same artifact shapes must work across authoring, reconstruction, and planning.
 
-## Why The Pack Is Layered
+## Why the pack is layered
 
-Each layer has one responsibility:
+Each layer has one job:
 
-- foundational skills define reusable contracts, templates, validators, and naming rules
-- expertise skills apply those contracts inside one bounded responsibility
-- orchestration skills orchestrate multiple expertise skills without restating lower-layer rules
+- **foundational** — reusable contracts, templates, validators, naming rules
+- **expertise** — one bounded application of those contracts
+- **orchestration** — coordination across expertise skills
 
-The layers are conceptual. Every skill is stored under `skills/<skill-name>/` and declares its layer in `metadata.layer`.
+Every skill still lives under `skills/<skill-name>/` and declares its layer in `metadata.layer`.
 
-This keeps dependencies directional and makes the pack easier to extend without duplicating artifact contracts.
+This keeps dependencies simple and avoids duplicated contract logic.
 
-## Why Shared Contracts Matter
+## Why shared contracts matter
 
-Authored and reconstructed artifacts should remain structurally compatible whenever they represent the same artifact type.
+Authored and reconstructed artifacts should stay compatible when they represent the same artifact type.
 
-That is why authored and reconstructed paths route through the same foundational skills whenever they target the same artifact type:
+That is why both paths reuse the same foundational contracts for charter, user stories, requirements, technical design, execution plans, and task tracking.
 
-- `write-charter` for authored charter artifacts
-- `write-user-stories`
-- `write-requirements`
-- `write-technical-design`
-- `write-execution-plan` when planning is needed after either path
-- `write-task-tracking` when plan work is decomposed into local tasks
+If those contracts drift, reconstructed artifacts stop being reliable inputs.
 
-That constraint keeps the system reversible:
+## Why authoring, reconstruction, and planning stay separate
 
-- authored artifacts can guide implementation
-- derived artifacts can guide later changes to existing systems
-- downstream execution skills can consume either skill-pack variant
+These workflows start from different sources of truth:
 
-If the contracts drift, the reverse path stops being useful because reconstructed artifacts no longer behave like first-class inputs.
+- **authoring** — product intent and approved scope
+- **reconstruction** — repository evidence and implemented behavior
+- **planning** — approved specification artifacts
 
-## Why Authoring, Reconstruction, And Planning Stay Separate
+If one skill mixes them, it becomes unclear whether an artifact describes intent, reality, or sequencing.
 
-The workflows serve different sources of truth and should not blur together:
+## Why execution coordination is downstream
 
-- authoring starts from product intent and approved scope
-- reconstruction starts from repository evidence and implemented behavior
-- planning starts from approved specification artifacts and produces coordination outputs
+Execution plans and task tracking are coordination artifacts, not substitutes for requirements or technical design.
 
-If one skill mixes those responsibilities, downstream users cannot tell whether an artifact represents intent, implemented reality, or implementation sequencing.
-
-## Why Execution Coordination Is Downstream
-
-Execution planning and task tracking are downstream coordination artifacts, not substitutes for requirements or technical design.
-
-They stay in this package because they depend on specification artifacts, but they remain expertise-level consumers of foundational contracts instead of becoming their own ad hoc process model.
-
-This separation prevents:
+Keeping them downstream prevents:
 
 - planning from redefining scope
 - task generation from becoming issue-tracker boilerplate
 - technical design from collapsing into sequencing notes
 
-## Why Execution State Is Local
+## Why execution state is local
 
-The execution coordination pack writes plan and task artifacts into the repository because implementation work needs a local, inspectable coordination surface.
-
-That keeps execution state:
+Plans and tasks live in the repo so they stay:
 
 - close to the code
-- reviewable in the same workspace
-- usable without external issue trackers
-- easy for an agent to reload on later turns
+- easy to review
+- reloadable by agents
+- usable without external tooling

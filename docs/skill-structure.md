@@ -1,22 +1,14 @@
-# Skill Structure
+# Skill structure
 
-Use this document when creating or updating a skill directory in this package.
+Use this guide when creating or updating a skill.
 
-## Required Layout
+## Canonical layout
 
-The canonical package layout is:
+Every skill lives under:
 
 - `skills/<skill-name>/`
 
-Every package skill lives under `skills/`. Use `metadata.layer` to declare whether it is foundational, expertise, or orchestration.
-
-Choose one layer only:
-
-- foundational for reusable contracts, templates, validators, naming rules, and provenance-and-traceability rules
-- expertise for one expertise-specific entry skill that applies foundational contracts
-- orchestration for a coordinating skill that depends on expertise skills only
-
-Each skill lives in its own directory:
+Each skill must include:
 
 - `skills/<skill-name>/SKILL.md`
 
@@ -26,13 +18,13 @@ Add these only when needed:
 - `skills/<skill-name>/scripts/`
 - `skills/<skill-name>/references/`
 
-Use:
+Use them like this:
 
-- `assets/` for templates, regexes, or scaffolds the skill directly uses
-- `scripts/` for deterministic validators or helper scripts
-- `references/` for short guidance docs the skill should consult on demand
+- `assets/` — templates, regexes, scaffolds
+- `scripts/` — deterministic validators or helpers
+- `references/` — short optional guidance
 
-## Required Frontmatter
+## Required frontmatter
 
 Every `SKILL.md` must define:
 
@@ -42,16 +34,19 @@ Every `SKILL.md` must define:
 
 Add `metadata.dependencies` when the skill composes other skills or relies on shared contracts.
 
-If a skill creates or validates a skill-pack artifact, prefer an explicit dependency on `document-traceability` unless the skill is purely orchestration-level and delegates provenance stamping to lower-layer skills.
+Expertise skills must also define:
 
-Add `metadata.archetype` and `metadata.domain` only for expertise skills.
+- `metadata.archetype`
+- `metadata.domain`
+
+If a skill creates or validates a package artifact, prefer an explicit dependency on `document-traceability` unless a lower-layer skill handles provenance.
 
 Example:
 
 ```yaml
 ---
 name: example-skill
-description: One-sentence description of the reusable workflow this skill owns.
+description: One-sentence description of the workflow this skill owns.
 metadata:
   layer: foundational
   dependencies:
@@ -60,18 +55,26 @@ metadata:
 ---
 ```
 
-## Dependency Direction Rules
+## Layer rules
 
-- foundational skills must not depend on other skills
-- expertise skills may depend only on foundational skills
-- orchestration skills may depend only on expertise skills
+Choose exactly one layer:
 
-## Validation Expectations
+- **foundational** — reusable contracts, templates, validators, naming, provenance
+- **expertise** — one bounded skill built on foundational contracts
+- **orchestration** — a coordinating skill that depends on expertise skills only
 
-If you add or change a skill:
+Dependency direction is strict:
 
-- verify the `SKILL.md` is internally consistent
-- verify every linked asset, script, or reference path exists
-- run any deterministic validator scripts you introduce
-- verify created artifacts use canonical provenance and the correct `source_artifacts` roles when the skill emits skill-pack artifacts
+- foundational must not depend on other skills
+- expertise may depend only on foundational skills
+- orchestration may depend only on expertise skills
+
+## Validation checklist
+
+When you add or change a skill:
+
+- verify `SKILL.md` is internally consistent
+- verify linked assets, scripts, and references exist
+- run any validator scripts you add
+- verify emitted artifacts use canonical provenance and the correct `source_artifacts` roles
 - keep examples and output paths aligned with package terminology

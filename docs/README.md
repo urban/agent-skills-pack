@@ -1,26 +1,24 @@
-# Agent Skills Spec Pack Docs
+# Docs overview
 
-This directory explains what `@urban/agent-skills-pack` is for, how the layer model works, how provenance and traceability work, and which rules should guide future changes.
+These docs explain what `@urban/agent-skills-pack` owns and how to change it safely.
 
-All package skills live under `../skills/`. A skill's layer is declared in its `metadata.layer` frontmatter.
+Core rules:
 
-Provenance and traceability are core package concepts. Created artifacts should carry canonical frontmatter that records deterministic skill provenance and source-artifact lineage. See [provenance.md](./provenance.md).
+- all skills live under `../skills/`
+- every skill declares one layer in `metadata.layer`
+- provenance and traceability are part of the artifact contract
+- authored and reconstructed artifacts should share the same structure when they represent the same artifact type
 
-Start here:
+## Read first
 
-- [purpose.md](./purpose.md)
-  What problem the skill pack solves and what artifacts it owns.
-- [provenance.md](./provenance.md)
-  Canonical artifact provenance, source-artifact lineage, and validation expectations.
-- [design-rationale.md](./design-rationale.md)
-  Why the pack separates foundational contracts, expertise entry skills, and orchestration skills.
-- [development-principles.md](./development-principles.md)
-  The rules for extending the pack without breaking reversibility, provenance, traceability, or layer boundaries.
-- [skill-expertise-selection.md](./skill-expertise-selection.md)
-  When a new skill should exist and which layer it should belong to.
-- [skill-structure.md](./skill-structure.md)
-  How to structure a skill directory and `SKILL.md` under `skills/`.
-- [composability-checklist.md](./composability-checklist.md)
-  Final checks for reuse, boundaries, contracts, and agent usability.
-- [progressive-disclosure.md](./progressive-disclosure.md)
-  How to split package guidance across `AGENTS.md`, `SKILL.md`, and supporting resources.
+- [purpose.md](./purpose.md) — scope and goals
+- [provenance.md](./provenance.md) — frontmatter, lineage, validation
+- [design-rationale.md](./design-rationale.md) — why the layer model is strict
+- [development-principles.md](./development-principles.md) — rules for package changes
+
+## Read by task
+
+- [skill-expertise-selection.md](./skill-expertise-selection.md) — decide whether a skill should exist and which layer it belongs to
+- [skill-structure.md](./skill-structure.md) — create or update a skill directory and `SKILL.md`
+- [composability-checklist.md](./composability-checklist.md) — final review before shipping a skill
+- [progressive-disclosure.md](./progressive-disclosure.md) — split guidance across `AGENTS.md`, `SKILL.md`, and support files

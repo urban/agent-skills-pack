@@ -1,31 +1,30 @@
-# Skill Expertise Selection
+# Skill expertise selection
 
-Use this document when deciding whether a new skill should exist and which layer it belongs in.
+Use this guide when deciding whether a new skill should exist and which layer it belongs to.
 
-## Create A New Skill Only When Needed
+## Create a new skill only when needed
 
-Create a new skill only when at least one of these is true:
+Create a new skill only if at least one of these is true:
 
 - a new artifact needs its own stable contract or validator
-- an orchestration skill is reusable across multiple repositories or multiple parent skills
-- a current skill is doing more than one job and should be split
-- a missing layer prevents the pack from staying reversible or composable
+- a reusable orchestration is needed across repositories or parent skills
+- an existing skill is doing more than one job and should be split
+- a missing layer would make the pack less reversible or less composable
 
 Do not create a new skill just to hold:
 
 - project-specific content
 - one-off analysis
-- logic that belongs inside an existing skill
+- logic that belongs in an existing skill
 
-## Choose One Layer
+## Choose one layer
 
-Every skill should fit one clear layer.
-
-All skills are stored under `skills/<skill-name>/`. The chosen layer is declared in `metadata.layer`.
+Every skill belongs to exactly one layer and lives under `skills/<skill-name>/`.
+Declare the layer in `metadata.layer`.
 
 ### Foundational
 
-Use this layer when the pack needs a shared artifact contract, template, naming rule, or validator.
+Use this layer for shared contracts, templates, naming, validators, or provenance rules.
 
 Examples:
 
@@ -54,16 +53,16 @@ Examples:
 - `execution-planning`
 - `task-generation`
 
-Expertise skills should:
+Expertise skills must:
 
-- own one output or one bounded analysis/planning responsibility
+- own one output or one bounded analysis/planning job
 - depend only on foundational skills
 - declare `metadata.archetype` and `metadata.domain`
 - keep optional routing guidance in local `references/`
 
 ### Orchestration
 
-Use this layer when the skill coordinates multiple expertise entry skills into one larger flow.
+Use this layer when the skill coordinates multiple expertise skills into one larger flow.
 
 Examples:
 
@@ -71,26 +70,26 @@ Examples:
 - `specification-to-execution`
 - `specification-reconstruction`
 
-Orchestration skills should:
+Orchestration skills must:
 
 - depend only on expertise skills
 - preserve one end-to-end flow
 - avoid restating foundational contract rules
 
-## Selection Checks
+## Selection checks
 
-Before creating the skill, confirm:
+Before creating a skill, confirm that:
 
 - it owns one clear output or coordination outcome
 - it does not redefine adjacent artifacts
-- it can declare its dependencies instead of inlining their rules
+- it can declare dependencies instead of inlining their rules
 - it fits exactly one layer
 
-## Split Signals
+## Split signals
 
 Split a skill instead of expanding it when:
 
-- it both defines a reusable contract and performs expertise-specific execution
+- it both defines a reusable contract and performs expertise execution
 - it needs dependencies from both foundational and orchestration layers
 - it tries to own multiple artifact types
 - it mixes authoring, reconstruction, and planning sources of truth

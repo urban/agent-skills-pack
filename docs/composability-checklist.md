@@ -1,73 +1,68 @@
-# Composability Checklist
+# Composability checklist
 
-Use this document before finalizing a new or updated skill.
+Use this checklist before finalizing a skill.
 
-## Runtime Composition Checks
+## Runtime composition
 
-Confirm:
+Confirm that:
 
-- the skill can be selected at runtime from its `description`, especially its `Use when ...` trigger
+- the `description` makes the skill easy to select at runtime
 - runtime use does not depend on `metadata.dependencies`
-- the skill has clear boundaries without tightly coupling itself to one workflow
-- another agent can choose this skill without already knowing the rest of the package graph
+- the skill has clear boundaries
+- another agent could choose it without knowing the full package graph
 
-Prefer loose composition through strong descriptions, bounded outputs, and explicit contracts.
+Prefer loose composition through good descriptions, bounded outputs, and explicit contracts.
 
-Avoid using install-time dependencies as runtime routing hints.
+## Boundaries
 
-## Boundary Checks
-
-Confirm the skill keeps these responsibilities separate:
+Confirm that:
 
 - foundational skills define shared contracts and validation
-- expertise skills apply those contracts within one bounded responsibility
-- orchestration skills orchestrate expertise entry skills without restating contract rules
+- expertise skills apply those contracts within one bounded job
+- orchestration skills coordinate expertise skills without restating contract rules
+- planning does not redefine requirements
+- requirements do not become technical design
+- reconstruction does not invent intent
 
-Planning must not redefine requirements.
-Requirements must not become technical design.
-Reconstruction must not silently invent intent.
+## Contracts
 
-## Contract Checks
-
-If the skill participates in a shared artifact type, confirm:
+If the skill works with a shared artifact type, confirm that:
 
 - section order matches the canonical contract
-- naming rules match the canonical contract
-- validation rules match the canonical contract
-- canonical provenance and `source_artifacts` lineage are applied when the artifact is created
-- uncertainty handling is explicit where reconstruction is involved
+- naming matches the canonical contract
+- validation matches the canonical contract
+- canonical provenance and `source_artifacts` are applied on create
+- uncertainty is explicit for reconstruction
 
-Prefer building or reusing a `write-*` contract skill instead of duplicating rules.
+Prefer reusing a `write-*` skill over copying its rules.
 
-## Reuse Checks
+## Reuse
 
-Confirm:
+Confirm that:
 
-- the foundational skill has one clear responsibility
+- the skill has one clear responsibility
 - the owned output is explicit
-- install-time dependencies are declared instead of inlined when packaging truly requires them
-- another orchestration could reuse it without modification
+- install-time dependencies are declared when packaging requires them
+- another orchestration could reuse the skill unchanged
 
-Do not use `metadata.dependencies` to force runtime composition. Runtime composition should come from skill descriptions and clear scope.
-
-## Agent-Use Checks
+## Agent use
 
 Prefer:
 
 - deterministic filenames
-- canonical artifact frontmatter when the skill creates artifacts
+- canonical frontmatter for created artifacts
 - explicit headings
 - concise instructions
 - direct workflow order
 - local validation commands
 
-Avoid vague prose, hidden assumptions, and output formats that require an LLM to infer structure.
+Avoid vague prose, hidden assumptions, and formats that require structure inference.
 
-## Reconstruction Checks
+## Reconstruction
 
-For reconstruction or inference-heavy skills, confirm:
+For reconstruction-heavy skills, confirm that:
 
-- code, tests, config, and repository structure are treated as primary evidence
-- implemented reality is described instead of imagined original intent
-- weakly supported conclusions are marked explicitly
-- compatibility with the authored artifact contract is preserved where the artifact type is shared
+- code, tests, config, and repo structure are primary evidence
+- implemented reality is described instead of imagined intent
+- weak conclusions are marked explicitly
+- compatibility with the authored contract is preserved when the artifact type is shared

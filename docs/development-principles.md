@@ -1,26 +1,29 @@
-# Development Principles
+# Development principles
 
-Changes to this skill pack should follow these principles.
+Use these principles when changing the pack.
 
-## Preserve The Layer Model
+## Preserve the layer model
 
-Every skill should fit exactly one layer:
+Every skill must fit exactly one layer:
 
 - foundational
 - expertise
 - orchestration
 
-Store every skill under `skills/<skill-name>/` and declare the layer with `metadata.layer`.
+Store each skill under `skills/<skill-name>/` and declare its layer in `metadata.layer`.
 
-Split mixed responsibilities instead of adding exceptions to the dependency graph.
+Split mixed responsibilities instead of bending the dependency graph.
 
-## Preserve Reversibility
+## Preserve reversibility
 
-Any new authored artifact should have a clear story for reconstruction, or an explicit reason it is author-only.
+Any new authored artifact should either:
 
-Do not add authored-only structure casually. Every one-way artifact makes the system less reusable.
+- have a reconstruction path, or
+- state clearly why it is author-only
 
-## Keep Contracts Stable
+Do not add one-way structure casually.
+
+## Keep contracts stable
 
 Canonical artifact contracts are the center of the pack.
 
@@ -28,65 +31,53 @@ Prefer:
 
 - stable section order
 - stable naming
-- explicit validation rules
-- explicit uncertainty handling for reconstructed outputs
+- explicit validation
+- explicit uncertainty for reconstructed outputs
 
-Avoid silent contract drift between create and derive paths.
+Avoid silent drift between create and derive paths.
 
-## Keep Pack Boundaries Clear
+## Keep boundaries clear
 
-Do not blur these responsibilities:
+Do not blur these roles:
 
-- foundational skills define shared artifact contracts
-- expertise skills own one bounded authoring, planning, or reconstruction responsibility
-- orchestration skills orchestrate expertise entry skills only
+- foundational skills define shared contracts
+- expertise skills own one bounded job
+- orchestration skills coordinate expertise skills only
 
-If a skill mixes those roles, the outputs get harder to trust and harder to compose.
+## Keep dependency direction strict
 
-## Keep Dependency Direction Strict
-
-Follow the package dependency rules:
+Follow these rules:
 
 - foundational -> no required skill dependencies
-- expertises -> foundational only
-- orchestrations -> expertise only
+- expertise -> foundational only
+- orchestration -> expertise only
 
-If a skill needs behavior from a lower layer, declare the dependency. If it needs guidance from another package or an optional follow-on path, prefer a local reference doc over a required dependency.
+Prefer local references over required dependencies for optional follow-on guidance.
 
-## Optimize For Agent Use
+## Optimize for agent use
 
-Artifacts should be easy for an implementation agent to load, compare, and act on.
+Artifacts should be easy for agents to load and act on.
 
 Prefer:
 
 - deterministic filenames
-- canonical provenance and source-artifact lineage on created artifacts
-- explicit section headings
+- canonical provenance and `source_artifacts`
+- explicit headings
 - concise language
-- direct traceability between artifacts
+- direct traceability
 
-Avoid prose that sounds good to humans but hides the actual contract.
+## Prefer explicit uncertainty
 
-If a skill creates a skill-pack artifact, make provenance and traceability explicit. Use the shared `document-traceability` contract or a foundational contract that requires its canonical frontmatter and validation.
+Reconstruction skills should mark uncertainty instead of inventing intent.
 
-## Prefer Explicit Uncertainty
-
-Reconstruction skills should mark uncertainty instead of inventing original intent.
-
-A precise unknown is more useful than a confident guess.
-
-## Narrow Responsibilities
+## Keep responsibilities narrow
 
 Each skill should do one thing well.
 
-Prefer adding a small composable foundational contract or expertise skill over making one orchestration skill absorb unrelated responsibilities.
-
-## Keep Repository Workflow In Mind
-
-The pack is meant to be used inside a live repository with local planning and task artifacts.
+## Preserve repository workflow
 
 Changes should preserve:
 
-- compatibility with repository-based review
-- easy diffing of generated artifacts
+- easy review in the repo
+- clean diffs
 - straightforward reuse by agents

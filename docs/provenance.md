@@ -1,42 +1,37 @@
-# Provenance And Traceability
+# Provenance and traceability
 
-Provenance and traceability are core concepts in `@urban/agent-skills-pack`.
+Provenance and traceability are core parts of `@urban/agent-skills-pack`.
 
-The pack is designed to make specification artifacts reusable in both directions:
-
-- from intent to implementation
-- from an implemented system back to reusable specification artifacts
-
-That only works when every created artifact carries deterministic metadata that explains:
+The pack only stays reversible when every created artifact says:
 
 - what produced it
-- which supporting skills participated
-- which upstream artifacts it depends on
+- which skills participated
+- which upstream artifacts it used
 - when it was created and updated
 
-## Why Provenance And Traceability Matter
+## Why this matters
 
 Without canonical provenance and lineage:
 
 - artifacts cannot be validated consistently
-- downstream skills cannot reliably determine whether inputs are complete
+- downstream skills cannot reliably check inputs
 - reviewers cannot reconstruct how a document was produced
-- reversibility degrades because artifact relationships become implicit or conversational
-- plan and task artifacts lose their link back to approved scope and design
+- reversibility degrades because relationships become implicit
+- plans and tasks lose their link to approved scope and design
 
-In this pack, provenance and traceability are not optional annotations. They are part of the artifact contract.
+In this pack, provenance and traceability are part of the artifact contract.
 
-## The Foundational Skill
+## Foundational skill
 
-The foundational skill that owns this contract is:
+This contract is owned by:
 
 - `skills/document-traceability/SKILL.md`
 
 Use it whenever a skill creates or validates a charter, user stories, requirements, technical design, execution plan, or task-tracking artifact.
 
-## Canonical Frontmatter
+## Canonical frontmatter
 
-Created skill-pack artifacts must begin with canonical frontmatter:
+Created artifacts must begin with this shape:
 
 ```yaml
 ---
@@ -58,56 +53,40 @@ source_artifacts:
 
 Use UTC ISO 8601 timestamps with a trailing `Z`.
 
-Keep two concepts separate:
+Keep these separate:
 
-- `generated_by`
-  How the artifact was produced.
-- `source_artifacts`
-  Which approved or inspected upstream artifacts it used.
+- `generated_by` — how the artifact was produced
+- `source_artifacts` — which upstream artifacts shaped it
 
-## Required Lineage By Artifact Kind
+## Required lineage by artifact kind
 
 Use exactly these `source_artifacts` roles:
 
-- `charter`
-  - `source_artifacts: {}`
-- `user-stories`
-  - `charter`
-- `requirements`
-  - `charter`
-  - `user_stories`
-- `technical-design`
-  - `charter`
-  - `user_stories`
-  - `requirements`
-- `plan`
-  - `charter`
-  - `user_stories`
-  - `requirements`
-  - `technical_design`
-- `tasks`
-  - `plan`
+- `charter` -> `{}`
+- `user-stories` -> `charter`
+- `requirements` -> `charter`, `user_stories`
+- `technical-design` -> `charter`, `user_stories`, `requirements`
+- `plan` -> `charter`, `user_stories`, `requirements`, `technical_design`
+- `tasks` -> `plan`
 
-Do not add extra lineage roles casually. Determinism matters.
+Do not add extra lineage roles casually.
 
-## Provenance Assembly Rules
+## Provenance assembly rules
 
-Build provenance from the producing branch only.
-
-That means:
+Build provenance from the producing branch only:
 
 - include the root orchestration skill
 - include the direct producing skill
 - include participating foundational skills from that branch
-- exclude sibling expertise branches that did not participate in the specific artifact
+- exclude sibling expertise branches that did not participate
 
-Deterministic traversal order is:
+Traversal order:
 
 1. root skill first
-2. then depth-first traversal in declared dependency order
-3. with duplicates removed from `skills_used`
+2. then depth-first in declared dependency order
+3. remove duplicates from `skills_used`
 
-`skill_graph` should be derived from the same participating set of skills.
+Derive `skill_graph` from the same participating set.
 
 Fail closed on:
 
@@ -116,21 +95,21 @@ Fail closed on:
 - malformed metadata
 - dependency cycles
 
-## Workflow Expectation
+## Workflow expectation
 
 When creating an artifact:
 
 1. identify the artifact kind
 2. identify the root workflow and direct producing skill
-3. collect the producing branch skill dependencies
+3. collect dependencies from the producing branch
 4. stamp canonical frontmatter before final validation
 5. record exactly the required `source_artifacts` roles
 6. run the shared provenance validator
-7. do not emit the artifact if provenance validation fails
+7. do not emit the artifact if validation fails
 
 ## Validation
 
-The shared validator is:
+Shared validator:
 
 - `skills/document-traceability/scripts/validate_frontmatter_provenance.sh`
 
@@ -140,31 +119,31 @@ Usage:
 bash skills/document-traceability/scripts/validate_frontmatter_provenance.sh <artifact-kind> <artifact-file>
 ```
 
-Most `write-*` validators in the pack already invoke this shared provenance validator.
+Most `write-*` validators already call it.
 
-## Where This Should Be Enforced
+## Where this applies
 
-Provenance and traceability should be applied across:
+Apply provenance and traceability to:
 
-- authored specification artifacts under `.specs/<project-name>/`
-- execution coordination artifacts under `.specs/<project-name>/`
-- reconstructed research artifacts under `.specs/<project-name>-research/` whenever they are created through the pack's canonical artifact contracts
+- authored artifacts under `.specs/<project-name>/`
+- execution artifacts under `.specs/<project-name>/`
+- reconstructed artifacts under `.specs/<project-name>-research/` when created through the pack's canonical contracts
 
 If a skill creates one of these artifacts, it should either:
 
 - depend on `document-traceability`, or
-- use a foundational contract that explicitly requires the canonical frontmatter and validator
+- use a foundational contract that already requires the canonical frontmatter and validator
 
 Prefer the explicit dependency when the skill itself stamps or validates provenance.
 
-## Design Intent
+## Design intent
 
-This repo optimizes for reversible specification systems. Provenance and traceability are what let a reviewer or another agent answer:
+A valid artifact should answer:
 
-- Where did this artifact come from?
+- Where did this come from?
 - Which workflow created it?
 - Which shared contracts shaped it?
-- Which upstream artifacts did it depend on?
-- Can this artifact be trusted as a valid input for the next stage?
+- Which upstream artifacts did it use?
+- Can the next skill trust it as input?
 
-If those questions cannot be answered from the artifact itself, the pack has lost one of its core guarantees.
+If it cannot, the pack has lost one of its core guarantees.

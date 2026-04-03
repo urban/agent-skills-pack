@@ -1,41 +1,46 @@
 # Purpose
 
-`@urban/agent-skills-pack` exists to make software specifications usable in both directions:
+`@urban/agent-skills-pack` makes software specification artifacts usable in both directions:
 
 - from product intent to implementation
-- from an implemented codebase back to reusable specification artifacts
+- from an implemented system back to reusable specification artifacts
 
-It does that with a layered skill system stored under `skills/`:
+## What the pack owns
 
-- foundational skills
-  Shared contracts, naming rules, templates, and validators.
-- expertise skills
-  Authoring, reconstruction, and planning entry points that apply those contracts.
-- orchestration skills
-  Orchestration across multiple expertise skills.
+The pack covers skills for:
 
-Each skill declares its layer with `metadata.layer`.
+- charter
+- user stories
+- requirements
+- technical design
+- execution plan
+- task tracking
 
-## What The Pack Owns
+Skills live under `skills/` and fit one layer:
 
-The pack focuses on the skills needed to create, reconstruct, and operationalize specification artifacts:
+- **foundational** — shared contracts, templates, validators, naming, provenance
+- **expertise** — one bounded authoring, reconstruction, design, or planning job
+- **orchestration** — multi-step flows across expertise skills
 
-- canonical contracts for charter, user stories, requirements, technical design, execution plans, and task tracking
-- canonical provenance and source-artifact lineage for created artifacts
-- authoring workflows for new work
-- derivation workflows for existing systems
-- planning workflows that turn an approved spec pack into implementable work
-- orchestration workflows that assemble coherent multi-artifact flows
+Each skill declares its layer in `metadata.layer`.
 
-## Why This Matters
+## Why it matters
 
-Without stable specification artifacts, an implementation agent has to infer missing product and architecture context from partial inputs. That usually causes:
+Without stable artifacts, agents infer too much from prompts and repository clues. That leads to:
 
 - scope drift
 - architecture drift
-- weaker traceability from intent to code
-- weaker follow-on work on existing systems
+- weak traceability
+- weaker follow-on work
 
-This pack reduces that ambiguity by making artifact contracts explicit, reusable, traceable, and machine-friendly across both the authoring and reconstruction paths.
+This pack reduces that ambiguity by making contracts, provenance, and lineage explicit.
 
-Provenance and traceability are part of the contract, not optional add-ons. Created artifacts should explain both how they were produced and which upstream artifacts shaped them so later review, reconstruction, planning, and implementation can trust the chain of custody.
+## Core guarantee
+
+Provenance and source-artifact lineage are part of the artifact contract.
+
+Each created artifact should show:
+
+- how it was produced
+- which upstream artifacts shaped it
+- where uncertainty remains

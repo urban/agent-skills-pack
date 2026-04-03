@@ -1,198 +1,179 @@
-# Agent Skills for Software Development
+# Agent skills for software development
 
-This package contains a contract-first skill pack for software specification work.
+`@urban/agent-skills-pack` is a contract-first skill pack for software specification work.
 
-It provides:
+It supports both directions:
 
-- foundational skills for shared artifact contracts, templates, validators, naming, and provenance-and-traceability rules
-- expertise skills that apply those contracts within one authoring, planning, design, or reconstruction responsibility
-- orchestration skills that orchestrate multiple expertise skills into a full specification flow
+- from product intent to implementation
+- from an existing codebase back to reusable specification artifacts
 
-A core package concept is artifact provenance and traceability. Every created skill-pack artifact should carry canonical frontmatter that records:
+## Package model
 
-- when it was created and last updated
-- which workflow and producing skill generated it
-- which skill branch participated in producing it
-- which upstream source artifacts it depends on
+The pack has three layers:
 
-The foundational `document-traceability` skill defines that contract so artifact lineage stays deterministic, machine-checkable, and reversible across authored, planned, and reconstructed outputs.
+- **Foundational** — shared contracts, templates, validators, naming, provenance
+- **Expertise** — one bounded authoring, reconstruction, design, or planning job
+- **Orchestration** — multi-step flows across expertise skills
 
-## Package Boundary
+Each skill declares its layer in `metadata.layer`.
 
-`@urban/agent-skills-pack` owns specification artifacts and the workflows that create or reconstruct them.
+## Why it exists
 
-## Canonical Layout
+Without stable artifacts, agents infer too much from prompts and repository clues. That leads to:
 
-- `skills/`
-  All package skills. Each skill declares its layer in `metadata.layer`.
-- `docs/`
-  Package guidance for purpose, boundaries, layering, and skill authoring.
+- scope drift
+- architecture drift
+- weak traceability
+- weaker follow-on work
 
-Each skill keeps its own `assets/`, `scripts/`, and `references/` directories under `skills/<skill-name>/`.
+This pack makes artifact structure, provenance, and lineage explicit.
 
-Dependency direction for the layer model:
+## Package boundary
 
-- foundational skills do not depend on other skills
-- expertise skills may depend only on foundational skills
-- orchestration skills may depend only on expertise skills
+The package owns specification artifacts and the workflows that create, reconstruct, and operationalize them:
 
-## Current Skill Inventory
+- charter
+- user stories
+- requirements
+- technical design
+- execution plan
+- task tracking
+
+## Repository layout
+
+- `skills/` — all package skills
+- `docs/` — package guidance
+
+Each skill lives at `skills/<skill-name>/SKILL.md` and may also include:
+
+- `assets/` — templates and scaffolds
+- `scripts/` — validators and helpers
+- `references/` — optional guidance
+
+## Layer rules
+
+Dependency direction is strict:
+
+- foundational -> no required skill dependencies
+- expertise -> foundational only
+- orchestration -> expertise only
+
+Reversibility depends on authored and reconstructed artifacts sharing the same foundational contracts for the same artifact type.
+
+## Current skill inventory
 
 ### Foundational
 
-- `artifact-naming`
-  Deterministic artifact-name resolution reused across authored and planning artifacts.
-- `document-traceability`
-  Canonical artifact frontmatter, deterministic provenance, source-artifact lineage, and shared validation.
-- `write-charter`
-  Canonical charter artifact contract, template, and validator.
-- `write-user-stories`
-  Canonical user-story sentence contract.
-- `write-requirements`
-  Canonical requirements artifact contract, numbering taxonomy, template, and validator.
-- `write-technical-design`
-  Canonical technical-design artifact contract, template, and validator.
-- `write-execution-plan`
-  Canonical execution-plan contract, template, and validator.
-- `write-task-tracking`
-  Canonical task-tracking contract, template, and validator.
-- `gray-box-modules`
-  Canonical bounded-capability contract for reusable module seams in technical design artifacts.
-- `visual-diagramming`
-  Canonical diagram-selection guidance for Mermaid-backed visual explanations.
-- `effect-technical-design`
-  Effect-specific technical-design guidance for TypeScript systems.
+- `artifact-naming` — deterministic artifact naming
+- `document-traceability` — canonical provenance and source-artifact lineage
+- `write-charter` — charter contract, template, validator
+- `write-user-stories` — user story sentence contract
+- `write-requirements` — requirements contract, numbering, template, validator
+- `write-technical-design` — technical design contract, template, validator
+- `write-execution-plan` — execution plan contract, template, validator
+- `write-task-tracking` — task tracking contract, template, validator
+- `gray-box-modules` — bounded capability contract for technical design artifacts
+- `visual-diagramming` — diagram selection guidance for Mermaid-backed visuals
+- `effect-technical-design` — Effect-specific technical design guidance for TypeScript systems
 
 ### Expertise
 
-- `charter`
-  Authoring expertise skill for `docs/specs/<project-name>/charter.md`.
-- `user-story-authoring`
-  Authoring expertise skill for `docs/specs/<project-name>/user-stories.md`.
-- `requirements`
-  Authoring expertise skill for `docs/specs/<project-name>/requirements.md`.
-- `technical-design`
-  Design expertise skill for `docs/specs/<project-name>/technical-design.md`.
-- `execution-planning`
-  Planning expertise skill for `docs/plans/<project-name>-plan.md`.
-- `task-generation`
-  Planning expertise skill for `docs/tasks/<project-name>-tasks.md`.
-- `derive-charter`
-  Reconstruction expertise skill for `docs/research/<project-name>/charter.md` by default.
-- `derive-user-stories`
-  Reconstruction expertise skill for `docs/research/<project-name>/user-stories.md` by default.
-- `derive-requirements`
-  Reconstruction expertise skill for `docs/research/<project-name>/requirements.md` by default.
-- `derive-technical-design`
-  Reconstruction expertise skill for `docs/research/<project-name>/technical-design.md` by default.
+- `charter` — writes `.specs/<project-name>/charter.md`
+- `user-story-authoring` — writes `.specs/<project-name>/user-stories.md`
+- `requirements` — writes `.specs/<project-name>/requirements.md`
+- `technical-design` — writes `.specs/<project-name>/technical-design.md`
+- `execution-planning` — writes `.specs/<project-name>/execution-plan.md`
+- `task-generation` — writes `.specs/<project-name>/execution-tasks.md`
+- `derive-charter` — reconstructs `.specs/<project-name>-research/charter.md` by default
+- `derive-user-stories` — reconstructs `.specs/<project-name>-research/user-stories.md` by default
+- `derive-requirements` — reconstructs `.specs/<project-name>-research/requirements.md` by default
+- `derive-technical-design` — reconstructs `.specs/<project-name>-research/technical-design.md` by default
 
-### Orchestrations
+### Orchestration
 
-- `specification-authoring`
-  Orchestrates `charter -> user-story-authoring -> requirements -> technical-design`.
-- `specification-to-execution`
-  Orchestrates `execution-planning -> task-generation` from approved specification artifacts.
-- `specification-reconstruction`
-  Orchestrates `derive-charter -> derive-user-stories -> derive-requirements -> derive-technical-design`.
+- `specification-authoring` — `charter -> user-story-authoring -> requirements -> technical-design`
+- `specification-to-execution` — `execution-planning -> task-generation`
+- `specification-reconstruction` — `derive-charter -> derive-user-stories -> derive-requirements -> derive-technical-design`
 
-All listed skills are stored at `skills/<skill-name>/SKILL.md`.
+## Artifact flows
 
-## Layer Model
-
-Each layer has one job:
-
-- foundational
-  Define reusable contracts. No required skill dependencies.
-- expertise
-  Apply one foundational contract set inside one bounded responsibility.
-- orchestration
-  Coordinate multiple expertise skills without restating foundational rules.
-
-Reversibility depends on authoring and reconstruction expertise skills targeting the same foundational contracts for shared artifact types.
-
-Provenance and traceability are part of that reversibility contract. Artifacts are only safely reusable when they carry canonical provenance and explicit `source_artifacts` lineage instead of relying on conversational memory or implicit workflow context.
-
-## Artifact Flow
-
-Greenfield path:
+### Greenfield
 
 ```text
 idea / feature request
   -> specification-authoring
-    -> docs/specs/<project-name>/charter.md
-    -> docs/specs/<project-name>/user-stories.md
-    -> docs/specs/<project-name>/requirements.md
-    -> docs/specs/<project-name>/technical-design.md
+    -> .specs/<project-name>/charter.md
+    -> .specs/<project-name>/user-stories.md
+    -> .specs/<project-name>/requirements.md
+    -> .specs/<project-name>/technical-design.md
       -> specification-to-execution
-        -> docs/plans/<project-name>-plan.md
-        -> docs/tasks/<project-name>-tasks.md
-          -> implementation with Codex
+        -> .specs/<project-name>/execution-plan.md
+        -> .specs/<project-name>/execution-tasks.md
+          -> implementation
 ```
 
-Reverse-engineering path:
+### Reconstruction
 
 ```text
 existing codebase
   -> specification-reconstruction
-    -> docs/research/<project-name>/charter.md
-    -> docs/research/<project-name>/user-stories.md
-    -> docs/research/<project-name>/requirements.md
-    -> docs/research/<project-name>/technical-design.md
+    -> .specs/<project-name>-research/charter.md
+    -> .specs/<project-name>-research/user-stories.md
+    -> .specs/<project-name>-research/requirements.md
+    -> .specs/<project-name>-research/technical-design.md
       -> specification-to-execution or execution-planning
-        -> docs/plans/<project-name>-plan.md
-        -> docs/tasks/<project-name>-tasks.md
-          -> follow-on implementation with Codex
+        -> .specs/<project-name>/execution-plan.md
+        -> .specs/<project-name>/execution-tasks.md
+          -> follow-on implementation
 ```
 
-Typical greenfield workflow:
+## Provenance and traceability
 
-1. Use `specification-authoring` to create the authored spec pack.
-   Outputs `docs/specs/<project-name>/charter.md`, `docs/specs/<project-name>/user-stories.md`, `docs/specs/<project-name>/requirements.md`, and `docs/specs/<project-name>/technical-design.md`.
-   When authored technical design identifies a meaningful bounded capability, express it with the package's foundational `gray-box-modules` contract inside the design artifact.
-2. Use `specification-to-execution` when you want an execution plan and local tasks created from the approved spec pack.
-3. Use `execution-planning` or `task-generation` directly only when refreshing one downstream artifact instead of the full execution-coordination flow.
-4. Implement from the combination of user stories, requirements, technical design, plan, and tasks.
+Created artifacts should use the canonical frontmatter from `document-traceability`.
 
-Typical reverse-engineering workflow:
+That frontmatter records:
 
-1. Use `specification-reconstruction` against an existing codebase.
-   By default it writes `docs/research/<project-name>/charter.md`, `docs/research/<project-name>/user-stories.md`, `docs/research/<project-name>/requirements.md`, and `docs/research/<project-name>/technical-design.md`, but expertise skills may honor explicit user-provided destinations.
-   When evidence shows a real bounded capability, let `derive-technical-design` apply the package's foundational `gray-box-modules` contract and mark uncertainty explicitly when the seam is weak.
-2. Review the reconstructed charter, user stories, requirements, and technical design.
-3. Use `specification-to-execution` if you want the full execution-coordination pack, or `execution-planning` if you only need a fresh plan for follow-on work.
-4. Use `task-generation` directly only when an approved execution plan already exists and only local task tracking needs to be refreshed.
+- artifact name
+- creation and update timestamps
+- root workflow and producing skill
+- participating skills in the producing branch
+- upstream artifacts used to create the document
 
-## Traceability And Provenance
+Keep these separate:
 
-Created skill-pack artifacts should begin with canonical frontmatter defined by `document-traceability`, including:
+- `generated_by` — how the artifact was produced
+- `source_artifacts` — which inputs shaped it
 
-- `name`
-- `created_at`
-- `updated_at`
-- `generated_by`
-  - `root_skill`
-  - `producing_skill`
-  - `skills_used`
-  - `skill_graph`
-- `source_artifacts`
+Typical lineage:
 
-Use `generated_by` for skill provenance and `source_artifacts` for input lineage. Keep those concerns separate.
+- charter -> `{}`
+- user stories -> `charter`
+- requirements -> `charter`, `user_stories`
+- technical design -> `charter`, `user_stories`, `requirements`
+- plan -> `charter`, `user_stories`, `requirements`, `technical_design`
+- tasks -> `plan`
 
-Examples:
+See [`docs/provenance.md`](./docs/provenance.md) for the full contract.
 
-- charter uses `source_artifacts: {}`
-- user stories use `source_artifacts.charter`
-- requirements use `source_artifacts.charter` and `source_artifacts.user_stories`
-- technical design uses `source_artifacts.charter`, `source_artifacts.user_stories`, and `source_artifacts.requirements`
-- plan uses `source_artifacts.charter`, `source_artifacts.user_stories`, `source_artifacts.requirements`, and `source_artifacts.technical_design`
-- tasks use `source_artifacts.plan`
+## Typical workflows
 
-For the detailed contract, see [`docs/provenance.md`](./docs/provenance.md).
+### Author a new spec pack
 
-## Authoring Guidance
+1. Run `specification-authoring`.
+2. Review the charter, user stories, requirements, and technical design.
+3. Run `specification-to-execution` if you want a plan and tasks.
+4. Implement from the approved artifacts.
 
-Read these docs when changing the pack:
+### Reconstruct a spec pack from code
 
+1. Run `specification-reconstruction`.
+2. Review the reconstructed artifacts and mark uncertainty where evidence is weak.
+3. Run `specification-to-execution` or `execution-planning` for follow-on work.
+4. Use `task-generation` only when a plan already exists and tasks need refresh.
+
+## Docs for maintainers
+
+- [`docs/README.md`](./docs/README.md)
 - [`docs/purpose.md`](./docs/purpose.md)
 - [`docs/provenance.md`](./docs/provenance.md)
 - [`docs/design-rationale.md`](./docs/design-rationale.md)
@@ -202,12 +183,10 @@ Read these docs when changing the pack:
 - [`docs/composability-checklist.md`](./docs/composability-checklist.md)
 - [`docs/progressive-disclosure.md`](./docs/progressive-disclosure.md)
 
-## Recommended Prompts
-
-Examples:
+## Example prompts
 
 - `Use specification-authoring to define the spec for a new feature in @urban/dotai.`
 - `Use specification-to-execution to turn the approved remote-skill-installation spec into an execution plan and local tasks.`
-- `Use execution-planning to refresh docs/plans/remote-skill-installation-plan.md from the approved spec pack.`
-- `Use task-generation to break docs/plans/remote-skill-installation-plan.md into local tasks.`
+- `Use execution-planning to refresh .specs/remote-skill-installation/execution-plan.md from the approved spec pack.`
+- `Use task-generation to break .specs/remote-skill-installation/execution-plan.md into local tasks.`
 - `Use specification-reconstruction to derive the missing spec from this codebase.`
