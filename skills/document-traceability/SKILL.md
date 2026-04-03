@@ -53,8 +53,8 @@ Use `source_artifacts: {}` when the active orchestration workflow requires an em
 ## Source Artifact Lineage Field
 
 - `source_artifacts` records the upstream artifact paths required by the active orchestration workflow.
-- This skill defines the field shape and validation expectations for `source_artifacts`, but not the canonical role map for each workflow.
-- Orchestration owns which lineage roles must be present for each artifact in that workflow.
+- This skill defines the field shape and validation expectations for `source_artifacts`, but not the canonical artifact-type map for each workflow.
+- Orchestration owns which source artifact-types must be present for each artifact in that workflow.
 
 ## Workflow
 
@@ -63,7 +63,7 @@ Use `source_artifacts: {}` when the active orchestration workflow requires an em
 3. Walk the producing skill branch from `SKILL.md` metadata dependencies only.
 4. Build `skills_used` in deterministic traversal order with duplicates removed.
 5. Build `skill_graph` from the same participating skills.
-6. Record the `source_artifacts` roles required by the active orchestration workflow.
+6. Record the `source_artifacts` artifact-type keys required by the active orchestration workflow.
 7. Stamp canonical frontmatter before final validation.
 8. Validate with [`scripts/validate_frontmatter_provenance.sh`](./scripts/validate_frontmatter_provenance.sh).
 9. If validation fails, stop and do not emit the artifact.

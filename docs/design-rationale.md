@@ -6,13 +6,13 @@ This pack is contract-first because the same artifact shapes must work across au
 
 Each layer has one job:
 
-- **foundational** — reusable contracts, templates, validators, naming rules
-- **expertise** — one bounded application of those contracts
-- **orchestration** — coordination across expertise skills
+- **foundational** — reusable leaf contracts, templates, validators, naming rules, provenance mechanics
+- **expertise** — one bounded leaf application of those contracts that produces one artifact or bounded analysis output
+- **orchestration** — workflow-wide coordination across expertise skills
 
 Every skill still lives under `skills/<skill-name>/` and declares its layer in `metadata.layer`.
 
-This keeps dependencies simple and avoids duplicated contract logic.
+This keeps dependencies simple, avoids duplicated contract logic, and prevents parent workflow framing from leaking into lower layers.
 
 ## Why shared contracts matter
 
@@ -68,6 +68,18 @@ Using `artifact-naming` to resolve one workflow-wide `<project-name>` is valid.
 Using foundational write contracts to bypass expertise artifact skills is not.
 
 This keeps basename resolution stable across authoring, reconstruction, and planning workflows.
+
+## Why foundational skills stay pure leaves
+
+Foundational skills should be orchestration-agnostic and expertise-agnostic.
+They should not know:
+
+- where a workflow places outputs
+- which artifact filename an expertise skill owns
+- what parent workflow is active
+- which canonical lineage map a workflow expects
+
+That purity keeps shared contracts reusable across authored, reconstructed, and planning flows without embedding parent semantics.
 
 ## Why authoring, reconstruction, and planning stay separate
 

@@ -24,7 +24,7 @@ metadata:
 
 - Output must be one Markdown artifact.
 - Frontmatter must use canonical authored-document fields from `document-traceability`.
-- `source_artifacts` must include exactly `plan`.
+- `source_artifacts` must include exactly `execution_plan`.
 - Required sections must appear in canonical order.
 - `Task Summary` must include `Runtime-edge obligations:`.
 - Every task must include a stable identifier, status, dependency field, and plan references.
@@ -44,7 +44,7 @@ A valid task-tracking artifact must include these sections in this order:
 Minimum content expectations:
 
 - canonical provenance and timestamp frontmatter
-- `source_artifacts.plan`
+- `source_artifacts.execution_plan`
 - `Runtime-edge obligations:` in `Task Summary`
 - at least one grouped implementation stream
 - at least one task identifier with status, dependency field, and plan references
@@ -68,7 +68,7 @@ Output:
 
 1. Confirm the approved execution plan and its companion specification artifacts.
 2. Draft from [`assets/tasks-template.md`](./assets/tasks-template.md) so section order stays canonical.
-3. Stamp canonical frontmatter from `document-traceability`, including `source_artifacts.plan`.
+3. Stamp canonical frontmatter from `document-traceability`, including `source_artifacts.execution_plan`.
 4. Extract implementation streams, work breakdown items, sequencing constraints, validation checkpoints, and runtime-edge obligations from the plan.
 5. Record `Runtime-edge obligations:` in `Task Summary`, using `None in parent plan` only when the plan explicitly says no runtime edge is in scope.
 6. Slice the work into grouped tracer-bullet tasks with stable task identifiers.
@@ -100,7 +100,7 @@ Output:
 ## Validation Checklist
 
 - Canonical frontmatter passes shared provenance validation.
-- `source_artifacts.plan` is present.
+- `source_artifacts.execution_plan` is present.
 - All required sections exist and are in the correct order.
 - `Task Summary` includes `Runtime-edge obligations:`.
 - At least one implementation stream group is present.

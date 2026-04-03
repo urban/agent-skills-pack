@@ -33,14 +33,14 @@ metadata:
 
 ## Source Artifact Lineage
 
-Use exactly these `source_artifacts` roles in this workflow:
+Use exactly these `source_artifacts` artifact-type keys in this workflow:
 
 - `charter.md` -> `{}`
 - `user-stories.md` -> `charter`
 - `requirements.md` -> `charter`, `user_stories`
 - `technical-design.md` -> `charter`, `user_stories`, `requirements`
 
-Do not add extra lineage roles casually.
+Do not add extra source artifact-types casually.
 
 ## Requirements
 
@@ -98,7 +98,7 @@ Out of scope:
    - derived `user-stories.md` fits the derived personas and implied scope boundaries
    - derived `requirements.md` is supported by repository evidence and aligns to derived stories
    - derived `technical-design.md` explains the implemented system
-   - every reconstructed artifact carries canonical provenance and the `source_artifacts` roles required by this workflow
+   - every reconstructed artifact carries canonical provenance and the `source_artifacts` artifact-type keys required by this workflow
    - weakly supported conclusions remain marked `TODO: Confirm`
 12. Deliver the reconstructed pack for documentation recovery, planning, or future implementation work.
 
@@ -133,7 +133,7 @@ Out of scope:
 - default workflow output paths match the reconstruction role defaults when the user does not override them
 - derived `charter.md`, `user-stories.md`, `requirements.md`, and `technical-design.md` all exist at the chosen destinations
 - every reconstructed artifact records `generated_by.root_skill = specification-reconstruction`
-- every reconstructed artifact records the `source_artifacts` roles required by this workflow
+- every reconstructed artifact records the `source_artifacts` artifact-type keys required by this workflow
 - derived charter and stories reflect observed behavior rather than desired future intent
 - derived requirements and design are supported by repository evidence
 - weakly supported conclusions are marked explicitly with `TODO: Confirm`

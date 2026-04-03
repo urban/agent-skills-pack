@@ -32,12 +32,12 @@ metadata:
 
 ## Source Artifact Lineage
 
-Use exactly these `source_artifacts` roles in this workflow:
+Use exactly these `source_artifacts` artifact-type keys in this workflow:
 
 - `execution-plan.md` -> `charter`, `user_stories`, `requirements`, `technical_design`
-- `execution-tasks.md` -> `plan`
+- `execution-tasks.md` -> `execution_plan`
 
-Do not add extra lineage roles casually.
+Do not add extra source artifact-types casually.
 
 ## Requirements
 
@@ -114,7 +114,7 @@ Out of scope:
 - execution plan exists at `<spec-pack-root>/execution-plan.md`
 - local task-tracking artifact exists at `<spec-pack-root>/execution-tasks.md`
 - both execution artifacts record `generated_by.root_skill = specification-to-execution`
-- both execution artifacts record the `source_artifacts` roles required by this workflow
+- both execution artifacts record the `source_artifacts` artifact-type keys required by this workflow
 - plan references the companion specification artifacts
 - tasks reference the execution plan and preserve grouped execution structure
 - runtime-edge obligations are either preserved explicitly or recorded as `None in approved spec`

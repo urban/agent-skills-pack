@@ -80,7 +80,7 @@ Output:
 
 1. Identify the approved charter, requirements, or implemented behavior the design must satisfy and use them as referenced scope anchors.
 2. Draft from [`assets/technical-design-template.md`](./assets/technical-design-template.md) so canonical ordering stays intact.
-3. Stamp canonical frontmatter from `document-traceability`, including all required source-artifact roles.
+3. Stamp canonical frontmatter from `document-traceability`, including all required source-artifact types.
 4. Define major components or subsystems and state their responsibilities and interactions.
 5. Use `visual-diagramming` to fill the required diagram slots with either the right Mermaid diagram, a `Not needed:` rationale, or `TODO: Confirm` when applicability is unresolved.
 6. Describe data flow, interfaces, integration points, and failure handling in enough detail to guide implementation.
@@ -113,7 +113,7 @@ Output:
 ## Validation Checklist
 
 - Canonical frontmatter passes shared provenance validation.
-- Required source-artifact roles are present.
+- Required source-artifact types are present.
 - All required sections exist and are in the correct order.
 - Architecture and implementation strategy are both present.
 - At least one component or subsystem is named explicitly.

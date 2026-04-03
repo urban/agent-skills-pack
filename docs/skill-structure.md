@@ -59,9 +59,9 @@ metadata:
 
 Choose exactly one layer:
 
-- **foundational** — reusable contracts, templates, validators, naming, provenance
-- **expertise** — one bounded skill built on foundational contracts
-- **orchestration** — a coordinating skill built on expertise skills and, when needed, selected foundational leaf contracts for workflow-wide coordination
+- **foundational** — reusable leaf contracts, templates, validators, naming, metadata, provenance mechanics
+- **expertise** — one bounded leaf skill built on foundational contracts that produces one artifact or bounded analysis output
+- **orchestration** — a coordinating skill that owns workflow-wide concerns and uses expertise skills for artifact-producing work, plus selected foundational leaf contracts when needed for workflow-wide coordination
 
 Dependency direction is strict:
 
@@ -84,12 +84,12 @@ Treat artifact location as three separate concerns:
 
 Apply these rules:
 
-- foundational skills may define naming and normalization rules for `<project-name>`, but not workflow-specific spec-pack roots
+- foundational skills may define naming and normalization rules for `<project-name>`, shared metadata shape, validators, templates, and provenance assembly mechanics, but not workflow-specific spec-pack roots or artifact filenames
 - orchestration skills may choose or override one spec-pack root for a run, but should not redefine expertise-owned artifact filenames
-- orchestration skills own canonical `source_artifacts` lineage expectations for artifacts in their workflow
+- orchestration skills own output defaults, destination overrides, root workflow provenance, canonical `source_artifacts` lineage expectations, and cross-artifact consistency rules for their workflow
 - expertise skills should define the filename of the artifact they produce
 - when expertise skills refer to sibling artifacts in the same spec pack, they should use pack-relative paths such as `./charter.md`
-- expertise skills may describe same-pack context, but should not define workflow-level lineage policy
+- expertise skills may describe same-pack context and runtime validation invocation shape, but should not define workflow-level lineage policy or hardcode root workflow identity
 - validators may still operate on fully resolved runtime paths, but the skill contract should describe pack-local placement when appropriate
 
 Use this split when writing or revising path guidance in `SKILL.md` files.
@@ -102,5 +102,5 @@ When you add or change a skill:
 - verify `SKILL.md` is internally consistent
 - verify linked assets, scripts, and references exist
 - run any validator scripts you add
-- verify emitted artifacts use canonical provenance and the correct `source_artifacts` roles
+- verify emitted artifacts use canonical provenance and the correct `source_artifacts` artifact-type keys
 - keep examples and output paths aligned with package terminology and layer ownership

@@ -73,7 +73,7 @@ Output:
 
 1. Confirm the approved scope and identify the companion charter, user stories, requirements, and technical design artifacts.
 2. Draft from [`assets/plan-template.md`](./assets/plan-template.md) so section order stays canonical.
-3. Stamp canonical frontmatter from `document-traceability`, including all required source-artifact roles.
+3. Stamp canonical frontmatter from `document-traceability`, including all required source-artifact types.
 4. Translate the approved specification into major implementation streams rather than flat tasks.
 5. Record `Runtime-edge obligations:` explicitly from the approved source artifacts, using `None in approved spec` only when the upstream artifacts do not describe one.
 6. Group work items under those streams with enough detail to coordinate implementation without becoming commit instructions.
@@ -104,7 +104,7 @@ Output:
 ## Validation Checklist
 
 - Canonical frontmatter passes shared provenance validation.
-- Required source-artifact roles are present.
+- Required source-artifact types are present.
 - All required sections exist and are in the correct order.
 - `Scope Alignment` references charter, user stories, requirements, and technical design.
 - `Scope Alignment` includes `Runtime-edge obligations:`.

@@ -89,7 +89,7 @@ Out of scope:
 - If data flow and interface contracts stay vague, integration bugs show up during coding when assumptions finally collide. Make boundary shape explicit before handing the design downstream.
 - If implementation strategy turns into a task list, execution planning gets duplicated and the design becomes noisy fast. Capture rollout shape and sequencing constraints, not every work item.
 - If the target system uses Effect and you skip the shared Effect guidance, abstraction choices drift toward personal preference and later designs stop being comparable. Reuse the foundational Effect pattern skill instead of improvising.
-- If provenance omits any upstream spec artifact, execution planning cannot prove what design commitments came from where. Keep all required source-artifact roles explicit.
+- If provenance omits any upstream spec artifact, execution planning cannot prove what design commitments came from where. Keep all required source-artifact types explicit.
 - If unresolved design choices are hidden behind confident prose, planners treat guesses as settled architecture. Use `TODO: Confirm` where the decision is still open or weakly supported.
 
 ## Deliverables
@@ -105,7 +105,7 @@ Out of scope:
 
 - artifact filename is `technical-design.md`
 - section order follows the `write-technical-design` contract
-- required source-artifact roles are present
+- required source-artifact types are present
 - architecture and implementation strategy are both present
 - at least one component or subsystem is named explicitly
 - testing strategy and risks/tradeoffs are explicit

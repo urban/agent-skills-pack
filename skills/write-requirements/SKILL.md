@@ -76,7 +76,7 @@ Output:
 
 ## Gotchas
 
-- If provenance omits either upstream artifact, later design and planning cannot prove the obligation chain. Keep both lineage roles explicit.
+- If provenance omits either upstream artifact, later design and planning cannot prove the obligation chain. Keep both source artifact-types explicit.
 - If requirements include technical design choices, later architecture work becomes fake because the solution was smuggled in as scope. Keep requirements focused on externally meaningful obligations and constraints.
 - If goals, personas, or success criteria are copied into this artifact, the pack drifts into redundancy and later edits split across files. Leave product framing to the charter.
 - If numbering is ad hoc, design and plan documents cannot reference requirements stably across revisions. Use the shared prefix taxonomy every time.

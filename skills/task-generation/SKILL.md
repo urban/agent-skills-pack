@@ -15,7 +15,7 @@ metadata:
 
 - Treat the parent execution plan as the coordination source of truth because this role decomposes approved work rather than redefining it.
 - Produce the artifact as `execution-tasks.md`.
-- Use `document-traceability` to stamp canonical provenance plus `source_artifacts.plan`.
+- Use `document-traceability` to stamp canonical provenance plus `source_artifacts.execution_plan`.
 - Use the `write-task-tracking` contract for section order, task fields, runtime-edge preservation, and validation because local tracking must stay stable across turns.
 - Keep each task tracer-bullet shaped: thin, end-to-end, independently verifiable, and production-bound.
 - Group tasks by implementation stream because stream context preserves the plan's sequencing logic.
@@ -27,7 +27,7 @@ metadata:
 
 - Output must be one Markdown artifact named `execution-tasks.md`.
 - The artifact must stay compatible with the `write-task-tracking` contract.
-- The artifact must record `source_artifacts.plan`.
+- The artifact must record `source_artifacts.execution_plan`.
 - Every task must include a stable identifier, status, dependency field, and plan references.
 - Tasks must remain local tracking artifacts; do not create GitHub issues or external tickets.
 - Do not create layer-only tasks that deliver no verifiable end-to-end behavior.
@@ -68,7 +68,7 @@ Out of scope:
 6. Assign stable task IDs, explicit dependencies, statuses, and plan references.
 7. For runtime-edge work, include both structural and behavior-verifying acceptance criteria instead of only bootstrap steps.
 8. Draft `execution-tasks.md` using the `write-task-tracking` contract.
-9. Stamp canonical provenance with `source_artifacts.plan`.
+9. Stamp canonical provenance with `source_artifacts.execution_plan`.
 10. Mark unresolved high-impact task-boundary or dependency ambiguity as `TODO: Confirm`.
 11. Validate with `bash ../write-task-tracking/scripts/validate_tasks.sh <resolved-execution-tasks-path>`.
 12. Deliver the local task-tracking artifact for execution.
@@ -87,7 +87,7 @@ Out of scope:
 
 - `execution-tasks.md`
 - grouped tracer-bullet tasks with stable identifiers, statuses, dependencies, and plan references
-- explicit `source_artifacts.plan` lineage and deterministic provenance
+- explicit `source_artifacts.execution_plan` lineage and deterministic provenance
 - local tracking structure suitable for iterative implementation updates
 - validation passing via the shared task-tracking validator
 
@@ -99,7 +99,7 @@ Out of scope:
 
 - artifact filename is `execution-tasks.md`
 - parent execution plan was used as the source of truth
-- `source_artifacts.plan` points to the approved plan
+- `source_artifacts.execution_plan` points to the approved plan
 - at least one implementation stream group exists
 - every task has an ID, status, dependencies, and plan references
 - dependencies are behavior-oriented rather than layer-oriented

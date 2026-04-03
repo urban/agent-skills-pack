@@ -11,22 +11,22 @@ artifact_file="$2"
 
 case "$artifact_kind" in
   charter)
-    required_roles=()
+    required_artifact_types=()
     ;;
   user-stories)
-    required_roles=(charter)
+    required_artifact_types=(charter)
     ;;
   requirements)
-    required_roles=(charter user_stories)
+    required_artifact_types=(charter user_stories)
     ;;
   technical-design)
-    required_roles=(charter user_stories requirements)
+    required_artifact_types=(charter user_stories requirements)
     ;;
   plan)
-    required_roles=(charter user_stories requirements technical_design)
+    required_artifact_types=(charter user_stories requirements technical_design)
     ;;
   tasks)
-    required_roles=(plan)
+    required_artifact_types=(execution_plan)
     ;;
   *)
     echo "Unsupported artifact kind: $artifact_kind" >&2
@@ -214,34 +214,34 @@ else
     exit 1
   fi
 
-  mapfile -t found_roles < <(printf '%s\n' "$source_artifacts_block" | sed -nE 's/^  ([a-z_]+): (.+)$/\1/p')
-  if (( ${#found_roles[@]} == 0 )); then
-    echo "source_artifacts must include at least one role for artifact kind: $artifact_kind" >&2
+  mapfile -t found_artifact_types < <(printf '%s\n' "$source_artifacts_block" | sed -nE 's/^  ([a-z_]+): (.+)$/\1/p')
+  if (( ${#found_artifact_types[@]} == 0 )); then
+    echo "source_artifacts must include at least one artifact-type key for artifact kind: $artifact_kind" >&2
     exit 1
   fi
 
-  for role in "${required_roles[@]}"; do
-    path_value="$(printf '%s\n' "$source_artifacts_block" | sed -nE "s/^  ${role}: (.+)$/\\1/p" | head -n1)"
+  for artifact_type in "${required_artifact_types[@]}"; do
+    path_value="$(printf '%s\n' "$source_artifacts_block" | sed -nE "s/^  ${artifact_type}: (.+)$/\\1/p" | head -n1)"
     if [[ -z "$path_value" ]]; then
-      echo "Missing source_artifacts role: $role" >&2
+      echo "Missing source_artifacts artifact-type: $artifact_type" >&2
       exit 1
     fi
     if [[ ! "$path_value" =~ ^docs/(specs|plans|tasks)/.+\.md$ ]]; then
-      echo "Invalid source_artifacts path for role ${role}: $path_value" >&2
+      echo "Invalid source_artifacts path for artifact-type ${artifact_type}: $path_value" >&2
       exit 1
     fi
   done
 
-  for found_role in "${found_roles[@]}"; do
+  for found_artifact_type in "${found_artifact_types[@]}"; do
     matched=false
-    for role in "${required_roles[@]}"; do
-      if [[ "$found_role" == "$role" ]]; then
+    for artifact_type in "${required_artifact_types[@]}"; do
+      if [[ "$found_artifact_type" == "$artifact_type" ]]; then
         matched=true
         break
       fi
     done
     if [[ "$matched" == false ]]; then
-      echo "Unexpected source_artifacts role for ${artifact_kind}: $found_role" >&2
+      echo "Unexpected source_artifacts artifact-type for ${artifact_kind}: $found_artifact_type" >&2
       exit 1
     fi
   done

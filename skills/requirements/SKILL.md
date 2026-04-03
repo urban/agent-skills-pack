@@ -78,7 +78,7 @@ Out of scope:
 - If you restate goals, non-goals, personas, or success criteria at length, the pack grows redundant and later edits drift across files. Let the charter own framing.
 - If you draft from memory instead of the shared `write-requirements` contract, numbering and section order drift and downstream skills stop composing cleanly. Reuse the canonical structure every time.
 - If repository evidence already constrains behavior and you ignore it, the requirements read clean but contradict the product the team actually has to evolve. Inspect the code when it materially affects scope.
-- If provenance omits either `charter` or `user_stories`, later design and planning cannot prove which approved obligations the artifact inherited. Keep both lineage roles explicit.
+- If provenance omits either `charter` or `user_stories`, later design and planning cannot prove which approved obligations the artifact inherited. Keep both source artifact-types explicit.
 - If missing details are guessed to keep momentum, later design work inherits invented certainty and has to unwind it. Use `TODO: Confirm` for high-impact unknowns.
 
 ## Deliverables

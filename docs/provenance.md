@@ -62,15 +62,16 @@ Skill contracts may describe same-pack dependencies using pack-relative paths, b
 
 ## Required lineage ownership
 
-Canonical provenance must record the exact `source_artifacts` roles required by the active orchestration workflow.
+Canonical provenance must record the exact `source_artifacts` artifact-type keys required by the active orchestration workflow.
 
 Use these rules:
 
 - orchestration owns canonical lineage expectations for artifacts in its workflow
 - expertise may use same-pack sibling artifacts as local context, but should not define workflow-level lineage policy
-- foundational provenance defines the metadata shape and validation flow, not which artifact kinds require which lineage roles
+- foundational provenance defines the metadata shape and validation flow, not which artifact kinds require which source artifact-types
+- expertise should not hardcode `generated_by.root_skill`; root workflow identity belongs to orchestration
 
-Do not add extra lineage roles casually.
+Do not add extra source artifact-types casually.
 
 ## Provenance assembly rules
 
@@ -104,7 +105,7 @@ When creating an artifact:
 2. identify the root workflow and direct producing skill
 3. collect dependencies from the producing branch
 4. stamp canonical frontmatter before final validation
-5. record exactly the required `source_artifacts` roles
+5. record exactly the required `source_artifacts` artifact-type keys
 6. run the shared provenance validator
 7. do not emit the artifact if validation fails
 
@@ -134,6 +135,12 @@ If a skill creates one of these artifacts, it should either:
 
 - depend on `document-traceability`, or
 - use a foundational contract that already requires the canonical frontmatter and validator
+
+The same ownership rules apply across authored, planning, and reconstruction flows:
+
+- foundational traceability owns frontmatter shape and provenance assembly mechanics
+- expertise owns local artifact context and the direct production step
+- orchestration owns root workflow provenance and canonical lineage policy
 
 Prefer the explicit dependency when the skill itself stamps or validates provenance.
 

@@ -93,7 +93,7 @@ Out of scope:
 - artifact filename is `requirements.md`
 - existing artifact backup is created before overwrite when needed
 - section order and numbering follow the `write-requirements` contract
-- canonical provenance is present and required source-artifact roles are recorded
+- canonical provenance is present and required source-artifact types are recorded
 - requirements describe implemented behavior rather than guessed original intent
 - unresolved high-impact details are marked `TODO: Confirm`
 - validation passes with the shared script

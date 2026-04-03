@@ -99,7 +99,7 @@ Out of scope:
 
 - artifact filename is `execution-plan.md`
 - section order follows the `write-execution-plan` contract
-- required source-artifact roles are present
+- required source-artifact types are present
 - `Scope Alignment` references charter, user stories, requirements, and technical design
 - runtime-edge obligations are recorded explicitly
 - at least one implementation stream exists

@@ -38,14 +38,14 @@ metadata:
 
 ## Source Artifact Lineage
 
-Use exactly these `source_artifacts` roles in this workflow:
+Use exactly these `source_artifacts` artifact-type keys in this workflow:
 
 - `charter.md` -> `{}`
 - `user-stories.md` -> `charter`
 - `requirements.md` -> `charter`, `user_stories`
 - `technical-design.md` -> `charter`, `user_stories`, `requirements`
 
-Do not add extra lineage roles casually.
+Do not add extra source artifact-types casually.
 
 ## Requirements
 
@@ -104,7 +104,7 @@ Out of scope:
 - user-visible requirements map to approved stories
 - `requirements.md` does not re-own goals, non-goals, personas, or success criteria from `charter.md`
 - `requirements.md` maps to `technical-design.md`
-- every artifact carries canonical provenance and the `source_artifacts` roles required by this workflow
+- every artifact carries canonical provenance and the `source_artifacts` artifact-type keys required by this workflow
 - unresolved items stay explicit as `TODO: Confirm`
 
 15. Deliver the authored specification pack for approval or downstream coordination.
@@ -125,7 +125,7 @@ Out of scope:
 - If you produce `user-stories.md` before `charter.md` is explicitly approved, produce `requirements.md` before `user-stories.md` is explicitly approved, or produce `technical-design.md` before `requirements.md` is explicitly approved, you have violated the workflow even if the documents are high quality. Stop, return to the last approved artifact, and re-enter the gated review flow.
 - If requirements restate goals, non-goals, personas, or success criteria that the charter already owns, the pack grows redundant and future edits drift across files. Keep each artifact on its side of the boundary.
 - If technical design is allowed to solve imagined future needs, architecture quietly becomes the place where scope expands. Push speculative work back to requirements or mark it `TODO: Confirm`.
-- If provenance is missing or the wrong source-artifact roles are stamped, later feedback cannot tell which authored branch drifted. Validate metadata before treating the pack as approved.
+- If provenance is missing or the wrong source-artifact types are stamped, later feedback cannot tell which authored branch drifted. Validate metadata before treating the pack as approved.
 - If you treat the workflow as a thin router and skip the consistency pass, contradictions survive in polished artifacts until implementation exposes them. Explicitly trace charter to stories, stories to requirements, and requirements to design.
 - If unresolved decisions are smoothed over for readability, every downstream artifact repeats the guess and makes it harder to unwind later. Keep `TODO: Confirm` markers visible wherever evidence is missing.
 
@@ -143,7 +143,7 @@ Out of scope:
 - one stable authored spec-pack root is reused across the full pack
 - `charter.md`, `user-stories.md`, `requirements.md`, and `technical-design.md` all exist in the chosen authored spec-pack root
 - every authored artifact records `generated_by.root_skill = specification-authoring`
-- every authored artifact records the `source_artifacts` roles required by this workflow
+- every authored artifact records the `source_artifacts` artifact-type keys required by this workflow
 - the user explicitly approved `charter.md` before `user-stories.md` was authored, unless the user explicitly waived stage-by-stage approval
 - the user explicitly approved `user-stories.md` before `requirements.md` was authored, unless the user explicitly waived stage-by-stage approval
 - the user explicitly approved `requirements.md` before `technical-design.md` was authored, unless the user explicitly waived stage-by-stage approval

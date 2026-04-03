@@ -41,15 +41,15 @@ Avoid silent drift between create and derive paths.
 
 Do not blur these roles:
 
-- foundational skills define shared contracts
-- expertise skills own one bounded job
-- orchestration skills coordinate expertise skills only
+- foundational skills define reusable leaf contracts
+- expertise skills own one bounded artifact or analysis job
+- orchestration skills own workflow-wide coordination and depend on expertise skills for artifact-producing work
 
 For path and lineage ownership:
 
-- foundational owns `<project-name>` derivation and normalization
-- orchestration owns spec-pack root selection and canonical `source_artifacts` lineage expectations
-- expertise owns artifact filenames and same-pack dependency guidance
+- foundational owns `<project-name>` derivation and normalization, shared metadata shape, validators, and provenance assembly mechanics
+- orchestration owns spec-pack root selection, output defaults or overrides, root workflow identity, and canonical `source_artifacts` lineage expectations
+- expertise owns artifact filenames, local same-pack dependency guidance, and bounded content behavior
 
 ## Keep dependency direction strict
 
@@ -82,6 +82,7 @@ Prefer:
 - relocatable spec packs when workflows need alternate output roots
 
 Do not duplicate `<project-name>` derivation outside foundational naming contracts.
+Do not hardcode root workflow identity in expertise skills.
 Keep canonical `source_artifacts` lineage expectations in orchestration rather than foundational or expertise skills.
 
 ## Prefer explicit uncertainty

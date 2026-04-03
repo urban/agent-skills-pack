@@ -10,7 +10,7 @@ generated_by:
   skill_graph:
     [TODO: skill-name]: []
 source_artifacts:
-  plan: .specs/[TODO: artifact-name]/execution-plan.md
+  execution_plan: .specs/[TODO: artifact-name]/execution-plan.md
 ---
 
 ## Task Summary

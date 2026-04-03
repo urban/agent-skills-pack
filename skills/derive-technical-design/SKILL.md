@@ -29,7 +29,7 @@ metadata:
 
 - Output must be one Markdown artifact named `technical-design.md`.
 - The artifact must stay compatible with the `write-technical-design` contract.
-- The artifact must record the required upstream `source_artifacts` roles.
+- The artifact must record the required upstream `source_artifacts` artifact-type keys.
 - The artifact must explicitly address the four required diagram slots from `write-technical-design`: context flowchart, behavior state diagram, entity relationship diagram, and interaction diagram.
 - Diagrams must stay evidence-based and support the observed system instead of proposing a cleaner future state.
 - If the destination file already exists, create a timestamped backup before overwrite.
@@ -109,7 +109,7 @@ Out of scope:
 - artifact filename is `technical-design.md`
 - existing artifact backup is created before overwrite when needed
 - section order follows the `write-technical-design` contract
-- canonical provenance is present and required source-artifact roles are recorded
+- canonical provenance is present and required source-artifact types are recorded
 - named components, interfaces, testing strategy, and risks/tradeoffs are explicit
 - all four required diagram slots are present and completed without overstating certainty
 - gray-box module claims are tied to concrete repository evidence

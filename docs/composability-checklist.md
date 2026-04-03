@@ -17,9 +17,10 @@ Prefer loose composition through good descriptions, bounded outputs, and explici
 
 Confirm that:
 
-- foundational skills define shared contracts and validation
-- expertise skills apply those contracts within one bounded job
-- orchestration skills coordinate expertise skills without restating contract rules
+- foundational skills define reusable leaf contracts and validation
+- expertise skills apply those contracts within one bounded artifact or analysis job
+- orchestration skills own workflow-wide coordination without restating contract rules
+- child skills do not know parent workflow framing
 - planning does not redefine requirements
 - requirements do not become technical design
 - reconstruction does not invent intent
@@ -32,6 +33,7 @@ If the skill works with a shared artifact type, confirm that:
 - naming matches the canonical contract
 - validation matches the canonical contract
 - canonical provenance and `source_artifacts` are applied on create
+- workflow-level lineage expectations come from orchestration rather than foundational or expertise contracts
 - uncertainty is explicit for reconstruction
 
 Prefer reusing a `write-*` skill over copying its rules.

@@ -6,6 +6,9 @@ Core rules:
 
 - all skills live under `../skills/`
 - every skill declares one layer in `metadata.layer`
+- foundational skills are reusable leaf contracts
+- expertise skills are bounded leaf artifact producers or analysis jobs
+- orchestration skills own workflow-wide coordination and canonical lineage policy
 - provenance and traceability are part of the artifact contract
 - authored and reconstructed artifacts should share the same structure when they represent the same artifact type
 
