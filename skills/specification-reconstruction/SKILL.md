@@ -3,7 +3,7 @@ name: specification-reconstruction
 description: Orchestrate reconstruction of a specification pack from an existing codebase. Use when a user wants charter, user stories, requirements, and technical design recovered from implemented software.
 metadata:
   version: 0.1.0
-  layer: orchestration
+  layer: coordination
   dependencies:
     - artifact-naming
     - derive-charter
@@ -15,7 +15,7 @@ metadata:
 ## Rules
 
 - Treat repository evidence as the primary source of truth because this workflow reconstructs implemented reality, not intended history.
-- Keep this workflow at the orchestration layer because expertise skills own artifact-specific reconstruction methods and validation.
+- Keep this workflow at the coordination layer because specialist skills own artifact-specific reconstruction methods and validation.
 - Use `artifact-naming` to resolve one stable `<project-name>` for the workflow because reconstructed artifacts must align to one reconstruction spec-pack root.
 - Use `.specs/<project-name>-research/` as the default reconstruction spec-pack root unless the user provides explicit destinations.
 - Establish `generated_by.root_skill` as `specification-reconstruction` for every artifact emitted from this workflow.
@@ -25,9 +25,9 @@ metadata:
 
 ## Constraints
 
-- This workflow coordinates reconstruction; it does not replace underlying expertise or foundational contracts.
+- This workflow coordinates reconstruction; it does not replace underlying specialist or foundational contracts.
 - Final output must include reconstructed `charter.md`, `user-stories.md`, `requirements.md`, and `technical-design.md`.
-- Orchestration must use expertise skills for artifact-producing work and may use `artifact-naming` only for workflow-wide naming and placement coordination.
+- Coordination must use specialist skills for artifact-producing work and may use `artifact-naming` only for workflow-wide naming and placement coordination.
 - If a user asks for a reconstructed execution plan, frame it as current-state guidance rather than pretending to recover the original authored plan.
 - Every reconstructed artifact must carry deterministic provenance rooted in this workflow plus the canonical `source_artifacts` lineage required by this workflow.
 
@@ -69,7 +69,7 @@ In scope:
 
 - resolving one workflow-wide `<project-name>` with `artifact-naming`
 - selecting and preserving one reconstruction spec-pack root for the workflow
-- orchestrating expertise entry skills for reconstruction
+- orchestrating specialist entry skills for reconstruction
 - checking that derived artifacts support each other
 - establishing root workflow provenance and canonical `source_artifacts` lineage for every reconstructed artifact
 - routing bounded gray-box follow-on discovery when needed
@@ -78,7 +78,7 @@ Out of scope:
 
 - inventing business intent the repository does not support
 - presenting guesses as recovered facts
-- replacing expertise-level reconstruction contracts with workflow prose
+- replacing specialist-level reconstruction contracts with workflow prose
 - treating current-state recommendations as the original plan
 
 ## Workflow

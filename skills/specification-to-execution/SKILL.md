@@ -3,7 +3,7 @@ name: specification-to-execution
 description: Orchestrate execution coordination artifacts from an approved specification pack. Use when a user wants an execution plan and local task tracking created from approved charter, user stories, requirements, and technical design.
 metadata:
   version: 0.1.0
-  layer: orchestration
+  layer: coordination
   dependencies:
     - artifact-naming
     - execution-planning
@@ -13,20 +13,20 @@ metadata:
 ## Rules
 
 - Treat the approved specification pack as the source of truth because this workflow coordinates execution rather than redefining scope.
-- Keep this workflow at the orchestration layer because expertise skills own the execution-plan and task-tracking contracts.
+- Keep this workflow at the coordination layer because specialist skills own the execution-plan and task-tracking contracts.
 - Use `artifact-naming` to resolve one stable `<project-name>` for the workflow because the execution artifacts must align to one authored spec-pack root.
 - Use `.specs/<project-name>/` as the default execution spec-pack root unless the user provides an explicit destination.
 - Establish `generated_by.root_skill` as `specification-to-execution` for every artifact emitted from this workflow.
-- Run expertise entry skills in order because task generation depends on an approved execution plan.
+- Run specialist entry skills in order because task generation depends on an approved execution plan.
 - Keep traceability explicit from charter, stories, requirements, and design into plan streams and local tasks.
 - When source artifacts describe an operator-facing runtime edge, preserve that behavior into plan streams and tasks instead of weakening it into package bootstrap only.
 - If missing detail changes task boundaries, sequencing, or validation, ask or mark `TODO: Confirm` instead of inventing certainty.
 
 ## Constraints
 
-- This workflow coordinates execution artifacts; it does not replace underlying expertise or foundational contracts.
+- This workflow coordinates execution artifacts; it does not replace underlying specialist or foundational contracts.
 - Final output must include `execution-plan.md` and `execution-tasks.md`.
-- Orchestration must use expertise skills for artifact-producing work and may use `artifact-naming` only for workflow-wide naming and placement coordination.
+- Coordination must use specialist skills for artifact-producing work and may use `artifact-naming` only for workflow-wide naming and placement coordination.
 - Every execution artifact must carry deterministic provenance rooted in this workflow plus the canonical `source_artifacts` lineage required by this workflow.
 - Do not rewrite the approved specification pack inside this workflow.
 
@@ -62,7 +62,7 @@ In scope:
 
 - resolving one workflow-wide `<project-name>` with `artifact-naming`
 - selecting and preserving one execution spec-pack root for the workflow
-- orchestrating expertise entry skills from execution planning through task generation
+- orchestrating specialist entry skills from execution planning through task generation
 - establishing root workflow provenance and canonical `source_artifacts` lineage for plan and tasks
 - checking that tasks trace back to the execution plan and approved spec pack
 - surfacing blockers or ambiguity that affect sequencing or task boundaries

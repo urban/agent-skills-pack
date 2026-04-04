@@ -48,7 +48,7 @@ Inputs:
 
 - user intent or source material defining the problem and desired outcomes
 - known scope boundaries, users, stakeholders, and success measures
-- root orchestration context needed to stamp `generated_by`
+- root coordination context needed to stamp `generated_by`
 
 Output:
 

@@ -31,8 +31,8 @@ Every skill belongs to exactly one layer.
 | Layer | Owns | Must not own |
 | --- | --- | --- |
 | **foundational** | shared contracts, templates, validators, naming, metadata shape, provenance mechanics | workflow framing, artifact-specific filenames, parent workflow identity |
-| **expertise** | one bounded artifact or one bounded analysis/planning output | workflow-wide coordination, spec-pack root ownership, canonical lineage policy for the full workflow |
-| **orchestration** | sequencing, workflow-wide defaults, root workflow identity, cross-artifact consistency, canonical lineage expectations | reusable leaf artifact contracts |
+| **specialist** | one bounded artifact or one bounded analysis/planning output | workflow-wide coordination, spec-pack root ownership, canonical lineage policy for the full workflow |
+| **coordination** | sequencing, workflow-wide defaults, root workflow identity, cross-artifact consistency, canonical lineage expectations | reusable leaf artifact contracts |
 
 This split is strict because the same artifact contracts must survive across authoring, reconstruction, and planning.
 
@@ -41,16 +41,16 @@ This split is strict because the same artifact contracts must survive across aut
 Dependency direction is strict:
 
 - **foundational** -> no required skill dependencies
-- **expertise** -> foundational only
-- **orchestration** -> expertise only for artifact-producing work
+- **specialist** -> foundational only
+- **coordination** -> specialist only for artifact-producing work
 
-Orchestration may also use selected foundational leaf contracts when the concern is truly workflow-wide, such as:
+Coordination may also use selected foundational leaf contracts when the concern is truly workflow-wide, such as:
 
 - `<project-name>` resolution
 - spec-pack root selection
 - provenance assembly support
 
-Orchestration must not use foundational dependencies to bypass expertise artifact skills.
+Coordination must not use foundational dependencies to bypass specialist artifact skills.
 
 ## Ownership model for paths and names
 
@@ -59,18 +59,18 @@ Treat artifact location as three separate concerns.
 | Concern | Example | Owner |
 | --- | --- | --- |
 | artifact basename | `<project-name>` | foundational |
-| spec-pack root | `.specs/<project-name>/` or `.specs/<project-name>-research/` | orchestration |
-| artifact filename | `charter.md`, `requirements.md` | expertise |
+| spec-pack root | `.specs/<project-name>/` or `.specs/<project-name>-research/` | coordination |
+| artifact filename | `charter.md`, `requirements.md` | specialist |
 
 This split keeps filenames stable while letting workflows choose different output roots.
 
 ### What each layer does with paths
 
 - **foundational** may define naming and normalization rules for `<project-name>` and shared validation behavior
-- **orchestration** may choose or override the spec-pack root for one run
-- **expertise** should define the filename of the artifact it produces and describe same-pack dependencies with pack-relative paths such as `./charter.md`
+- **coordination** may choose or override the spec-pack root for one run
+- **specialist** should define the filename of the artifact it produces and describe same-pack dependencies with pack-relative paths such as `./charter.md`
 
-Expertise may describe local same-pack context, but it should not define workflow-level `source_artifacts` policy or hardcode the root workflow identity.
+Specialist may describe local same-pack context, but it should not define workflow-level `source_artifacts` policy or hardcode the root workflow identity.
 
 ## Why the boundaries are strict
 
@@ -79,8 +79,8 @@ The package becomes less reliable when a skill tries to do more than one layer's
 Typical failure modes:
 
 - a foundational skill starts encoding workflow placement rules
-- an expertise skill starts defining cross-workflow lineage policy
-- an orchestration skill starts copying the rules of a shared artifact contract
+- a specialist skill starts defining cross-workflow lineage policy
+- a coordination skill starts copying the rules of a shared artifact contract
 - a single skill mixes authoring, reconstruction, and planning into one vague flow
 
 When that happens, artifacts drift, reuse drops, and reversibility weakens.
@@ -129,7 +129,7 @@ When uncertain, prefer:
 - explicit validation
 - explicit uncertainty over guessed intent
 - local references over optional required dependencies
-- one bounded expertise skill over a multi-purpose skill
-- orchestration over cross-expertise coupling
+- one bounded specialist skill over a multi-purpose skill
+- coordination over cross-specialist coupling
 
 These defaults keep the package predictable for both humans and agents.

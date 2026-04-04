@@ -17,8 +17,8 @@ Confirm that:
 
 - the skill fits exactly one layer
 - foundational skills define reusable leaf contracts and validation
-- expertise skills apply those contracts within one bounded artifact or analysis/planning job
-- orchestration skills own workflow-wide coordination without restating shared contract rules
+- specialist skills apply those contracts within one bounded artifact or analysis/planning job
+- coordination skills own workflow-wide coordination without restating shared contract rules
 - child skills do not know parent workflow framing
 - planning does not redefine requirements
 - requirements do not become technical design
@@ -32,7 +32,7 @@ If the skill works with a shared artifact type, confirm that:
 - naming matches the canonical contract
 - validation matches the canonical contract
 - canonical provenance and `source_artifacts` are applied on create
-- workflow-level lineage expectations come from orchestration rather than foundational or expertise contracts
+- workflow-level lineage expectations come from coordination rather than foundational or specialist contracts
 - uncertainty is explicit for reconstruction outputs
 
 Prefer reusing a `write-*` skill over copying its rules.
@@ -42,10 +42,10 @@ Prefer reusing a `write-*` skill over copying its rules.
 Confirm that:
 
 - foundational owns `<project-name>` derivation and normalization
-- orchestration owns spec-pack root selection and workflow-wide output defaults
-- expertise owns the artifact filename for the output it produces
-- same-pack dependencies in expertise skills use pack-relative paths when appropriate
-- expertise does not hardcode root workflow identity
+- coordination owns spec-pack root selection and workflow-wide output defaults
+- specialist owns the artifact filename for the output it produces
+- same-pack dependencies in specialist skills use pack-relative paths when appropriate
+- specialist does not hardcode root workflow identity
 
 ## 5. Reuse checks
 
@@ -54,7 +54,7 @@ Confirm that:
 - the skill has one clear responsibility
 - the owned output is explicit
 - install-time dependencies are declared when packaging requires them
-- another orchestration could reuse the skill unchanged
+- another coordination could reuse the skill unchanged
 
 ## 6. Agent-use checks
 

@@ -7,7 +7,7 @@ Use this guide before adding a new skill or splitting an existing one.
 Create a new skill only if at least one of these is true:
 
 - a new artifact needs its own stable contract or validator
-- a reusable orchestration is needed across repositories or parent skills
+- a reusable coordination is needed across repositories or parent skills
 - an existing skill is doing more than one job and should be split
 - a missing layer would make the package less reversible or less composable
 
@@ -36,9 +36,9 @@ Typical examples:
 - `write-task-tracking`
 - `gray-box-modules`
 
-Foundational skills should be reusable leaves. They may own shared naming and normalization such as `<project-name>` resolution, shared metadata shape, validators, templates, and provenance assembly mechanics. They must not own workflow-specific spec-pack roots, expertise-owned filenames, or workflow-level lineage policy.
+Foundational skills should be reusable leaves. They may own shared naming and normalization such as `<project-name>` resolution, shared metadata shape, validators, templates, and provenance assembly mechanics. They must not own workflow-specific spec-pack roots, specialist-owned filenames, or workflow-level lineage policy.
 
-### Expertise
+### Specialist
 
 Use this layer when the skill applies foundational contracts within one bounded responsibility.
 
@@ -54,14 +54,14 @@ Typical examples:
 - `execution-planning`
 - `task-generation`
 
-Expertise skills must:
+Specialist skills must:
 
 - own one output or one bounded analysis/planning job
-- behave like leaves relative to orchestration
+- behave like leaves relative to coordination
 - depend only on foundational skills
 - declare `metadata.archetype` and `metadata.domain`
 
-Expertise skills should own the artifact filename for that output, describe same-pack dependency expectations relative to the spec-pack root when needed, and define the local validation invocation shape when useful.
+Specialist skills should own the artifact filename for that output, describe same-pack dependency expectations relative to the spec-pack root when needed, and define the local validation invocation shape when useful.
 
 They should not define:
 
@@ -70,9 +70,9 @@ They should not define:
 - `<project-name>`
 - root workflow identity
 
-### Orchestration
+### Coordination
 
-Use this layer when the skill coordinates multiple expertise skills into one larger flow.
+Use this layer when the skill coordinates multiple specialist skills into one larger flow.
 
 Typical examples:
 
@@ -80,9 +80,9 @@ Typical examples:
 - `specification-to-execution`
 - `specification-reconstruction`
 
-Orchestration skills must:
+Coordination skills must:
 
-- depend on expertise skills for artifact-producing work
+- depend on specialist skills for artifact-producing work
 - preserve one end-to-end flow
 - avoid restating foundational contract rules
 - own workflow-wide coordination such as sequencing, approvals, root workflow provenance, and cross-artifact consistency checks
@@ -93,7 +93,7 @@ They may also depend on selected foundational leaf contracts when the concern is
 - spec-pack root selection
 - provenance assembly support
 
-They must not use foundational dependencies to replace expertise artifact contracts.
+They must not use foundational dependencies to replace specialist artifact contracts.
 
 ## Selection checks
 
@@ -108,8 +108,8 @@ Before creating a skill, confirm that:
 
 Split a skill instead of expanding it when:
 
-- it both defines a reusable contract and performs expertise execution
-- it needs dependencies from both foundational and orchestration layers
+- it both defines a reusable contract and performs specialist execution
+- it needs dependencies from both foundational and coordination layers
 - it tries to own multiple artifact types
 - it mixes authoring, reconstruction, and planning sources of truth
 
@@ -118,8 +118,8 @@ Split a skill instead of expanding it when:
 When uncertain, prefer:
 
 - foundational reuse over restating rules
-- one bounded expertise skill over a multi-purpose skill
-- orchestration over cross-expertise coupling
+- one bounded specialist skill over a multi-purpose skill
+- coordination over cross-specialist coupling
 - explicit validation
 - explicit uncertainty
 - composition over duplication

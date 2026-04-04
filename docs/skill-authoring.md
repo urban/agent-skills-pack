@@ -36,7 +36,7 @@ Every `SKILL.md` must define:
 
 Add `metadata.dependencies` when the skill composes other skills or relies on shared contracts.
 
-Expertise skills must also define:
+Specialist skills must also define:
 
 - `metadata.archetype`
 - `metadata.domain`
@@ -62,16 +62,16 @@ metadata:
 Choose exactly one layer:
 
 - **foundational** — reusable leaf contracts, templates, validators, naming, metadata, provenance mechanics
-- **expertise** — one bounded leaf skill built on foundational contracts that produces one artifact or bounded analysis/planning output
-- **orchestration** — workflow-wide coordination across expertise skills
+- **specialist** — one bounded leaf skill built on foundational contracts that produces one artifact or bounded analysis/planning output
+- **coordination** — workflow-wide coordination across specialist skills
 
 Dependency direction is strict:
 
 - foundational must not depend on other skills
-- expertise may depend only on foundational skills
-- orchestration must depend on expertise skills for artifact-producing work
-- orchestration may also use selected foundational leaf contracts only for workflow-wide coordination concerns such as naming, spec-pack root selection, or provenance assembly support
-- orchestration must not use foundational dependencies to replace expertise artifact contracts
+- specialist may depend only on foundational skills
+- coordination must depend on specialist skills for artifact-producing work
+- coordination may also use selected foundational leaf contracts only for workflow-wide coordination concerns such as naming, spec-pack root selection, or provenance assembly support
+- coordination must not use foundational dependencies to replace specialist artifact contracts
 
 ## Path and filename ownership
 
@@ -80,18 +80,18 @@ Treat location as three separate concerns.
 | Concern | Owner | Example |
 | --- | --- | --- |
 | artifact basename | foundational | `<project-name>` |
-| spec-pack root | orchestration | `.specs/<project-name>/` |
-| artifact filename | expertise | `requirements.md` |
+| spec-pack root | coordination | `.specs/<project-name>/` |
+| artifact filename | specialist | `requirements.md` |
 
 Use that split when writing skill instructions.
 
 ### Practical rules
 
 - foundational skills may define naming rules, metadata shape, validators, templates, and provenance assembly mechanics
-- orchestration skills may choose or override one spec-pack root for a run
-- expertise skills should define the filename of the artifact they produce
-- when expertise skills refer to sibling artifacts in the same pack, use pack-relative paths such as `./charter.md`
-- expertise skills may describe same-pack context and local validation commands, but should not define workflow-level lineage policy or hardcode root workflow identity
+- coordination skills may choose or override one spec-pack root for a run
+- specialist skills should define the filename of the artifact they produce
+- when specialist skills refer to sibling artifacts in the same pack, use pack-relative paths such as `./charter.md`
+- specialist skills may describe same-pack context and local validation commands, but should not define workflow-level lineage policy or hardcode root workflow identity
 - validators may operate on fully resolved runtime paths, but the skill contract should describe pack-local placement when that is the real contract
 
 ## Progressive disclosure

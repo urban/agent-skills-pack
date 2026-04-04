@@ -58,7 +58,7 @@ Inputs:
 - approved execution plan
 - companion charter, user stories, requirements, and technical design when needed for clarification
 - any current implementation status or blockers
-- root orchestration context needed to stamp `generated_by`
+- root coordination context needed to stamp `generated_by`
 
 Output:
 

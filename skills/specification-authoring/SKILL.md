@@ -3,7 +3,7 @@ name: specification-authoring
 description: Orchestrate an authored specification pack for a new product or major feature. Use when a user wants charter, user-story, requirements, and technical-design artifacts created before downstream coordination or implementation.
 metadata:
   version: 0.1.0
-  layer: orchestration
+  layer: coordination
   dependencies:
     - artifact-naming
     - charter
@@ -14,12 +14,12 @@ metadata:
 
 ## Rules
 
-- Keep this workflow at the orchestration layer because expertise skills own artifact-specific contracts and validation.
+- Keep this workflow at the coordination layer because specialist skills own artifact-specific contracts and validation.
 - Use `artifact-naming` to resolve one stable `<project-name>` for the workflow because the authored spec-pack root must stay consistent across all artifacts.
 - Resolve one stable authored spec-pack root early and preserve it across every authored artifact because placement drift breaks downstream alignment.
 - Use `.specs/<project-name>/` as the default authored spec-pack root unless the user provides an explicit destination.
 - Establish `generated_by.root_skill` as `specification-authoring` for every artifact emitted from this workflow.
-- Run expertise entry skills in order because charter sets scope and success, stories define user-visible outcomes, requirements define product obligations, and design explains the solution.
+- Run specialist entry skills in order because charter sets scope and success, stories define user-visible outcomes, requirements define product obligations, and design explains the solution.
 - Do not start `user-story-authoring` until the user explicitly approves `charter.md`.
 - Do not start `requirements` until the user explicitly approves `user-stories.md`.
 - Do not start `technical-design` until the user explicitly approves `requirements.md`.
@@ -29,9 +29,9 @@ metadata:
 
 ## Constraints
 
-- This workflow coordinates artifacts; it does not replace underlying expertise or foundational contracts.
+- This workflow coordinates artifacts; it does not replace underlying specialist or foundational contracts.
 - Final output must include `charter.md`, `user-stories.md`, `requirements.md`, and `technical-design.md` in one authored spec pack.
-- Orchestration must use expertise skills for artifact-producing work and may use `artifact-naming` only for workflow-wide naming and placement coordination.
+- Coordination must use specialist skills for artifact-producing work and may use `artifact-naming` only for workflow-wide naming and placement coordination.
 - Every authored artifact must carry deterministic provenance rooted in this workflow plus the canonical `source_artifacts` lineage required by this workflow.
 - Never author the full specification pack in one uninterrupted pass unless the user explicitly waives stage-by-stage approval.
 - Do not start downstream coordination or implementation from this workflow unless the user explicitly asks for that next phase.
@@ -70,14 +70,14 @@ In scope:
 
 - resolving one workflow-wide `<project-name>` with `artifact-naming`
 - selecting and preserving one authored spec-pack root for the workflow
-- orchestrating expertise entry skills in authored order
+- orchestrating specialist entry skills in authored order
 - preserving pack-wide placement and scope consistency
 - establishing root workflow provenance and canonical `source_artifacts` lineage for every authored artifact
 - checking that artifacts map cleanly from charter through design
 
 Out of scope:
 
-- redefining expertise-level artifact contracts in this workflow
+- redefining specialist-level artifact contracts in this workflow
 - producing execution coordination artifacts
 - doing implementation work
 - hiding unresolved scope or intent behind polished prose

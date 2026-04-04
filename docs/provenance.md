@@ -28,7 +28,7 @@ name: <artifact-name>
 created_at: <UTC ISO 8601 timestamp>
 updated_at: <UTC ISO 8601 timestamp>
 generated_by:
-  root_skill: <top-level orchestration skill>
+  root_skill: <top-level coordination skill>
   producing_skill: <direct artifact-producing skill>
   skills_used:
     - <ordered participating skills>
@@ -56,16 +56,16 @@ Lineage policy has separate owners.
 | --- | --- |
 | frontmatter shape | foundational provenance contract |
 | provenance assembly mechanics | foundational provenance contract |
-| direct production step | expertise |
-| root workflow identity | orchestration |
-| canonical `source_artifacts` expectations for a workflow | orchestration |
+| direct production step | specialist |
+| root workflow identity | coordination |
+| canonical `source_artifacts` expectations for a workflow | coordination |
 
 Follow these rules:
 
-- orchestration owns the canonical lineage map for artifacts in its workflow
-- expertise may use same-pack sibling artifacts as local context, but should not define workflow-wide lineage policy
+- coordination owns the canonical lineage map for artifacts in its workflow
+- specialist may use same-pack sibling artifacts as local context, but should not define workflow-wide lineage policy
 - foundational provenance defines the metadata shape and validation flow, not which artifact kinds require which source artifact types
-- expertise should not hardcode `generated_by.root_skill`
+- specialist should not hardcode `generated_by.root_skill`
 
 Do not add extra source artifact types casually.
 
@@ -75,13 +75,13 @@ Build provenance from the producing branch only.
 
 Include:
 
-- the root orchestration skill
+- the root coordination skill
 - the direct producing skill
 - participating foundational skills from that branch
 
 Exclude:
 
-- sibling expertise branches that did not participate
+- sibling specialist branches that did not participate
 
 Traversal order:
 
@@ -139,7 +139,7 @@ If a skill creates one of these artifacts, it should either:
 
 ## Typical lineage expectations
 
-Workflow-specific lineage belongs to orchestration, but these examples show the common pattern:
+Workflow-specific lineage belongs to coordination, but these examples show the common pattern:
 
 - charter -> `{}`
 - user stories -> `charter`
@@ -148,4 +148,4 @@ Workflow-specific lineage belongs to orchestration, but these examples show the 
 - execution plan -> `charter`, `user_stories`, `requirements`, `technical_design`
 - execution tasks -> `plan`
 
-Treat this as a common shape, not a reason to move lineage ownership out of orchestration.
+Treat this as a common shape, not a reason to move lineage ownership out of coordination.

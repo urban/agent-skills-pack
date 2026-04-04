@@ -10,7 +10,7 @@ metadata:
 
 - Use one canonical frontmatter contract for authored skill-pack artifacts because downstream validation and feedback depend on deterministic metadata.
 - Keep skill provenance separate from source artifact lineage because one explains how the artifact was produced and the other explains what approved inputs it used.
-- Compute provenance only from the artifact-producing skill branch because sibling orchestration branches are not part of one artifact's generation path.
+- Compute provenance only from the artifact-producing skill branch because sibling coordination branches are not part of one artifact's generation path.
 - Treat provenance failures as hard failures because partial or guessed metadata breaks traceability.
 - Use UTC ISO 8601 timestamps with a trailing `Z` because authored artifacts need stable machine-checkable time values.
 
@@ -24,7 +24,7 @@ name: <artifact-name>
 created_at: <UTC ISO 8601 timestamp>
 updated_at: <UTC ISO 8601 timestamp>
 generated_by:
-  root_skill: <top-level orchestration skill>
+  root_skill: <top-level coordination skill>
   producing_skill: <direct artifact-producing skill>
   skills_used:
     - <ordered participating skills>
@@ -36,25 +36,25 @@ source_artifacts:
 ---
 ```
 
-Use `source_artifacts: {}` when the active orchestration workflow requires an empty lineage map.
+Use `source_artifacts: {}` when the active coordination workflow requires an empty lineage map.
 
 ## Provenance Assembly
 
-- `root_skill` is the orchestration skill that initiated authored generation.
-- `producing_skill` is the direct expertise skill responsible for the artifact.
+- `root_skill` is the coordination skill that initiated authored generation.
+- `producing_skill` is the direct specialist skill responsible for the artifact.
 - `skills_used` is the ordered, deduplicated skill list from the producing branch only.
 - `skill_graph` is the adjacency map derived from each participating skill's declared `metadata.dependencies`.
 - traversal order is deterministic: root skill first, then depth-first traversal in declared dependency order.
 - include only participating skills from the producing branch, including foundational leaf contracts when they actually participate in that branch.
 - participating foundational skills may include `artifact-naming`, `document-traceability`, and the relevant `write-*` contract skill when used by the producing branch.
-- exclude sibling expertise branches that did not participate in the specific artifact.
+- exclude sibling specialist branches that did not participate in the specific artifact.
 - fail closed on missing skill files, missing declared dependencies, malformed metadata, or dependency cycles.
 
 ## Source Artifact Lineage Field
 
-- `source_artifacts` records the upstream artifact paths required by the active orchestration workflow.
+- `source_artifacts` records the upstream artifact paths required by the active coordination workflow.
 - This skill defines the field shape and validation expectations for `source_artifacts`, but not the canonical artifact-type map for each workflow.
-- Orchestration owns which source artifact-types must be present for each artifact in that workflow.
+- Coordination owns which source artifact-types must be present for each artifact in that workflow.
 
 ## Workflow
 
@@ -63,7 +63,7 @@ Use `source_artifacts: {}` when the active orchestration workflow requires an em
 3. Walk the producing skill branch from `SKILL.md` metadata dependencies only.
 4. Build `skills_used` in deterministic traversal order with duplicates removed.
 5. Build `skill_graph` from the same participating skills.
-6. Record the `source_artifacts` artifact-type keys required by the active orchestration workflow.
+6. Record the `source_artifacts` artifact-type keys required by the active coordination workflow.
 7. Stamp canonical frontmatter before final validation.
 8. Validate with [`scripts/validate_frontmatter_provenance.sh`](./scripts/validate_frontmatter_provenance.sh).
 9. If validation fails, stop and do not emit the artifact.
@@ -71,7 +71,7 @@ Use `source_artifacts: {}` when the active orchestration workflow requires an em
 ## Gotchas
 
 - If source artifact lineage is copied into `generated_by`, provenance stops explaining the skill chain and becomes noisy. Keep the two concerns separate.
-- If sibling orchestration branches appear in `skills_used`, the metadata becomes non-deterministic across artifact kinds. Keep traversal on the producing branch only.
+- If sibling coordination branches appear in `skills_used`, the metadata becomes non-deterministic across artifact kinds. Keep traversal on the producing branch only.
 - If timestamps use date-only values or local time, machines cannot tell whether metadata is canonical. Use UTC ISO 8601 with `Z`.
 - If a workflow expects `source_artifacts: {}` and you emit an empty multiline map instead, validators cannot distinguish deliberate emptiness from omission. Use the explicit empty map form.
 - If a skill is used but missing from `skill_graph`, downstream reviewers cannot reconstruct provenance deterministically. Keep `skills_used` and `skill_graph` aligned.

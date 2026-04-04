@@ -33,18 +33,18 @@ Every skill belongs to exactly one layer and declares it in `metadata.layer`.
 | Layer | Purpose | Typical ownership |
 | --- | --- | --- |
 | **foundational** | shared reusable contracts | templates, validators, naming, provenance, shared artifact rules |
-| **expertise** | one bounded artifact or analysis/planning job | writing one artifact, deriving one artifact, producing one bounded output |
-| **orchestration** | workflow-wide coordination | sequencing expertise skills, approvals, workflow defaults, lineage expectations |
+| **specialist** | one bounded artifact or analysis/planning job | writing one artifact, deriving one artifact, producing one bounded output |
+| **coordination** | workflow-wide coordination | sequencing specialist skills, approvals, workflow defaults, lineage expectations |
 
 ### Dependency rules
 
 Dependency direction is strict:
 
 - foundational -> no required skill dependencies
-- expertise -> foundational only
-- orchestration -> expertise only for artifact-producing work
+- specialist -> foundational only
+- coordination -> specialist only for artifact-producing work
 
-Orchestration may also use selected foundational leaf contracts for workflow-wide concerns such as naming, spec-pack root selection, or provenance assembly support.
+Coordination may also use selected foundational leaf contracts for workflow-wide concerns such as naming, spec-pack root selection, or provenance assembly support.
 
 ## Ownership model
 
@@ -53,8 +53,8 @@ The package keeps naming, placement, and artifact identity separate.
 | Concern | Example | Owner |
 | --- | --- | --- |
 | artifact basename | `<project-name>` | foundational |
-| spec-pack root | `.specs/<project-name>/` | orchestration |
-| artifact filename | `requirements.md` | expertise |
+| spec-pack root | `.specs/<project-name>/` | coordination |
+| artifact filename | `requirements.md` | specialist |
 
 This keeps artifact filenames stable while still allowing different workflows to choose different output roots.
 
@@ -100,7 +100,7 @@ A skill may also include:
 - `visual-diagramming` — diagram selection guidance for Mermaid-backed visuals
 - `effect-technical-design` — Effect-specific technical design guidance for TypeScript systems
 
-### Expertise
+### Specialist
 
 - `charter` — writes `charter.md`
 - `user-story-authoring` — writes `user-stories.md`
@@ -115,7 +115,7 @@ A skill may also include:
 
 By default, authored artifacts live under `.specs/<project-name>/` and reconstructed artifacts live under `.specs/<project-name>-research/`.
 
-### Orchestration
+### Coordination
 
 - `specification-authoring` — `charter -> user-story-authoring -> requirements -> technical-design`
 - `specification-to-execution` — `execution-planning -> task-generation`

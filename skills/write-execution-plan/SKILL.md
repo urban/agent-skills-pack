@@ -63,7 +63,7 @@ Inputs:
 - approved or derived requirements
 - approved or derived technical design
 - any known implementation constraints, milestones, or sequencing risks
-- root orchestration context needed to stamp `generated_by`
+- root coordination context needed to stamp `generated_by`
 
 Output:
 

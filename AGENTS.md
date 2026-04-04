@@ -8,15 +8,15 @@ Optimize for:
 
 - reversibility between authored and reconstructed spec packs
 - shared artifact contracts in foundational skills
-- narrow expertise entry skills
-- orchestration separated from expertise and contract logic
+- narrow specialist entry skills
+- coordination separated from specialist and contract logic
 - explicit provenance and source-artifact lineage for created artifacts
 
 ## Hard rules
 
 - All skills live under `skills/`.
 - Every skill declares exactly one layer in `metadata.layer`.
-- Expertise skills must also define `metadata.archetype` and `metadata.domain`.
+- Specialist skills must also define `metadata.archetype` and `metadata.domain`.
 - Keep support files inside the owning skill directory:
   - `assets/` — templates and scaffolds
   - `scripts/` — deterministic validators or helpers
@@ -30,8 +30,8 @@ Optimize for:
 ## Layer model
 
 - **foundational** — shared contracts, templates, validators, naming, provenance mechanics
-- **expertise** — one bounded application of foundational contracts within one role or domain
-- **orchestration** — workflow-wide coordination across expertise skills
+- **specialist** — one bounded application of foundational contracts within one role or domain
+- **coordination** — workflow-wide coordination across specialist skills
 
 If a skill crosses layers, split it.
 

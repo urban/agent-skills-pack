@@ -27,12 +27,12 @@ These rules appear throughout the docs. Keep them stable.
 - Every skill declares exactly one layer in `metadata.layer`.
 - Layers are strict:
   - **foundational** — shared contracts, templates, validators, naming, provenance mechanics
-  - **expertise** — one bounded artifact or bounded analysis/planning job built on foundational contracts
-  - **orchestration** — workflow-wide coordination across expertise skills
+  - **specialist** — one bounded artifact or bounded analysis/planning job built on foundational contracts
+  - **coordination** — workflow-wide coordination across specialist skills
 - Dependency direction is strict:
   - foundational -> no required skill dependencies
-  - expertise -> foundational only
-  - orchestration -> expertise only for artifact-producing work, with selected foundational leaf contracts allowed only for workflow-wide coordination concerns
+  - specialist -> foundational only
+  - coordination -> specialist only for artifact-producing work, with selected foundational leaf contracts allowed only for workflow-wide coordination concerns
 - Provenance and `source_artifacts` are part of the artifact contract.
 - Authored and reconstructed artifacts should use the same contract when they represent the same artifact type.
 
