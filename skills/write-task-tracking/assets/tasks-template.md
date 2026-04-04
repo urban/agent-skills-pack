@@ -10,14 +10,15 @@ generated_by:
   skill_graph:
     [TODO: skill-name]: []
 source_artifacts:
-  execution_plan: .specs/[TODO: artifact-name]/execution-plan.md
+  [TODO: workflow-owned lineage key]: [TODO: resolved artifact path]
 ---
 
 ## Task Summary
 
-- Parent plan: `.specs/[TODO: artifact-name]/execution-plan.md`
+- Parent plan: [TODO: resolved execution-plan path]
 - Scope: [TODO: summarize the implementation slice covered by these tasks]
 - Tracking intent: [TODO: describe how this document should be used during implementation]
+- Capability / requirement / design anchors: [TODO: main capability areas, requirement IDs, or design anchors carried through the plan]
 - Runtime-edge obligations: [TODO: preserved operator-facing runtime behavior or `None in parent plan`]
 
 ## Stream Groups
@@ -33,6 +34,7 @@ Objective: [TODO: what this stream delivers]
 - Blocked by: [TODO: comma-separated task IDs or `None`]
 - Plan references:
   - [TODO: stable anchor from parent plan]
+  - [TODO: capability area, requirement ID, or design anchor when useful]
 - What to build: [TODO: smallest independently verifiable end-to-end behavior]
 - Acceptance criteria:
   - [TODO: structural completion criterion]

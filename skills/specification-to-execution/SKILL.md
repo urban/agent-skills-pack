@@ -2,7 +2,7 @@
 name: specification-to-execution
 description: Orchestrate execution coordination artifacts from an approved specification pack. Use when a user wants an execution plan and local task tracking created from approved charter, user stories, requirements, and technical design.
 metadata:
-  version: 0.1.0
+  version: 0.2.0
   layer: coordination
   dependencies:
     - artifact-naming
@@ -32,10 +32,32 @@ metadata:
 
 ## Source Artifact Lineage
 
+This workflow owns the canonical `source_artifacts` lineage map for execution artifacts.
+
 Use exactly these `source_artifacts` artifact-type keys in this workflow:
 
 - `execution-plan.md` -> `charter`, `user_stories`, `requirements`, `technical_design`
 - `execution-tasks.md` -> `execution_plan`
+
+Resolved execution paths should normally be:
+
+- `charter` -> `<spec-pack-root>/charter.md`
+- `user_stories` -> `<spec-pack-root>/user-stories.md`
+- `requirements` -> `<spec-pack-root>/requirements.md`
+- `technical_design` -> `<spec-pack-root>/technical-design.md`
+- `execution_plan` -> `<spec-pack-root>/execution-plan.md`
+
+For execution planning specifically:
+
+- `execution-planning` produces `execution-plan.md`
+- the shared `write-execution-plan` contract defines the plan structure
+- this workflow defines that `execution-plan.md` records exactly `source_artifacts.charter`, `source_artifacts.user_stories`, `source_artifacts.requirements`, and `source_artifacts.technical_design` resolved to the execution spec-pack root
+
+For task generation specifically:
+
+- `task-generation` produces `execution-tasks.md`
+- the shared `write-task-tracking` contract defines the task structure
+- this workflow defines that `execution-tasks.md` records exactly `source_artifacts.execution_plan = <spec-pack-root>/execution-plan.md`
 
 Do not add extra source artifact-types casually.
 
@@ -79,10 +101,11 @@ Out of scope:
 2. Resolve `<project-name>` once with `artifact-naming`, honoring an explicit artifact slug or preferred basename when provided.
 3. Resolve the execution spec-pack root once for the full run, defaulting to `.specs/<project-name>/` unless the user provides an explicit destination.
 4. Establish `root_skill = specification-to-execution` for the execution artifacts in this run.
-5. Run `execution-planning`, write the result to `<spec-pack-root>/execution-plan.md`, and confirm the plan sequences approved work rather than inventing new scope.
-6. Run `task-generation`, write the result to `<spec-pack-root>/execution-tasks.md`, and confirm the tasks decompose the plan into thin local execution slices.
+5. Run `execution-planning`, write the result to `<spec-pack-root>/execution-plan.md`, stamp `source_artifacts.charter = <spec-pack-root>/charter.md`, `source_artifacts.user_stories = <spec-pack-root>/user-stories.md`, `source_artifacts.requirements = <spec-pack-root>/requirements.md`, and `source_artifacts.technical_design = <spec-pack-root>/technical-design.md`, and confirm the plan sequences approved work rather than inventing new scope.
+6. Run `task-generation`, write the result to `<spec-pack-root>/execution-tasks.md`, stamp `source_artifacts.execution_plan = <spec-pack-root>/execution-plan.md`, and confirm the tasks decompose the plan into thin local execution slices.
 7. Perform a consistency pass:
    - `Scope Alignment` in the plan references the companion specification artifacts
+   - plan streams visibly align to user-story capability areas, requirement IDs, and technical-design concerns
    - plan and tasks preserve operator-facing runtime-edge obligations when the approved source artifacts describe them
    - runtime-edge tasks include both structural and behavior-verifying acceptance criteria
    - task groups and task references map back to the execution plan
@@ -97,6 +120,7 @@ Out of scope:
 - If the execution spec-pack root drifts between plan and tasks, the coordination artifacts split even when the content still aligns. Resolve placement once for the workflow.
 - If tasks are accepted without checking plan references, the tracking artifact becomes a flat backlog instead of a coordination surface. Confirm every task set still points back to the plan.
 - If runtime-edge behavior in the approved spec gets translated into only structural bootstrap work, implementation loses the operator-facing contract that made the runtime edge necessary. Keep behavior and verification explicit in both plan and tasks.
+- If capability areas, requirement IDs, or design anchors disappear between spec, plan, and task artifacts, downstream execution loses reversibility and reviewability. Keep those anchors visible where they matter.
 - If unresolved blockers are hidden to make the pack look execution-ready, implementation inherits false certainty and stalls later. Keep `TODO: Confirm` visible where evidence is missing.
 
 ## Deliverables
@@ -114,7 +138,8 @@ Out of scope:
 - execution plan exists at `<spec-pack-root>/execution-plan.md`
 - local task-tracking artifact exists at `<spec-pack-root>/execution-tasks.md`
 - both execution artifacts record `generated_by.root_skill = specification-to-execution`
-- both execution artifacts record the `source_artifacts` artifact-type keys required by this workflow
+- `execution-plan.md` records exactly `source_artifacts.charter`, `source_artifacts.user_stories`, `source_artifacts.requirements`, and `source_artifacts.technical_design` resolved to the execution spec-pack root
+- `execution-tasks.md` records exactly `source_artifacts.execution_plan = <spec-pack-root>/execution-plan.md`
 - plan references the companion specification artifacts
 - tasks reference the execution plan and preserve grouped execution structure
 - runtime-edge obligations are either preserved explicitly or recorded as `None in approved spec`

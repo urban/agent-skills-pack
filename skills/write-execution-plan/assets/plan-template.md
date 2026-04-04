@@ -10,10 +10,7 @@ generated_by:
   skill_graph:
     [TODO: skill-name]: []
 source_artifacts:
-  charter: .specs/[TODO: artifact-name]/charter.md
-  user_stories: .specs/[TODO: artifact-name]/user-stories.md
-  requirements: .specs/[TODO: artifact-name]/requirements.md
-  technical_design: .specs/[TODO: artifact-name]/technical-design.md
+  [TODO: workflow-owned lineage key]: [TODO: resolved artifact path]
 ---
 
 ## Execution Summary
@@ -22,10 +19,13 @@ source_artifacts:
 
 ## Scope Alignment
 
-- Charter: `.specs/[TODO: artifact-name]/charter.md`
-- User Stories: `.specs/[TODO: artifact-name]/user-stories.md`
-- Requirements: `.specs/[TODO: artifact-name]/requirements.md`
-- Technical Design: `.specs/[TODO: artifact-name]/technical-design.md`
+- Charter: [TODO: resolved charter path]
+- User Stories: [TODO: resolved user-stories path]
+- Requirements: [TODO: resolved requirements path]
+- Technical Design: [TODO: resolved technical-design path]
+- Story capability areas: [TODO: relevant capability areas from user-stories.md]
+- Requirement anchors: [TODO: relevant requirement IDs]
+- Design anchors: [TODO: relevant interfaces, components, or failure-strategy sections]
 - Runtime-edge obligations: [TODO: preserved operator-facing runtime behavior or `None in approved spec`]
 - In-scope implementation objective: [TODO: describe what part of the approved spec pack this plan coordinates]
 
@@ -35,7 +35,8 @@ source_artifacts:
 
 - Objective: [TODO: what this stream delivers]
 - Implements:
-  - [TODO: relevant charter, story, requirement, or design reference]
+  - [TODO: relevant capability area, story title, requirement ID, or design anchor]
+- Interfaces / failure concerns: [TODO: relevant boundary, integration point, or recovery concern]
 - Notes: [TODO: constraints, integration boundary, or coordination note]
 
 ## Work Breakdown
@@ -43,7 +44,11 @@ source_artifacts:
 ### [TODO: Stream name]
 
 - [ ] [TODO: grouped implementation task]
+  - Traceability: [TODO: capability area, story title, requirement ID, or design anchor]
+  - Verification focus: [TODO: key validation checkpoint or visible behavior]
 - [ ] [TODO: grouped implementation task]
+  - Traceability: [TODO: capability area, story title, requirement ID, or design anchor]
+  - Verification focus: [TODO: key validation checkpoint or visible behavior]
 
 ## Dependency and Sequencing Strategy
 
@@ -53,7 +58,7 @@ source_artifacts:
 
 ## Validation Checkpoints
 
-- [TODO: checkpoint such as lint, typecheck, tests, manual CLI verification]
+- [TODO: checkpoint such as lint, typecheck, tests, manual verification, or runtime-edge behavior check]
 
 ## Risks and Mitigations
 
