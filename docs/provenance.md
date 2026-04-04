@@ -1,33 +1,22 @@
 # Provenance and traceability
 
-Provenance and traceability are core parts of `agent-skills-pack`.
+Provenance is part of the artifact contract. The package only stays reversible if every created artifact records how it was produced and which upstream artifacts shaped it.
 
-The pack only stays reversible when every created artifact says:
+A valid artifact should answer these questions:
 
-- what produced it
-- which skills participated
-- which upstream artifacts it used
-- when it was created and updated
+- What produced this file?
+- Which skills participated?
+- Which upstream artifacts shaped it?
+- When was it created and last updated?
+- Can a downstream skill trust it as input?
 
-## Why this matters
+## Owning skill
 
-Without canonical provenance and lineage:
-
-- artifacts cannot be validated consistently
-- downstream skills cannot reliably check inputs
-- reviewers cannot reconstruct how a document was produced
-- reversibility degrades because relationships become implicit
-- plans and tasks lose their link to approved scope and design
-
-In this pack, provenance and traceability are part of the artifact contract.
-
-## Foundational skill
-
-This contract is owned by:
+The shared provenance contract is owned by:
 
 - `skills/document-traceability/SKILL.md`
 
-Use it whenever a skill creates or validates a charter, user stories, requirements, technical design, execution plan, or task-tracking artifact.
+Use it whenever a skill creates or validates one of the package's canonical artifacts.
 
 ## Canonical frontmatter
 
@@ -51,36 +40,48 @@ source_artifacts:
 ---
 ```
 
-Use UTC ISO 8601 timestamps with a trailing `Z`.
+Rules:
 
-Keep these separate:
+- Use UTC ISO 8601 timestamps with a trailing `Z`.
+- Keep `generated_by` and `source_artifacts` separate.
+- `generated_by` records how the artifact was produced.
+- `source_artifacts` records which upstream artifacts shaped the result.
+- Skill contracts may describe same-pack dependencies with pack-relative paths, but canonical provenance must record resolved artifact paths in `source_artifacts`.
 
-- `generated_by` — how the artifact was produced
-- `source_artifacts` — which upstream artifacts shaped it
+## Ownership of lineage policy
 
-Skill contracts may describe same-pack dependencies using pack-relative paths, but canonical provenance must continue recording resolved artifact paths in `source_artifacts`.
+Lineage policy has separate owners.
 
-## Required lineage ownership
+| Concern | Owner |
+| --- | --- |
+| frontmatter shape | foundational provenance contract |
+| provenance assembly mechanics | foundational provenance contract |
+| direct production step | expertise |
+| root workflow identity | orchestration |
+| canonical `source_artifacts` expectations for a workflow | orchestration |
 
-Canonical provenance must record the exact `source_artifacts` artifact-type keys required by the active orchestration workflow.
+Follow these rules:
 
-Use these rules:
+- orchestration owns the canonical lineage map for artifacts in its workflow
+- expertise may use same-pack sibling artifacts as local context, but should not define workflow-wide lineage policy
+- foundational provenance defines the metadata shape and validation flow, not which artifact kinds require which source artifact types
+- expertise should not hardcode `generated_by.root_skill`
 
-- orchestration owns canonical lineage expectations for artifacts in its workflow
-- expertise may use same-pack sibling artifacts as local context, but should not define workflow-level lineage policy
-- foundational provenance defines the metadata shape and validation flow, not which artifact kinds require which source artifact-types
-- expertise should not hardcode `generated_by.root_skill`; root workflow identity belongs to orchestration
-
-Do not add extra source artifact-types casually.
+Do not add extra source artifact types casually.
 
 ## Provenance assembly rules
 
-Build provenance from the producing branch only:
+Build provenance from the producing branch only.
 
-- include the root orchestration skill
-- include the direct producing skill
-- include participating foundational skills from that branch
-- exclude sibling expertise branches that did not participate
+Include:
+
+- the root orchestration skill
+- the direct producing skill
+- participating foundational skills from that branch
+
+Exclude:
+
+- sibling expertise branches that did not participate
 
 Traversal order:
 
@@ -97,15 +98,15 @@ Fail closed on:
 - malformed metadata
 - dependency cycles
 
-## Workflow expectation
+## Workflow for creating an artifact
 
-When creating an artifact:
+When a skill creates an artifact:
 
 1. identify the artifact kind
 2. identify the root workflow and direct producing skill
 3. collect dependencies from the producing branch
 4. stamp canonical frontmatter before final validation
-5. record exactly the required `source_artifacts` artifact-type keys
+5. record exactly the required `source_artifacts` keys
 6. run the shared provenance validator
 7. do not emit the artifact if validation fails
 
@@ -123,35 +124,28 @@ bash skills/document-traceability/scripts/validate_frontmatter_provenance.sh <ar
 
 Most `write-*` validators already call it.
 
-## Where this applies
+## Where the contract applies
 
-Apply provenance and traceability to:
+Apply canonical provenance and traceability to:
 
 - authored artifacts under `.specs/<project-name>/`
 - execution artifacts under `.specs/<project-name>/`
-- reconstructed artifacts under `.specs/<project-name>-research/` when created through the pack's canonical contracts
+- reconstructed artifacts under `.specs/<project-name>-research/` when created through the package's canonical contracts
 
 If a skill creates one of these artifacts, it should either:
 
 - depend on `document-traceability`, or
-- use a foundational contract that already requires the canonical frontmatter and validator
+- use a lower-layer contract that already enforces the canonical frontmatter and validator
 
-The same ownership rules apply across authored, planning, and reconstruction flows:
+## Typical lineage expectations
 
-- foundational traceability owns frontmatter shape and provenance assembly mechanics
-- expertise owns local artifact context and the direct production step
-- orchestration owns root workflow provenance and canonical lineage policy
+Workflow-specific lineage belongs to orchestration, but these examples show the common pattern:
 
-Prefer the explicit dependency when the skill itself stamps or validates provenance.
+- charter -> `{}`
+- user stories -> `charter`
+- requirements -> `charter`, `user_stories`
+- technical design -> `charter`, `user_stories`, `requirements`
+- execution plan -> `charter`, `user_stories`, `requirements`, `technical_design`
+- execution tasks -> `plan`
 
-## Design intent
-
-A valid artifact should answer:
-
-- Where did this come from?
-- Which workflow created it?
-- Which shared contracts shaped it?
-- Which upstream artifacts did it use?
-- Can the next skill trust it as input?
-
-If it cannot, the pack has lost one of its core guarantees.
+Treat this as a common shape, not a reason to move lineage ownership out of orchestration.

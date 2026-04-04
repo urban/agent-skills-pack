@@ -1,0 +1,135 @@
+# System overview
+
+`agent-skills-pack` exists to make software specification artifacts usable in both directions:
+
+- from product intent to implementation
+- from an implemented system back to reusable specification artifacts
+
+The package is contract-first. It tries to make the structure, lineage, and boundaries of each artifact explicit so later work does not depend on guesswork.
+
+## What the pack owns
+
+The pack covers skills for these artifact types and adjacent workflow steps:
+
+- charter
+- user stories
+- requirements
+- technical design
+- execution plan
+- task tracking
+
+Those artifacts may be created in different workflows:
+
+- **authoring** — starting from product intent and approved scope
+- **reconstruction** — starting from repository evidence and implemented behavior
+- **planning** — starting from approved specification artifacts
+
+## The layer model
+
+Every skill belongs to exactly one layer.
+
+| Layer | Owns | Must not own |
+| --- | --- | --- |
+| **foundational** | shared contracts, templates, validators, naming, metadata shape, provenance mechanics | workflow framing, artifact-specific filenames, parent workflow identity |
+| **expertise** | one bounded artifact or one bounded analysis/planning output | workflow-wide coordination, spec-pack root ownership, canonical lineage policy for the full workflow |
+| **orchestration** | sequencing, workflow-wide defaults, root workflow identity, cross-artifact consistency, canonical lineage expectations | reusable leaf artifact contracts |
+
+This split is strict because the same artifact contracts must survive across authoring, reconstruction, and planning.
+
+## Dependency rules
+
+Dependency direction is strict:
+
+- **foundational** -> no required skill dependencies
+- **expertise** -> foundational only
+- **orchestration** -> expertise only for artifact-producing work
+
+Orchestration may also use selected foundational leaf contracts when the concern is truly workflow-wide, such as:
+
+- `<project-name>` resolution
+- spec-pack root selection
+- provenance assembly support
+
+Orchestration must not use foundational dependencies to bypass expertise artifact skills.
+
+## Ownership model for paths and names
+
+Treat artifact location as three separate concerns.
+
+| Concern | Example | Owner |
+| --- | --- | --- |
+| artifact basename | `<project-name>` | foundational |
+| spec-pack root | `.specs/<project-name>/` or `.specs/<project-name>-research/` | orchestration |
+| artifact filename | `charter.md`, `requirements.md` | expertise |
+
+This split keeps filenames stable while letting workflows choose different output roots.
+
+### What each layer does with paths
+
+- **foundational** may define naming and normalization rules for `<project-name>` and shared validation behavior
+- **orchestration** may choose or override the spec-pack root for one run
+- **expertise** should define the filename of the artifact it produces and describe same-pack dependencies with pack-relative paths such as `./charter.md`
+
+Expertise may describe local same-pack context, but it should not define workflow-level `source_artifacts` policy or hardcode the root workflow identity.
+
+## Why the boundaries are strict
+
+The package becomes less reliable when a skill tries to do more than one layer's job.
+
+Typical failure modes:
+
+- a foundational skill starts encoding workflow placement rules
+- an expertise skill starts defining cross-workflow lineage policy
+- an orchestration skill starts copying the rules of a shared artifact contract
+- a single skill mixes authoring, reconstruction, and planning into one vague flow
+
+When that happens, artifacts drift, reuse drops, and reversibility weakens.
+
+## Reversibility
+
+Reversibility means the package can support both authored and reconstructed versions of the same artifact type without changing the contract.
+
+That requires:
+
+- stable naming
+- stable section structure
+- explicit provenance
+- explicit uncertainty when reconstruction evidence is weak
+- shared foundational contracts for artifact types that appear in multiple workflows
+
+Do not add one-way structure casually. If a new authored artifact has no reconstruction path, say so clearly.
+
+## Workflow boundaries
+
+Keep these sources of truth separate:
+
+- **authoring** describes intended scope and approved direction
+- **reconstruction** describes implemented reality and evidence from the repo
+- **planning** describes sequencing and execution coordination
+
+Do not blur them. A plan is not a requirement. A requirement is not a design. A reconstruction should not invent intent.
+
+## Why execution artifacts stay downstream and local
+
+Execution plans and task tracking are coordination artifacts. They should stay downstream from requirements and technical design.
+
+Keeping execution state in the repo makes it:
+
+- easy to review
+- easy for agents to reload
+- usable without external tooling
+- close to the code it coordinates
+
+## Package defaults
+
+When uncertain, prefer:
+
+- shared contracts over duplicated rules
+- composition over duplication
+- explicit validation
+- explicit uncertainty over guessed intent
+- local references over optional required dependencies
+- one bounded expertise skill over a multi-purpose skill
+- orchestration over cross-expertise coupling
+
+These defaults keep the package predictable for both humans and agents.

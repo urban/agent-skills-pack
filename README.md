@@ -7,30 +7,11 @@ It supports both directions:
 - from product intent to implementation
 - from an existing codebase back to reusable specification artifacts
 
-## Package model
+The package is designed to be legible to both humans and agents. Each skill has a narrow job, artifact contracts stay stable, and provenance is part of the output rather than an afterthought.
 
-The pack has three layers:
+## What this pack covers
 
-- **Foundational** — shared contracts, templates, validators, naming, provenance
-- **Expertise** — one bounded authoring, reconstruction, design, or planning job
-- **Orchestration** — multi-step flows across expertise skills
-
-Each skill declares its layer in `metadata.layer`.
-
-## Why it exists
-
-Without stable artifacts, agents infer too much from prompts and repository clues. That leads to:
-
-- scope drift
-- architecture drift
-- weak traceability
-- weaker follow-on work
-
-This pack makes artifact structure, provenance, and lineage explicit.
-
-## Package boundary
-
-The package owns specification artifacts and the workflows that create, reconstruct, and operationalize them:
+The pack owns the artifacts and workflows around:
 
 - charter
 - user stories
@@ -39,26 +20,69 @@ The package owns specification artifacts and the workflows that create, reconstr
 - execution plan
 - task tracking
 
-## Repository layout
+Those artifacts appear in three kinds of workflows:
 
-- `skills/` — all package skills
-- `docs/` — package guidance
+- **authoring** — define a spec from product intent
+- **reconstruction** — derive a spec from an existing codebase
+- **planning** — turn approved spec artifacts into execution artifacts
 
-Each skill lives at `skills/<skill-name>/SKILL.md` and may also include:
+## The layer model
 
-- `assets/` — templates and scaffolds
-- `scripts/` — validators and helpers
-- `references/` — optional guidance
+Every skill belongs to exactly one layer and declares it in `metadata.layer`.
 
-## Layer rules
+| Layer | Purpose | Typical ownership |
+| --- | --- | --- |
+| **foundational** | shared reusable contracts | templates, validators, naming, provenance, shared artifact rules |
+| **expertise** | one bounded artifact or analysis/planning job | writing one artifact, deriving one artifact, producing one bounded output |
+| **orchestration** | workflow-wide coordination | sequencing expertise skills, approvals, workflow defaults, lineage expectations |
+
+### Dependency rules
 
 Dependency direction is strict:
 
 - foundational -> no required skill dependencies
 - expertise -> foundational only
-- orchestration -> expertise only
+- orchestration -> expertise only for artifact-producing work
 
-Reversibility depends on authored and reconstructed artifacts sharing the same foundational contracts for the same artifact type.
+Orchestration may also use selected foundational leaf contracts for workflow-wide concerns such as naming, spec-pack root selection, or provenance assembly support.
+
+## Ownership model
+
+The package keeps naming, placement, and artifact identity separate.
+
+| Concern | Example | Owner |
+| --- | --- | --- |
+| artifact basename | `<project-name>` | foundational |
+| spec-pack root | `.specs/<project-name>/` | orchestration |
+| artifact filename | `requirements.md` | expertise |
+
+This keeps artifact filenames stable while still allowing different workflows to choose different output roots.
+
+## Why this exists
+
+Without stable contracts, agents infer too much from prompts and repository clues. That usually leads to:
+
+- scope drift
+- architecture drift
+- weak traceability
+- weaker follow-on work
+
+This pack reduces that drift by making structure, provenance, and lineage explicit.
+
+## Repository layout
+
+- `skills/` — all package skills
+- `docs/` — package documentation for maintainers and contributors
+
+Each skill lives at:
+
+- `skills/<skill-name>/SKILL.md`
+
+A skill may also include:
+
+- `assets/` — templates and scaffolds
+- `scripts/` — validators and helpers
+- `references/` — optional supporting guidance
 
 ## Current skill inventory
 
@@ -78,16 +102,18 @@ Reversibility depends on authored and reconstructed artifacts sharing the same f
 
 ### Expertise
 
-- `charter` — writes `.specs/<project-name>/charter.md`
-- `user-story-authoring` — writes `.specs/<project-name>/user-stories.md`
-- `requirements` — writes `.specs/<project-name>/requirements.md`
-- `technical-design` — writes `.specs/<project-name>/technical-design.md`
-- `execution-planning` — writes `.specs/<project-name>/execution-plan.md`
-- `task-generation` — writes `.specs/<project-name>/execution-tasks.md`
-- `derive-charter` — reconstructs `.specs/<project-name>-research/charter.md` by default
-- `derive-user-stories` — reconstructs `.specs/<project-name>-research/user-stories.md` by default
-- `derive-requirements` — reconstructs `.specs/<project-name>-research/requirements.md` by default
-- `derive-technical-design` — reconstructs `.specs/<project-name>-research/technical-design.md` by default
+- `charter` — writes `charter.md`
+- `user-story-authoring` — writes `user-stories.md`
+- `requirements` — writes `requirements.md`
+- `technical-design` — writes `technical-design.md`
+- `execution-planning` — writes `execution-plan.md`
+- `task-generation` — writes `execution-tasks.md`
+- `derive-charter` — reconstructs `charter.md`
+- `derive-user-stories` — reconstructs `user-stories.md`
+- `derive-requirements` — reconstructs `requirements.md`
+- `derive-technical-design` — reconstructs `technical-design.md`
+
+By default, authored artifacts live under `.specs/<project-name>/` and reconstructed artifacts live under `.specs/<project-name>-research/`.
 
 ### Orchestration
 
@@ -95,9 +121,9 @@ Reversibility depends on authored and reconstructed artifacts sharing the same f
 - `specification-to-execution` — `execution-planning -> task-generation`
 - `specification-reconstruction` — `derive-charter -> derive-user-stories -> derive-requirements -> derive-technical-design`
 
-## Artifact flows
+## Typical artifact flows
 
-### Greenfield
+### Greenfield authoring flow
 
 ```text
 idea / feature request
@@ -112,7 +138,7 @@ idea / feature request
           -> implementation
 ```
 
-### Reconstruction
+### Reconstruction flow
 
 ```text
 existing codebase
@@ -144,14 +170,14 @@ Keep these separate:
 - `generated_by` — how the artifact was produced
 - `source_artifacts` — which inputs shaped it
 
-Typical lineage:
+Typical lineage shape:
 
 - charter -> `{}`
 - user stories -> `charter`
 - requirements -> `charter`, `user_stories`
 - technical design -> `charter`, `user_stories`, `requirements`
-- plan -> `charter`, `user_stories`, `requirements`, `technical_design`
-- tasks -> `plan`
+- execution plan -> `charter`, `user_stories`, `requirements`, `technical_design`
+- execution tasks -> `plan`
 
 See [`docs/provenance.md`](./docs/provenance.md) for the full contract.
 
@@ -171,17 +197,16 @@ See [`docs/provenance.md`](./docs/provenance.md) for the full contract.
 3. Run `specification-to-execution` or `execution-planning` for follow-on work.
 4. Use `task-generation` only when a plan already exists and tasks need refresh.
 
-## Docs for maintainers
+## Maintainer docs
+
+Start with:
 
 - [`docs/README.md`](./docs/README.md)
-- [`docs/purpose.md`](./docs/purpose.md)
+- [`docs/system-overview.md`](./docs/system-overview.md)
 - [`docs/provenance.md`](./docs/provenance.md)
-- [`docs/design-rationale.md`](./docs/design-rationale.md)
-- [`docs/development-principles.md`](./docs/development-principles.md)
-- [`docs/skill-expertise-selection.md`](./docs/skill-expertise-selection.md)
-- [`docs/skill-structure.md`](./docs/skill-structure.md)
-- [`docs/composability-checklist.md`](./docs/composability-checklist.md)
-- [`docs/progressive-disclosure.md`](./docs/progressive-disclosure.md)
+- [`docs/skill-authoring.md`](./docs/skill-authoring.md)
+- [`docs/skill-selection.md`](./docs/skill-selection.md)
+- [`docs/review-checklist.md`](./docs/review-checklist.md)
 
 ## Example prompts
 

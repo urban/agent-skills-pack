@@ -1,27 +1,44 @@
-# Docs overview
+# Documentation map
 
-These docs explain what `agent-skills-pack` owns and how to change it safely.
+This directory explains how `agent-skills-pack` is organized, what it guarantees, and how to change it safely.
 
-Core rules:
+## Start here
 
-- all skills live under `../skills/`
-- every skill declares one layer in `metadata.layer`
-- foundational skills are reusable leaf contracts
-- expertise skills are bounded leaf artifact producers or analysis jobs
-- orchestration skills own workflow-wide coordination and canonical lineage policy
-- provenance and traceability are part of the artifact contract
-- authored and reconstructed artifacts should share the same structure when they represent the same artifact type
+Read these in order if you are new to the package:
 
-## Read first
-
-- [purpose.md](./purpose.md) — scope and goals
-- [provenance.md](./provenance.md) — frontmatter, lineage, validation
-- [design-rationale.md](./design-rationale.md) — why the layer model is strict
-- [development-principles.md](./development-principles.md) — rules for package changes
+1. [system-overview.md](./system-overview.md) — what the pack owns, how the layer model works, and why the boundaries are strict
+2. [provenance.md](./provenance.md) — the canonical frontmatter contract, lineage rules, and validation flow
+3. [skill-authoring.md](./skill-authoring.md) — how to structure a skill, where files go, and where guidance belongs
 
 ## Read by task
 
-- [skill-expertise-selection.md](./skill-expertise-selection.md) — decide whether a skill should exist and which layer it belongs to
-- [skill-structure.md](./skill-structure.md) — create or update a skill directory and `SKILL.md`
-- [composability-checklist.md](./composability-checklist.md) — final review before shipping a skill
-- [progressive-disclosure.md](./progressive-disclosure.md) — split guidance across `AGENTS.md`, `SKILL.md`, and support files
+| Task | Read |
+| --- | --- |
+| Decide whether a new skill should exist | [skill-selection.md](./skill-selection.md) |
+| Create or update `skills/<skill-name>/SKILL.md` | [skill-authoring.md](./skill-authoring.md) |
+| Check provenance, lineage, and frontmatter | [provenance.md](./provenance.md) |
+| Review a skill before shipping it | [review-checklist.md](./review-checklist.md) |
+
+## Core rules
+
+These rules appear throughout the docs. Keep them stable.
+
+- All skills live under `skills/`.
+- Every skill declares exactly one layer in `metadata.layer`.
+- Layers are strict:
+  - **foundational** — shared contracts, templates, validators, naming, provenance mechanics
+  - **expertise** — one bounded artifact or bounded analysis/planning job built on foundational contracts
+  - **orchestration** — workflow-wide coordination across expertise skills
+- Dependency direction is strict:
+  - foundational -> no required skill dependencies
+  - expertise -> foundational only
+  - orchestration -> expertise only for artifact-producing work, with selected foundational leaf contracts allowed only for workflow-wide coordination concerns
+- Provenance and `source_artifacts` are part of the artifact contract.
+- Authored and reconstructed artifacts should use the same contract when they represent the same artifact type.
+
+## Design goal
+
+The package should be understandable in two ways at once:
+
+- a human maintainer can see what each skill owns and why
+- an agent can load the smallest set of rules needed to do the job correctly

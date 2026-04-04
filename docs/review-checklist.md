@@ -1,31 +1,30 @@
-# Composability checklist
+# Review checklist
 
-Use this checklist before finalizing a skill.
+Use this checklist before shipping a new or changed skill.
 
-## Runtime composition
+## 1. Runtime composition
 
 Confirm that:
 
 - the `description` makes the skill easy to select at runtime
-- runtime use does not depend on `metadata.dependencies`
+- runtime use does not depend on the reader already knowing the full package graph
 - the skill has clear boundaries
-- another agent could choose it without knowing the full package graph
+- another agent could choose it without reading unrelated skills first
 
-Prefer loose composition through good descriptions, bounded outputs, and explicit contracts.
-
-## Boundaries
+## 2. Layer and boundary checks
 
 Confirm that:
 
+- the skill fits exactly one layer
 - foundational skills define reusable leaf contracts and validation
-- expertise skills apply those contracts within one bounded artifact or analysis job
-- orchestration skills own workflow-wide coordination without restating contract rules
+- expertise skills apply those contracts within one bounded artifact or analysis/planning job
+- orchestration skills own workflow-wide coordination without restating shared contract rules
 - child skills do not know parent workflow framing
 - planning does not redefine requirements
 - requirements do not become technical design
 - reconstruction does not invent intent
 
-## Contracts
+## 3. Contract checks
 
 If the skill works with a shared artifact type, confirm that:
 
@@ -34,11 +33,21 @@ If the skill works with a shared artifact type, confirm that:
 - validation matches the canonical contract
 - canonical provenance and `source_artifacts` are applied on create
 - workflow-level lineage expectations come from orchestration rather than foundational or expertise contracts
-- uncertainty is explicit for reconstruction
+- uncertainty is explicit for reconstruction outputs
 
 Prefer reusing a `write-*` skill over copying its rules.
 
-## Reuse
+## 4. Path and ownership checks
+
+Confirm that:
+
+- foundational owns `<project-name>` derivation and normalization
+- orchestration owns spec-pack root selection and workflow-wide output defaults
+- expertise owns the artifact filename for the output it produces
+- same-pack dependencies in expertise skills use pack-relative paths when appropriate
+- expertise does not hardcode root workflow identity
+
+## 5. Reuse checks
 
 Confirm that:
 
@@ -47,7 +56,7 @@ Confirm that:
 - install-time dependencies are declared when packaging requires them
 - another orchestration could reuse the skill unchanged
 
-## Agent use
+## 6. Agent-use checks
 
 Prefer:
 
@@ -60,7 +69,7 @@ Prefer:
 
 Avoid vague prose, hidden assumptions, and formats that require structure inference.
 
-## Reconstruction
+## 7. Reconstruction checks
 
 For reconstruction-heavy skills, confirm that:
 
@@ -68,3 +77,13 @@ For reconstruction-heavy skills, confirm that:
 - implemented reality is described instead of imagined intent
 - weak conclusions are marked explicitly
 - compatibility with the authored contract is preserved when the artifact type is shared
+
+## 8. Final decision
+
+A skill is usually ready to ship when:
+
+- its ownership is narrow
+- its dependencies respect the layer model
+- its artifact contract is stable
+- its provenance is valid
+- another human or agent could use it without private context
