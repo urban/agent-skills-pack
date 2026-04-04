@@ -113,7 +113,7 @@ A skill may also include:
 - `derive-requirements` — reconstructs `requirements.md`
 - `derive-technical-design` — reconstructs `technical-design.md`
 
-By default, authored artifacts live under `.specs/<project-name>/` and reconstructed artifacts live under `.specs/<project-name>-research/`.
+By default, authored artifacts live under `.specs/<project-name>/` and reconstructed artifacts live under `.specs/<project-name>-reconstructed/`.
 
 ### Coordination
 
@@ -143,10 +143,10 @@ idea / feature request
 ```text
 existing codebase
   -> specification-reconstruction
-    -> .specs/<project-name>-research/charter.md
-    -> .specs/<project-name>-research/user-stories.md
-    -> .specs/<project-name>-research/requirements.md
-    -> .specs/<project-name>-research/technical-design.md
+    -> .specs/<project-name>-reconstructed/charter.md
+    -> .specs/<project-name>-reconstructed/user-stories.md
+    -> .specs/<project-name>-reconstructed/requirements.md
+    -> .specs/<project-name>-reconstructed/technical-design.md
       -> specification-to-execution or execution-planning
         -> .specs/<project-name>/execution-plan.md
         -> .specs/<project-name>/execution-tasks.md

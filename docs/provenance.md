@@ -130,7 +130,7 @@ Apply canonical provenance and traceability to:
 
 - authored artifacts under `.specs/<project-name>/`
 - execution artifacts under `.specs/<project-name>/`
-- reconstructed artifacts under `.specs/<project-name>-research/` when created through the package's canonical contracts
+- reconstructed artifacts under `.specs/<project-name>-reconstructed/` when created through the package's canonical contracts
 
 If a skill creates one of these artifacts, it should either:
 

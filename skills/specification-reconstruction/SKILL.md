@@ -17,7 +17,7 @@ metadata:
 - Treat repository evidence as the primary source of truth because this workflow reconstructs implemented reality, not intended history.
 - Keep this workflow at the coordination layer because specialist skills own artifact-specific reconstruction methods and validation.
 - Use `artifact-naming` to resolve one stable `<project-name>` for the workflow because reconstructed artifacts must align to one reconstruction spec-pack root.
-- Use `.specs/<project-name>-research/` as the default reconstruction spec-pack root unless the user provides explicit destinations.
+- Use `.specs/<project-name>-reconstructed/` as the default reconstruction spec-pack root unless the user provides explicit destinations.
 - Establish `generated_by.root_skill` as `specification-reconstruction` for every artifact emitted from this workflow.
 - Keep uncertainty explicit with `TODO: Confirm` whenever the codebase cannot prove original intent.
 - Run reconstruction in order because derived charter captures recoverable framing, derived stories capture user-visible behavior, derived requirements capture the contract, and derived design explains the implementation.
@@ -55,10 +55,10 @@ Inputs:
 
 Default outputs when the user does not provide explicit destinations:
 
-- `.specs/<project-name>-research/charter.md`
-- `.specs/<project-name>-research/user-stories.md`
-- `.specs/<project-name>-research/requirements.md`
-- `.specs/<project-name>-research/technical-design.md`
+- `.specs/<project-name>-reconstructed/charter.md`
+- `.specs/<project-name>-reconstructed/user-stories.md`
+- `.specs/<project-name>-reconstructed/requirements.md`
+- `.specs/<project-name>-reconstructed/technical-design.md`
 
 Additional outputs:
 
@@ -85,7 +85,7 @@ Out of scope:
 
 1. Confirm the repository scope to analyze, defaulting to the whole repository when the user does not narrow it.
 2. Resolve `<project-name>` once with `artifact-naming`, honoring an explicit artifact slug or preferred basename when provided.
-3. Resolve the reconstruction spec-pack root once for the full run, defaulting to `.specs/<project-name>-research/` unless the user provides explicit destinations.
+3. Resolve the reconstruction spec-pack root once for the full run, defaulting to `.specs/<project-name>-reconstructed/` unless the user provides explicit destinations.
 4. Establish `root_skill = specification-reconstruction` for all reconstructed artifacts in this run.
 5. Inspect repository evidence relevant to the chosen scope, prioritizing source, tests, configs, and existing docs.
 6. Run `derive-charter`, write the result to `<spec-pack-root>/charter.md`, and review whether the inferred goals, non-goals, personas, and success criteria stay within what the codebase can plausibly support.
@@ -110,7 +110,7 @@ Out of scope:
 - If requirements are reconstructed from naming conventions alone, they sound plausible while drifting from real system guarantees. Tie each important requirement back to concrete repository evidence.
 - If you hide uncertainty to make the pack read cleanly, future teams cannot tell which parts are proven and which are inferred. Keep `TODO: Confirm` markers where evidence is weak or conflicting.
 - If technical design explanation outruns what the codebase shows, architecture diagrams become fiction with the credibility of recovered documentation. Stop at the evidence boundary and label hypotheses.
-- If you write defaults as if they were mandatory output paths, users lose the ability to direct reconstruction where they need it. Treat the listed `.specs/...-research/` locations as defaults only.
+- If you write defaults as if they were mandatory output paths, users lose the ability to direct reconstruction where they need it. Treat the listed `.specs/...-reconstructed/` locations as defaults only.
 - If `<project-name>` is re-derived mid-workflow, the reconstructed pack can fork into multiple roots even when the artifact content still aligns. Resolve naming once and preserve it for the full run.
 - If you skip the consistency pass, contradictions between inferred charter, stories, requirements, and design survive until someone tries to use the pack for change planning. Reconcile or surface those conflicts before delivery.
 - If gray-box discovery turns into a substitute for careful repository reading, the workflow becomes an excuse to speculate about architecture. Use the gray-box handoff only for bounded seams that the main reconstruction pass cannot explain confidently.

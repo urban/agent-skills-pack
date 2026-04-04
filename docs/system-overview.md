@@ -59,7 +59,7 @@ Treat artifact location as three separate concerns.
 | Concern | Example | Owner |
 | --- | --- | --- |
 | artifact basename | `<project-name>` | foundational |
-| spec-pack root | `.specs/<project-name>/` or `.specs/<project-name>-research/` | coordination |
+| spec-pack root | `.specs/<project-name>/` or `.specs/<project-name>-reconstructed/` | coordination |
 | artifact filename | `charter.md`, `requirements.md` | specialist |
 
 This split keeps filenames stable while letting workflows choose different output roots.
