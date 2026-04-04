@@ -2,7 +2,7 @@
 name: specification-authoring
 description: Orchestrate an authored specification pack for a new product or major feature. Use when a user wants charter, user-story, requirements, and technical-design artifacts created before downstream coordination or implementation.
 metadata:
-  version: 0.1.0
+  version: 0.2.0
   layer: coordination
   dependencies:
     - artifact-naming
@@ -38,12 +38,26 @@ metadata:
 
 ## Source Artifact Lineage
 
+This workflow owns the canonical `source_artifacts` lineage map for authored artifacts.
+
 Use exactly these `source_artifacts` artifact-type keys in this workflow:
 
-- `charter.md` -> `{}`
+- `charter.md` -> `source_artifacts: {}`
 - `user-stories.md` -> `charter`
 - `requirements.md` -> `charter`, `user_stories`
 - `technical-design.md` -> `charter`, `user_stories`, `requirements`
+
+Resolved authored paths should normally be:
+
+- `charter` -> `<spec-pack-root>/charter.md`
+- `user_stories` -> `<spec-pack-root>/user-stories.md`
+- `requirements` -> `<spec-pack-root>/requirements.md`
+
+For authored user stories specifically:
+
+- `user-story-authoring` produces `user-stories.md`
+- the shared `write-user-stories` contract defines the story structure
+- this workflow defines that authored `user-stories.md` records exactly `source_artifacts.charter = <spec-pack-root>/charter.md`
 
 Do not add extra source artifact-types casually.
 
@@ -91,16 +105,16 @@ Out of scope:
 5. Co-create or confirm the core outcomes, goals, non-goals, personas / actors, success criteria, and scope boundaries.
 6. Run `charter`, write the result to `<spec-pack-root>/charter.md`, present it to the user, and wait for explicit approval before continuing.
 7. If the user does not approve the charter, revise it or mark unresolved points as `TODO: Confirm`, then present the updated artifact again and wait for explicit approval.
-8. Run `user-story-authoring`, write the result to `<spec-pack-root>/user-stories.md`, present it to the user, and wait for explicit approval before continuing.
+8. Run `user-story-authoring`, write the result to `<spec-pack-root>/user-stories.md`, stamp `source_artifacts.charter = <spec-pack-root>/charter.md`, present it to the user, and wait for explicit approval before continuing.
 9. If the user does not approve the story set, revise stories or mark unresolved points as `TODO: Confirm`, then present the updated artifact again and wait for explicit approval.
-10. Run `requirements`, write the result to `<spec-pack-root>/requirements.md`, present it to the user, and wait for explicit approval before continuing.
+10. Run `requirements`, write the result to `<spec-pack-root>/requirements.md`, stamp `source_artifacts.charter = <spec-pack-root>/charter.md` and `source_artifacts.user_stories = <spec-pack-root>/user-stories.md`, present it to the user, and wait for explicit approval before continuing.
 11. If the user does not approve the requirements, revise requirements or mark unresolved points as `TODO: Confirm`, then present the updated artifact again and wait for explicit approval.
-12. Run `technical-design`, write the result to `<spec-pack-root>/technical-design.md`, present it to the user, and wait for explicit approval before continuing.
+12. Run `technical-design`, write the result to `<spec-pack-root>/technical-design.md`, stamp `source_artifacts.charter = <spec-pack-root>/charter.md`, `source_artifacts.user_stories = <spec-pack-root>/user-stories.md`, and `source_artifacts.requirements = <spec-pack-root>/requirements.md`, present it to the user, and wait for explicit approval before continuing.
 13. If the user does not approve the technical design, revise design or mark unresolved points as `TODO: Confirm`, then present the updated artifact again and wait for explicit approval.
 14. Perform a cross-artifact consistency pass:
 
 - `charter.md` scope, actors, and success criteria support the story set
-- `user-stories.md` stays within approved charter scope
+- `user-stories.md` stays within approved charter scope and uses the shared five-field story contract
 - user-visible requirements map to approved stories
 - `requirements.md` does not re-own goals, non-goals, personas, or success criteria from `charter.md`
 - `requirements.md` maps to `technical-design.md`
@@ -143,7 +157,9 @@ Out of scope:
 - one stable authored spec-pack root is reused across the full pack
 - `charter.md`, `user-stories.md`, `requirements.md`, and `technical-design.md` all exist in the chosen authored spec-pack root
 - every authored artifact records `generated_by.root_skill = specification-authoring`
-- every authored artifact records the `source_artifacts` artifact-type keys required by this workflow
+- `user-stories.md` records exactly `source_artifacts.charter = <spec-pack-root>/charter.md`
+- `requirements.md` records exactly `source_artifacts.charter = <spec-pack-root>/charter.md` and `source_artifacts.user_stories = <spec-pack-root>/user-stories.md`
+- `technical-design.md` records exactly `source_artifacts.charter = <spec-pack-root>/charter.md`, `source_artifacts.user_stories = <spec-pack-root>/user-stories.md`, and `source_artifacts.requirements = <spec-pack-root>/requirements.md`
 - the user explicitly approved `charter.md` before `user-stories.md` was authored, unless the user explicitly waived stage-by-stage approval
 - the user explicitly approved `user-stories.md` before `requirements.md` was authored, unless the user explicitly waived stage-by-stage approval
 - the user explicitly approved `requirements.md` before `technical-design.md` was authored, unless the user explicitly waived stage-by-stage approval

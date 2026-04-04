@@ -10,17 +10,17 @@ generated_by:
   skill_graph:
     [TODO: skill-name]: []
 source_artifacts:
-  charter: .specs/[TODO: artifact-name]/charter.md
-  user_stories: .specs/[TODO: artifact-name]/user-stories.md
+  [TODO: workflow-owned lineage key]: [TODO: resolved artifact path]
 ---
 
 ## Functional Requirements
 
-- FR1.1: [TODO: required user-visible behavior]
+- FR1.1: [TODO: verifiable obligation derived from one or more approved user stories]
+  - Story traceability: [TODO: capability area and story title or `TODO: Confirm`]
 
 ## Non-Functional Requirements
 
-- NFR2.1: [TODO: quality, reliability, performance, privacy, or usability expectation]
+- NFR2.1: [TODO: quality, reliability, performance, privacy, safety, or usability expectation]
 
 ## Technical Constraints
 

@@ -2,7 +2,7 @@
 name: specification-reconstruction
 description: Orchestrate reconstruction of a specification pack from an existing codebase. Use when a user wants charter, user stories, requirements, and technical design recovered from implemented software.
 metadata:
-  version: 0.1.0
+  version: 0.2.0
   layer: coordination
   dependencies:
     - artifact-naming
@@ -33,12 +33,26 @@ metadata:
 
 ## Source Artifact Lineage
 
+This workflow owns the canonical `source_artifacts` lineage map for reconstructed artifacts.
+
 Use exactly these `source_artifacts` artifact-type keys in this workflow:
 
-- `charter.md` -> `{}`
+- `charter.md` -> `source_artifacts: {}`
 - `user-stories.md` -> `charter`
 - `requirements.md` -> `charter`, `user_stories`
 - `technical-design.md` -> `charter`, `user_stories`, `requirements`
+
+Resolved reconstructed paths should normally be:
+
+- `charter` -> `<spec-pack-root>/charter.md`
+- `user_stories` -> `<spec-pack-root>/user-stories.md`
+- `requirements` -> `<spec-pack-root>/requirements.md`
+
+For reconstructed user stories specifically:
+
+- `derive-user-stories` produces `user-stories.md`
+- the shared `write-user-stories` contract defines the story structure
+- this workflow defines that reconstructed `user-stories.md` records exactly `source_artifacts.charter = <spec-pack-root>/charter.md`
 
 Do not add extra source artifact-types casually.
 
@@ -89,13 +103,13 @@ Out of scope:
 4. Establish `root_skill = specification-reconstruction` for all reconstructed artifacts in this run.
 5. Inspect repository evidence relevant to the chosen scope, prioritizing source, tests, configs, and existing docs.
 6. Run `derive-charter`, write the result to `<spec-pack-root>/charter.md`, and review whether the inferred goals, non-goals, personas, and success criteria stay within what the codebase can plausibly support.
-7. Run `derive-user-stories`, write the result to `<spec-pack-root>/user-stories.md`, and review whether the inferred outcomes reflect observable behavior rather than desired future behavior.
-8. Run `derive-requirements`, write the result to `<spec-pack-root>/requirements.md`, and confirm the reconstructed contract stays supported by repository evidence and does not silently re-own charter content.
-9. Run `derive-technical-design`, write the result to `<spec-pack-root>/technical-design.md`, and confirm the as-built design explains the derived requirements without speculating beyond the codebase.
+7. Run `derive-user-stories`, write the result to `<spec-pack-root>/user-stories.md`, stamp `source_artifacts.charter = <spec-pack-root>/charter.md`, and review whether the inferred outcomes reflect observable behavior rather than desired future behavior.
+8. Run `derive-requirements`, write the result to `<spec-pack-root>/requirements.md`, stamp `source_artifacts.charter = <spec-pack-root>/charter.md` and `source_artifacts.user_stories = <spec-pack-root>/user-stories.md`, and confirm the reconstructed contract stays supported by repository evidence and does not silently re-own charter content.
+9. Run `derive-technical-design`, write the result to `<spec-pack-root>/technical-design.md`, stamp `source_artifacts.charter = <spec-pack-root>/charter.md`, `source_artifacts.user_stories = <spec-pack-root>/user-stories.md`, and `source_artifacts.requirements = <spec-pack-root>/requirements.md`, and confirm the as-built design explains the derived requirements without speculating beyond the codebase.
 10. Read [`references/gray-box-routing.md`](./references/gray-box-routing.md) only when the reconstruction pass finds a probable architectural seam that needs bounded follow-on analysis.
 11. Perform a cross-artifact consistency pass:
    - derived `charter.md` is supported by observable behavior and constraints
-   - derived `user-stories.md` fits the derived personas and implied scope boundaries
+   - derived `user-stories.md` fits the derived personas and implied scope boundaries and uses the shared five-field story contract
    - derived `requirements.md` is supported by repository evidence and aligns to derived stories
    - derived `technical-design.md` explains the implemented system
    - every reconstructed artifact carries canonical provenance and the `source_artifacts` artifact-type keys required by this workflow
@@ -133,7 +147,9 @@ Out of scope:
 - default workflow output paths match the reconstruction role defaults when the user does not override them
 - derived `charter.md`, `user-stories.md`, `requirements.md`, and `technical-design.md` all exist at the chosen destinations
 - every reconstructed artifact records `generated_by.root_skill = specification-reconstruction`
-- every reconstructed artifact records the `source_artifacts` artifact-type keys required by this workflow
+- reconstructed `user-stories.md` records exactly `source_artifacts.charter = <spec-pack-root>/charter.md`
+- reconstructed `requirements.md` records exactly `source_artifacts.charter = <spec-pack-root>/charter.md` and `source_artifacts.user_stories = <spec-pack-root>/user-stories.md`
+- reconstructed `technical-design.md` records exactly `source_artifacts.charter = <spec-pack-root>/charter.md`, `source_artifacts.user_stories = <spec-pack-root>/user-stories.md`, and `source_artifacts.requirements = <spec-pack-root>/requirements.md`
 - derived charter and stories reflect observed behavior rather than desired future intent
 - derived requirements and design are supported by repository evidence
 - weakly supported conclusions are marked explicitly with `TODO: Confirm`
