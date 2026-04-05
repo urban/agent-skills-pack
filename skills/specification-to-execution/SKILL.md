@@ -1,6 +1,6 @@
 ---
 name: specification-to-execution
-description: Orchestrate execution coordination artifacts from an approved specification pack. Use when a user wants an execution plan and local task tracking created from approved charter, user stories, requirements, and technical design.
+description: Orchestrate execution artifacts from an approved specification pack. Use when a user needs an execution plan and local task tracking created from approved specification context.
 metadata:
   version: 0.2.0
   layer: coordination

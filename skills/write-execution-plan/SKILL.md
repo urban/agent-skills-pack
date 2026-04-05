@@ -1,6 +1,6 @@
 ---
 name: write-execution-plan
-description: Write and validate canonical execution plan artifacts for implementation coordination. Use when a task creates, derives, reviews, or validates a plan that sequences approved charter, user stories, requirements, and technical design into executable work streams.
+description: Write and validate canonical execution-plan artifacts. Use when a task creates, derives, reviews, or validates implementation coordination from approved specification context.
 metadata:
   version: 0.2.0
   layer: foundational

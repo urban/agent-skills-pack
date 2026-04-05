@@ -7,9 +7,11 @@ Use this checklist before shipping a new or changed skill.
 Confirm that:
 
 - the `description` makes the skill easy to select at runtime
+- the `description` states stable ownership rather than today's workflow implementation details
 - runtime use does not depend on the reader already knowing the full package graph
 - the skill has clear boundaries
 - another agent could choose it without reading unrelated skills first
+- the `description` follows [skill-descriptions.md](./skill-descriptions.md)
 
 ## 2. Layer and boundary checks
 

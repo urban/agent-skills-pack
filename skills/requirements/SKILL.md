@@ -1,6 +1,6 @@
 ---
 name: requirements
-description: Produce implementation-ready requirements artifacts from an approved charter, approved user stories, and repository evidence. Use when a user wants product obligations, constraints, and dependencies defined before design or coding.
+description: Produce requirements artifacts from approved product framing, approved user stories, and repository context. Use when a user needs product obligations, constraints, and dependencies defined before technical design or implementation.
 metadata:
   version: 0.2.0
   layer: specialist

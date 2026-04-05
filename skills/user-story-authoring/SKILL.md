@@ -1,6 +1,6 @@
 ---
 name: user-story-authoring
-description: Produce actor-first user-stories artifacts from approved product framing and relevant repository context. Use when a user wants high-discipline user stories authored before detailed requirements, design, or execution planning.
+description: Produce user-stories artifacts from approved product framing and relevant repository context. Use when a user needs user-visible behavior captured before detailed requirements, technical design, or execution planning.
 metadata:
   version: 0.2.0
   layer: specialist

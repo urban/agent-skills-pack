@@ -34,6 +34,8 @@ Every `SKILL.md` must define:
 - `description`
 - `metadata.layer`
 
+Write `description` as stable routing metadata rather than a mini workflow summary. Follow [`skill-descriptions.md`](./skill-descriptions.md) when creating or revising the one-line description.
+
 Add `metadata.dependencies` when the skill composes other skills or relies on shared contracts.
 
 Specialist skills must also define:
@@ -141,6 +143,28 @@ Use that split when writing skill instructions.
 - validators may operate on fully resolved runtime paths, but the skill contract should describe pack-local placement when that is the real contract
 - when describing specialist inputs, label upstream artifacts as context unless the specialist truly owns that framing
 - when describing coordination behavior, keep workflow framing at coordination rather than leaking it into child specialist rules
+
+## Description writing
+
+Treat the `description` field as the stable identity of the skill.
+
+It should make the skill easy to select at runtime without requiring the reader to know the whole package graph.
+
+Prefer descriptions that state:
+
+- what the skill owns
+- what source of truth or framing it works from when that matters
+- when to use it
+
+Avoid putting these in the one-line description:
+
+- exact child routing or workflow order
+- current dependency composition
+- validator or template names
+- optional helper guidance
+- full current consumer lists unless that boundary is intrinsic to the skill
+
+Use the layer-specific rules and examples in [`skill-descriptions.md`](./skill-descriptions.md) as the canonical guide.
 
 ## Progressive disclosure
 

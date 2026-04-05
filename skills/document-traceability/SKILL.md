@@ -1,6 +1,6 @@
 ---
 name: document-traceability
-description: Define canonical package-artifact frontmatter, deterministic skill provenance, source artifact lineage fields, and shared provenance validation for authored, reconstructed, and execution artifacts. Use when a skill writes or validates charter, user stories, requirements, technical design, execution plans, or task-tracking artifacts.
+description: Define canonical provenance and source-artifact lineage for package artifacts. Use when a skill creates or validates a package artifact that must carry deterministic frontmatter metadata.
 metadata:
   version: 0.2.0
   layer: foundational

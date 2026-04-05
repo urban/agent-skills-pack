@@ -1,6 +1,6 @@
 ---
 name: derive-requirements
-description: Reconstruct software requirements artifacts from repository code, tests, and reconstructed user stories. Use when a user wants implemented product behavior documented as requirements for an existing project.
+description: Reconstruct requirements artifacts from repository evidence and reconstructed user-visible behavior. Use when a user needs implemented product obligations documented for an existing system.
 metadata:
   version: 0.2.0
   layer: specialist

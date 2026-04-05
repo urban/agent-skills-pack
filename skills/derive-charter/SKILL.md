@@ -1,6 +1,6 @@
 ---
 name: derive-charter
-description: Reconstruct charter-form artifacts from repository code and tests. Use when a user wants goals, non-goals, personas, and success criteria recovered from implemented software with explicit uncertainty handling.
+description: Reconstruct charter artifacts from repository evidence. Use when a user needs implemented goals, boundaries, personas, and success criteria inferred from an existing system with explicit uncertainty.
 metadata:
   version: 0.2.0
   layer: specialist

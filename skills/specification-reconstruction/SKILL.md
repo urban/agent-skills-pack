@@ -1,6 +1,6 @@
 ---
 name: specification-reconstruction
-description: Orchestrate reconstruction of a specification pack from an existing codebase. Use when a user wants charter, user stories, requirements, and technical design recovered from implemented software.
+description: Orchestrate reconstruction of a specification pack from repository evidence. Use when a user needs charter, user-stories, requirements, and technical-design artifacts recovered from an existing system.
 metadata:
   version: 0.2.0
   layer: coordination

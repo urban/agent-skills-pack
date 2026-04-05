@@ -1,6 +1,6 @@
 ---
 name: artifact-naming
-description: Resolve and normalize stable artifact basenames. Use when a task needs deterministic naming for related artifacts without mixing naming into placement, authoring, or workflow logic.
+description: Resolve and normalize stable artifact basenames. Use when a workflow or skill needs deterministic naming without taking ownership of placement, filenames, or authoring.
 metadata:
   version: 0.1.0
   layer: foundational

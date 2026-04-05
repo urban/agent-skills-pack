@@ -1,6 +1,6 @@
 ---
 name: write-requirements
-description: Write and validate canonical software requirements artifacts. Use when a task creates, derives, reviews, or validates requirements and needs stable section order, numbering, traceability from user stories, and uncertainty handling for downstream design and planning.
+description: Write and validate canonical requirements artifacts. Use when a task creates, derives, reviews, or validates product obligations that must stay stable for downstream design and planning.
 metadata:
   version: 0.2.0
   layer: foundational

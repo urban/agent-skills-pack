@@ -1,6 +1,6 @@
 ---
 name: specification-authoring
-description: Orchestrate an authored specification pack for a new product or major feature. Use when a user wants charter, user-story, requirements, and technical-design artifacts created before downstream coordination or implementation.
+description: Orchestrate authored specification work for a new product or major feature. Use when a user needs a coordinated charter, user-stories, requirements, and technical-design pack created from approved product framing.
 metadata:
   version: 0.2.0
   layer: coordination

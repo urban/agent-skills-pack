@@ -1,6 +1,6 @@
 ---
 name: write-user-stories
-description: Write and validate canonical user-stories artifacts with shared actor-situation-action-outcome-observation structure. Use when a task creates, derives, reviews, or validates user stories that must stay compatible across authoring, reconstruction, and downstream specification work.
+description: Write and validate canonical user-stories artifacts. Use when a task creates, derives, reviews, or validates user-visible behavior documentation that must stay compatible across workflows.
 metadata:
   version: 0.2.0
   layer: foundational

@@ -1,6 +1,6 @@
 ---
 name: technical-design
-description: Produce technical design artifacts from approved charter, user stories, requirements, and repository evidence. Use when a user wants architecture, boundaries, and implementation strategy defined before coding.
+description: Produce technical-design artifacts from approved specification context and repository evidence. Use when a user needs architecture, boundaries, interfaces, and implementation strategy documented before coding.
 metadata:
   version: 0.2.0
   layer: specialist

@@ -1,6 +1,6 @@
 ---
 name: charter
-description: Produce charter artifacts from product intent and repository context. Use when a user wants a scope baseline with goals, non-goals, personas, and success criteria.
+description: Produce charter artifacts from product intent and relevant repository context. Use when a user needs approved scope, goals, non-goals, personas, and success criteria captured for specification work.
 metadata:
   version: 0.2.0
   layer: specialist

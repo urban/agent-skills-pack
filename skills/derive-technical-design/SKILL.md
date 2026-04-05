@@ -1,6 +1,6 @@
 ---
 name: derive-technical-design
-description: Reconstruct technical design artifacts from repository code, tests, system structure, and reconstructed user-story behavior. Use when a user wants the as-built architecture and implementation strategy documented for an existing project.
+description: Reconstruct technical-design artifacts from repository evidence and reconstructed specification context. Use when a user needs as-built architecture, boundaries, and implementation strategy documented for an existing system.
 metadata:
   version: 0.2.0
   layer: specialist

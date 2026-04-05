@@ -1,6 +1,6 @@
 ---
 name: write-task-tracking
-description: Write and validate canonical local task-tracking artifacts derived from execution plans. Use when a task turns an approved plan into grouped tracer-bullet implementation tasks with explicit status, dependencies, and plan traceability.
+description: Write and validate canonical local task-tracking artifacts. Use when a task creates, derives, reviews, or validates execution tasks from an approved plan.
 metadata:
   version: 0.2.0
   layer: foundational

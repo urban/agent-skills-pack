@@ -1,6 +1,6 @@
 ---
 name: write-charter
-description: Write and validate canonical charter artifacts. Use when a task creates, reviews, or validates the goals, non-goals, personas, and success criteria that define the approved scope baseline for a specification pack.
+description: Write and validate canonical charter artifacts. Use when a task creates, derives, reviews, or validates scope-baseline documentation for a specification pack.
 metadata:
   version: 0.2.0
   layer: foundational

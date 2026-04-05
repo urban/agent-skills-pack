@@ -1,6 +1,6 @@
 ---
 name: execution-planning
-description: Produce execution-plan artifacts from approved charter, user stories, requirements, and technical design. Use when a user wants implementation coordination documented before coding starts.
+description: Produce execution-plan artifacts from an approved specification pack. Use when a user needs implementation coordination documented before coding begins.
 metadata:
   version: 0.2.0
   layer: specialist

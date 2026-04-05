@@ -1,6 +1,6 @@
 ---
 name: task-generation
-description: Break an execution plan into grouped tracer-bullet tasks with explicit dependencies and local tracking. Use when a user wants an approved implementation plan decomposed into execution-ready tasks.
+description: Produce local task-tracking artifacts from an approved execution plan. Use when a user needs execution-ready tasks with explicit dependencies and plan traceability.
 metadata:
   version: 0.2.0
   layer: specialist

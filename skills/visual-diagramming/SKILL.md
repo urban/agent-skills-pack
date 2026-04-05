@@ -1,6 +1,6 @@
 ---
 name: visual-diagramming
-description: Select and author Mermaid diagrams that clarify systems, interactions, behavior, data relationships, and persona journeys. Use when an artifact needs a visual explanation that communicates faster than prose without drifting beyond the evidence.
+description: Select and author Mermaid diagrams that clarify systems, behavior, relationships, or journeys. Use when an artifact needs a visual explanation grounded in the available evidence.
 metadata:
   version: 0.1.0
   layer: foundational

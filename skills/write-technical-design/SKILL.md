@@ -1,6 +1,6 @@
 ---
 name: write-technical-design
-description: Write and validate canonical software technical design artifacts. Use when a task creates, derives, reviews, or validates architecture and implementation-strategy documentation that must stay compatible across authoring and reconstruction.
+description: Write and validate canonical technical-design artifacts. Use when a task creates, derives, reviews, or validates architecture and implementation strategy documentation that must stay compatible across workflows.
 metadata:
   version: 0.2.0
   layer: foundational

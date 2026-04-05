@@ -1,6 +1,6 @@
 ---
 name: effect-technical-design
-description: Define Effect-specific technical-design patterns for TypeScript systems, including decomposition-to-recomposition rules and abstraction-selection guidance for `Schema.Class`, plain `Schema`, `ServiceMap.Service`, `ServiceMap.Reference`, `Layer`, `LayerMap.Service`, `Toolkit.make`, feature read modules, runtime edge modules, and `Atom`. Use when a technical-design task targets an Effect application and needs architecture guidance beyond the generic design contract.
+description: Define Effect-specific technical design guidance for TypeScript systems. Use when a technical-design task targets an Effect application and needs shared architecture and boundary conventions.
 metadata:
   version: 0.1.0
   layer: foundational

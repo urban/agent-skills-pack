@@ -1,6 +1,6 @@
 ---
 name: gray-box-modules
-description: Define the shared contract for describing bounded gray-box modules in technical design. Use when a skill must name module boundaries, public contracts, invariants, lifecycle ownership, or reconstruction evidence without turning that guidance into a separate workflow.
+description: Define the shared contract for describing bounded gray-box modules in technical design. Use when a technical-design task needs durable module boundaries, contracts, invariants, or lifecycle ownership described.
 metadata:
   version: 0.1.0
   layer: foundational

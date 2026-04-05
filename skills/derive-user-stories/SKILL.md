@@ -1,6 +1,6 @@
 ---
 name: derive-user-stories
-description: Reconstruct evidence-based user-stories artifacts, capability areas, and stakeholder narratives from an existing codebase. Use when a user wants implemented user-facing outcomes inferred from repository code and tests.
+description: Reconstruct user-stories artifacts from repository evidence. Use when a user needs implemented user-visible behavior and capability areas inferred from an existing system.
 metadata:
   version: 0.2.0
   layer: specialist
