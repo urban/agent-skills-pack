@@ -106,6 +106,16 @@ Coordination may also use selected foundational leaf contracts when the concern 
 
 Coordination must not use foundational dependencies to bypass specialist artifact skills.
 
+This leaf model also applies to prose, not just metadata.
+
+Foundational skills should describe reusable capabilities and the triggers for using them, rather than routing to other foundational skills by exact package name. That keeps the architecture clean and also keeps foundational skills directly usable by an LLM or a human prompt without requiring package-graph knowledge.
+
+In practice:
+
+- foundational guidance should say what capability to apply and when
+- specialist and coordination skills may still compose other skills by exact name when explicit package composition is the point
+- exact foundational skill names are still appropriate in inventories, frontmatter, dependencies, file paths, and validator commands
+
 ## Ownership model for paths and names
 
 Treat artifact location as three separate concerns.

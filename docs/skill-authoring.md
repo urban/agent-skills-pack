@@ -75,6 +75,46 @@ Dependency direction is strict:
 - coordination may also use selected foundational leaf contracts only for workflow-wide coordination concerns such as naming, spec-pack root selection, or provenance assembly support
 - coordination must not use foundational dependencies to replace specialist artifact contracts
 
+## Foundational reference rule
+
+Treat foundational skills as reusable capability contracts, not as prose routers for other foundational skills.
+
+That rule exists for two reasons:
+
+- architectural clarity — foundational skills should stay leaf contracts in both `metadata.dependencies` and instructional prose
+- runtime agency — foundational skills should remain directly useful to an LLM or user prompt without requiring package-graph knowledge
+
+When foundational guidance refers to behavior that may also be owned by another foundational skill, describe:
+
+- the capability being used, or
+- the trigger for using that capability
+
+Do not write foundational prose as named-skill chaining such as:
+
+- `Use \`visual-diagramming\` when ...`
+- `Load \`document-traceability\` to ...`
+- `Use the \`artifact-naming\` skill for ...`
+
+Prefer wording like:
+
+- `Use Mermaid diagram-authoring guidance when a diagram explains the system faster than prose.`
+- `Validate canonical frontmatter with the shared provenance validator when the workflow stamps provenance.`
+- `Apply the shared artifact naming rules when one stable <project-name> is needed.`
+
+This keeps foundational skills useful in three ways at once:
+
+- specialist skills can depend on them as shared contracts
+- coordination skills can use them for workflow-wide concerns
+- an LLM can apply them selectively during work because the skill explains the capability and its trigger, not just an internal package name
+
+Exact foundational skill names are still allowed where they are part of package structure rather than routing prose, such as:
+
+- frontmatter `name`
+- `metadata.dependencies`
+- exact file paths
+- validator commands
+- package inventories and architecture docs
+
 ## Framing and context rules
 
 Use these distinctions when writing a skill.

@@ -44,3 +44,27 @@ The package should be understandable in two ways at once:
 
 - a human maintainer can see what each skill owns and why
 - an agent can load the smallest set of rules needed to do the job correctly
+
+## Brief usage stories
+
+### Human maintainer
+
+A human uses `agent-skills-pack` to understand what skills exist, what each one owns, how they compose, and how to change the package without breaking reversibility, provenance, or layer boundaries.
+
+Typical goals:
+
+- decide whether to add a new skill or split an existing one
+- update a `SKILL.md` file without drifting from the layer model
+- review whether a workflow still preserves canonical artifact contracts
+- trace why an emitted artifact has the structure, provenance, and lineage it does
+
+### LLM or coding agent
+
+An LLM uses `agent-skills-pack` as selective runtime guidance. It should be able to load only the package-wide rules and the small set of skills needed for the current task, then apply those contracts directly while producing or validating artifacts.
+
+Typical goals:
+
+- choose the right coordination, specialist, or foundational skill for the task
+- apply foundational capabilities selectively during work without needing the full package graph
+- produce artifacts that stay compatible with shared templates, validators, and provenance rules
+- reconstruct or author specification artifacts while keeping framing, context, and lineage boundaries intact

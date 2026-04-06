@@ -38,6 +38,10 @@ Typical examples:
 
 Foundational skills should be reusable leaves. They may own shared naming and normalization such as `<project-name>` resolution, shared metadata shape, validators, templates, and provenance assembly mechanics. They must not own workflow-specific spec-pack roots, specialist-owned filenames, or workflow-level lineage policy.
 
+When writing foundational guidance, describe the capability or trigger rather than routing to another foundational skill by exact name. This keeps foundational skills usable as standalone capability contracts that an LLM can apply selectively during work.
+
+The literal names in the example list above are still appropriate here because this document is classifying package structure, not teaching foundational prose style.
+
 ### Specialist
 
 Use this layer when the skill applies foundational contracts within one bounded responsibility.
