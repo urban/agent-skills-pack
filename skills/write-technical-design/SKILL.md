@@ -2,7 +2,7 @@
 name: write-technical-design
 description: Write and validate canonical technical-design artifacts. Use when a task creates, derives, reviews, or validates architecture and implementation strategy documentation that must stay compatible across workflows.
 metadata:
-  version: 0.2.0
+  version: 0.3.0
   layer: foundational
 ---
 
@@ -14,6 +14,9 @@ metadata:
 - Use Mermaid diagram-authoring guidance when a Mermaid diagram communicates structure, interaction, behavior, or data relationships faster than prose because technical design is for humans making implementation decisions.
 - Describe the system in terms of responsibilities, boundaries, interactions, and tradeoffs because component lists without relationships do not guide implementation.
 - Keep interfaces, data flow, and operational concerns concrete enough to implement because vague design prose fails downstream.
+- When observable, name the composition root, runtime profile, boundary types, resource ownership, and error model explicitly.
+- For derived design, record the actual abstractions and runtime escape hatches the code uses, even when they differ from preferred style.
+- Interface sections should include accepted grammars, validation rules, and boundary errors when they materially shape callers.
 - Use prose around diagrams to add constraints, assumptions, exceptions, and tradeoffs; do not paraphrase the diagram.
 - Capture risks and tradeoffs explicitly because those decisions are part of the design contract.
 - Mark unresolved high-impact details as `TODO: Confirm` instead of filling gaps with optimism.
@@ -52,8 +55,12 @@ A valid technical-design artifact must include these sections in this order:
 Minimum content expectations:
 
 - canonical frontmatter shape when provenance is stamped for the workflow
-- a concrete architecture summary
+- a concrete architecture summary that names the runtime model and composition root when observable
 - at least one named component or subsystem
+- named components include concrete boundary types when observable
+- interfaces and contracts include accepted grammars, validation rules, and error surfaces when they materially affect callers
+- failure and recovery includes typed versus thrown failures, degraded modes, and operator-visible recovery paths when present
+- implementation strategy explains recomposition sites and ownership, not only rollout prose
 - explicit testing strategy
 - explicit risks and tradeoffs
 - a `### Context Flowchart` subsection using `flowchart`, `Not needed:`, or `TODO: Confirm`
@@ -83,24 +90,27 @@ Output:
    - user-story `Outcome` shapes success criteria the architecture must preserve
    - user-story `Observation` shapes externally visible signals, state transitions, or interaction feedback that design must support
    - requirements shape explicit obligations, constraints, and contracts
-4. Define major components or subsystems and state their responsibilities and interactions.
-5. Use Mermaid diagram-authoring guidance to fill the required diagram slots with either the right Mermaid diagram, a `Not needed:` rationale, or `TODO: Confirm` when applicability is unresolved.
-6. Describe data flow, interfaces, integration points, and failure handling in enough detail to guide implementation.
-7. Record security, reliability, performance, implementation strategy, and testing strategy decisions.
-8. Surface risks, tradeoffs, and unresolved questions rather than burying them in narrative.
-9. For derived design, separate observed architecture from inferred intent and use `TODO: Confirm` for weak conclusions.
-10. Validate the finished artifact with [`scripts/validate_technical_design.sh`](./scripts/validate_technical_design.sh).
+4. Distinguish runtime edges, domain or service boundaries, parser or decoder boundaries, validator boundaries, and integration adapters before filling sections.
+5. Define major components or subsystems and state their responsibilities, boundary types, ownership, and interactions.
+6. Use Mermaid diagram-authoring guidance to fill the required diagram slots with either the right Mermaid diagram, a `Not needed:` rationale, or `TODO: Confirm` when applicability is unresolved.
+7. Describe data flow, interfaces, integration points, grammars, validation rules, and failure handling in enough detail to guide implementation.
+8. Record security, reliability, performance, implementation strategy, resource ownership, and testing strategy decisions.
+9. Surface risks, tradeoffs, and unresolved questions rather than burying them in narrative.
+10. For derived design, separate observed architecture from inferred intent and use `TODO: Confirm` for weak conclusions.
+11. Validate the finished artifact with [`scripts/validate_technical_design.sh`](./scripts/validate_technical_design.sh).
 
 ## Gotchas
 
 - If the document repeats charter, user-story, or requirements content instead of explaining boundaries and interactions, implementers still have to invent the architecture. Reference upstream artifacts, then spend the document on solution shape.
-- If components are listed without owned responsibilities, the design becomes a directory tour rather than a system model. Name what each component owns and how it interacts with others.
+- If components are listed without boundary type, owned capability, or ownership, the design becomes a directory tour rather than a system model. Name what each component owns and how it interacts with others.
+- If interfaces omit accepted grammars, validation rules, or boundary errors, important contracts stay implicit and change risk hides until coding. Make those seams explicit when they matter.
 - If interfaces and data flow stay vague, teams discover incompatible assumptions only during coding. Make boundary contracts and major data movement explicit.
 - If you add a diagram and then repeat it in prose, the document gets longer without adding signal. Use the surrounding text for constraints, caveats, and decisions the diagram cannot show.
 - If you silently skip a required diagram slot because the system seems simple, validation will fail and reviewers will not know whether the omission was intentional. Fill every slot with a diagram, `Not needed:`, or `TODO: Confirm`.
+- If implementation strategy ignores composition roots, provide sites, or resource ownership, Effect and multi-boundary designs become too vague to guide change work. Name recomposition and ownership explicitly.
 - If implementation strategy turns into a task list, planning gets duplicated and the design ages badly. Explain rollout approach and sequencing constraints, not every work item.
 - If derived design smooths over contradictions in the codebase, later planning treats speculation as architecture fact. Report implemented reality and mark weak seams `TODO: Confirm`.
-- If failure and recovery strategy is skipped, reliability bugs get deferred until production because no one owned them in design. Capture degraded modes, error handling, and recovery paths explicitly.
+- If failure and recovery strategy is skipped, reliability bugs get deferred until production because no one owned them in design. Capture degraded modes, typed and thrown failures, and recovery paths explicitly.
 - If risks and tradeoffs are generic, reviewers cannot challenge the real decision points. Record the concrete tensions this design is actually choosing between.
 - If workflow lineage rules are embedded here, the foundational contract stops being reusable across authoring and reconstruction. Leave workflow-specific `source_artifacts` policy to coordination.
 - If design ignores story `Situation` or `Observation`, the architecture may satisfy happy-path behavior while missing triggers, feedback, and boundary handling. Carry those signals forward.
@@ -118,12 +128,17 @@ Output:
 - Canonical frontmatter passes shared provenance validation when the workflow stamps provenance.
 - All required sections exist and are in the correct order.
 - Architecture and implementation strategy are both present.
+- Runtime model and composition root are present when observable.
 - At least one component or subsystem is named explicitly.
-- Testing strategy and risks/tradeoffs are explicit.
+- Named components include boundary type and owned capability when observable.
+- Validation and error seams are explicit when source-backed.
+- Resource and lifecycle ownership is explicit when it materially affects behavior.
+- Testing strategy and risks or tradeoffs are explicit.
 - All four required diagram slots exist and each uses the expected Mermaid type, `Not needed:`, or `TODO: Confirm`.
 - User-story behavior influences interfaces, triggers, state, or feedback where relevant rather than being copied verbatim.
 - Mermaid diagrams are chosen to clarify rather than decorate and their prose does not simply restate them.
 - The artifact remains technical design rather than a task list or code dump.
+- Direct runtime escape hatches are documented when relevant.
 - Unknown high-impact details are marked `TODO: Confirm`.
 
 ## Deterministic Validation

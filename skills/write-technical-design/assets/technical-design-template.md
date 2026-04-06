@@ -13,14 +13,19 @@ source_artifacts:
   [TODO: workflow-owned lineage key]: [TODO: resolved artifact path]
 ---
 
+> For derived design, recover the runtime architecture the code proves. Name execution-relevant constraints, ownership, and escape hatches without turning the document into a directory tour.
+
 ## Architecture Summary
 
-[TODO: summarize the system shape, the main architectural approach, and the user-visible behaviors the design must support.]
+- Runtime profile: [TODO: CLI-only / server-only / browser-only / multi-runtime / `TODO: Confirm`]
+- Composition root: [TODO: entrypoint, main layer, or `TODO: Confirm`]
+- Main execution model: [TODO: main loop, request flow, batch run, or other observed model]
+- Summary: [TODO: summarize the system shape, the main architectural approach, and the user-visible behaviors the design must support]
 
 ## System Context
 
 - [TODO: upstream system, user surface, runtime environment, or external boundary]
-- Story/requirements traceability: [TODO: relevant capability areas, story titles, or requirement IDs]
+- Story or requirements traceability: [TODO: relevant capability areas, story titles, or requirement IDs]
 
 ### Context Flowchart
 
@@ -48,14 +53,16 @@ Or:
 
 ### [TODO: Component name]
 
-- Responsibility: [TODO: owned behavior]
+- Boundary type: [TODO: command handler / service / layer / parser / validator / adapter]
+- Owned capability: [TODO: bounded responsibility]
+- Hidden depth: [TODO: policy, workflow, or lifecycle complexity hidden behind the boundary]
 - Inputs: [TODO: upstream inputs]
 - Outputs: [TODO: downstream outputs]
 - Story impact: [TODO: relevant story behavior or requirement IDs]
 
 ## Data Model and Data Flow
 
-- Entities: [TODO: main entities or records]
+- Entities: [TODO: main entities, records, or document variants]
 - Flow: [TODO: how data moves through the system]
 - Observation support: [TODO: how visible outcomes, feedback, or state signals are produced]
 
@@ -72,7 +79,10 @@ Or:
 
 ## Interfaces and Contracts
 
-- [TODO: API, service, event, storage, or module contract]
+- Interface: [TODO: API, service, event, storage, or module contract]
+- Accepted input grammar: [TODO: CLI, URL, file, schema, or other grammar rule]
+- Validation rules: [TODO: strict, tolerant, required fields, or boundary checks]
+- Boundary errors: [TODO: tagged errors, schema errors, thrown errors, or `TODO: Confirm`]
 - Trigger and boundary conditions: [TODO: relevant situations, preconditions, or edge cases]
 
 ### Interaction Diagram
@@ -89,12 +99,12 @@ Or:
 
 ## Integration Points
 
-- [TODO: integration point and expectation]
+- [TODO: integration point, protocol, and expectation]
 
 ## Failure and Recovery Strategy
 
-- [TODO: failure mode and handling strategy]
-- Boundary behavior: [TODO: visible failure conditions, degraded modes, or recovery observations]
+- Error model: [TODO: tagged errors, schema errors, thrown errors, or `TODO: Confirm`]
+- Degraded modes and recovery: [TODO: visible failure conditions, fallback behavior, retries, or recovery observations]
 
 ## Security, Reliability, and Performance
 
@@ -102,12 +112,15 @@ Or:
 
 ## Implementation Strategy
 
-- [TODO: implementation approach, sequencing assumptions, and boundary choices]
+- Recomposition sites: [TODO: composition root, provide sites, or layer assembly points]
+- Resource ownership: [TODO: temp dirs, child processes, scoped resources, or `Not needed`]
+- Direct runtime escape hatches: [TODO: direct Node or Bun APIs, thrown errors, or `Not needed`]
+- Strategy: [TODO: implementation approach, sequencing assumptions, and boundary choices]
 
 ## Testing Strategy
 
 - [TODO: unit, integration, end-to-end, or contract testing approach]
-- Verification focus: [TODO: how key outcomes and observations will be verified]
+- Verification focus: [TODO: how key outcomes, grammars, and observations will be verified]
 
 ## Risks and Tradeoffs
 

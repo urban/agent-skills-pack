@@ -13,30 +13,32 @@ source_artifacts:
   [TODO: workflow-owned lineage key]: [TODO: resolved artifact path]
 ---
 
+> For derived requirements, recover implementation-enforced constraints that materially shape execution. Phrase them as verifiable obligations, not implementation trivia.
+
 ## Functional Requirements
 
-- FR1.1: [TODO: verifiable obligation derived from one or more approved user stories]
+- FR1.1: [TODO: command group, alias, shared flag, operator-visible behavior, no-op behavior, selection behavior, or install/update/remove obligation]
   - Story traceability: [TODO: capability area and story title or `TODO: Confirm`]
 
 ## Non-Functional Requirements
 
-- NFR2.1: [TODO: quality, reliability, performance, privacy, safety, or usability expectation]
+- NFR2.1: [TODO: runtime model, logging behavior, ordering guarantee, tolerant versus strict behavior, staging behavior, safety behavior, or other execution-relevant quality]
 
 ## Technical Constraints
 
-- TC3.1: [TODO: platform, compliance, stack, delivery, or compatibility constraint]
+- TC3.1: [TODO: accepted URL or CLI grammar, shared flag semantics, layer rule, metadata variant, role metadata requirement, path or layout assumption, or framework or runtime constraint]
 
 ## Data Requirements
 
-- DR4.1: [TODO: data shape, retention, validation, ownership, or lifecycle requirement]
+- DR4.1: [TODO: frontmatter shape, required metadata, schema variant, tolerant versus strict parsing rule, source-classification shape, ownership, or lifecycle requirement]
 
 ## Integration Requirements
 
-- IR5.1: [TODO: internal or external integration requirement]
+- IR5.1: [TODO: filesystem, git diff, GitHub codeload, child-process, bundled asset, or other integration requirement]
 
 ## Dependencies
 
-- DEP6.1: [TODO: dependency, prerequisite, or external system]
+- DEP6.1: [TODO: Bun, git, network access, packaged asset, fixed library, runtime integration, or other operational prerequisite]
 
 ## Further Notes
 

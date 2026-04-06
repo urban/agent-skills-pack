@@ -2,7 +2,7 @@
 name: gray-box-modules
 description: Define the shared contract for describing bounded gray-box modules in technical design. Use when a technical-design task needs durable module boundaries, contracts, invariants, or lifecycle ownership described.
 metadata:
-  version: 0.1.0
+  version: 0.2.0
   layer: foundational
 ---
 
@@ -44,6 +44,7 @@ Minimum output expectations:
 - dependency composition explains what the module relies on and where wiring responsibility lives
 - lifecycle ownership is explicit when resources, workers, subscriptions, or scoped cleanup matter
 - reconstruction claims separate observed evidence from inference
+- derived module claims cite evidence such as composition-root registration, explicit layer provisioning, stable public methods, tagged errors, dedicated tests, distinct tolerant versus strict modes, or isolated lifecycle and resource ownership when those signals exist
 
 Use the bundled references only when the task specifically needs Effect guidance. Do not load them for non-Effect technical design work.
 
@@ -55,7 +56,7 @@ Use the bundled references only when the task specifically needs Effect guidance
 4. Record invariants, validation, failure handling, dependency composition, and lifecycle ownership that materially affect that boundary.
 5. Describe boundary-test expectations that lock caller-visible behavior without locking helper choreography.
 6. If the design is authored, push toward gray-box modules only where the capability and lifecycle are durable.
-7. If the design is derived, verify the module claim with concrete evidence such as stable entrypoints, dedicated tests, isolated lifecycle control, cohesive ownership, or explicit wiring.
+7. If the design is derived, verify the module claim with concrete evidence such as stable entrypoints, composition-root registration, explicit layer provisioning, stable public methods, tagged errors, dedicated tests, distinct tolerant versus strict paths, isolated lifecycle control, cohesive ownership, or explicit wiring.
 8. Mark any weak seam or uncertain intent as `TODO: Confirm`.
 9. Load the Effect references only for Effect-specific boundary, lifecycle, testing, or deep-module questions.
 
@@ -65,6 +66,8 @@ Use the bundled references only when the task specifically needs Effect guidance
 - If the public contract mirrors internal helper flow, refactors become breaking changes on paper even when callers do not care. Keep the contract smaller than the implementation it hides.
 - If authored design skips invariants and lifecycle ownership, implementers guess where cleanup, retries, or background work live and the boundary rots immediately. State those responsibilities up front.
 - If derived design infers module intent from naming alone, you end up documenting an architecture that never really existed. Require evidence like dedicated tests, stable entrypoints, or explicit wiring.
+- If tolerant and strict paths are merged into one vague boundary, important caller-visible contracts disappear. Keep materially different modes explicit.
+- If service interfaces are named without public methods or error contracts, the module claim stays too weak to guide change work. Name the callable seam and failure model.
 - If tests assert queue names, batching groups, or helper call order, they freeze internals and block replacement. Test caller-visible behavior and critical invariants instead.
 - If you say a module exists but never name the complexity it hides, the boundary is probably just a convenience grouping. Explain the hidden policy, workflow, or lifecycle depth.
 - If uncertainty gets polished into confident prose, later skills treat speculation as fact and compound the error. Use `TODO: Confirm` for weak seams.
@@ -88,6 +91,8 @@ Use the bundled references only when the task specifically needs Effect guidance
 - The output reads as a foundational contract, not as a role-specific workflow.
 - Boundary, owned capability, contract, invariants, lifecycle, and dependency composition are all explicit.
 - Authored technical design guidance pushes toward real bounded capabilities, not generic decomposition.
-- Derived technical design guidance requires evidence before naming a module boundary.
+- Derived module claims cite caller-visible seams and supporting evidence rather than folder layout.
+- Boundary contracts include methods, inputs, outputs, and errors when they materially shape callers.
+- Resource and lifecycle ownership is explicit when present.
 - Weakly supported claims are marked `TODO: Confirm`.
 - Effect-specific details remain in references instead of bloating the main contract.

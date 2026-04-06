@@ -2,7 +2,7 @@
 name: effect-technical-design
 description: Define Effect-specific technical design guidance for TypeScript systems. Use when a technical-design task targets an Effect application and needs shared architecture and boundary conventions.
 metadata:
-  version: 0.1.0
+  version: 0.2.0
   layer: foundational
 ---
 
@@ -15,6 +15,9 @@ metadata:
 - Treat a read module as a design role, not an Effect API: a small read-only module that exposes reusable semantic reads, hides storage and projection details, and does not own write policy, retries, resource lifecycle, or runtime wiring.
 - Separate capability ownership from observation ownership, because services and layers own infrastructure while read modules and `Atom` expose reads and feature-facing state.
 - Recompose modules through a small number of explicit runtime seams, because ad hoc `provide` chains hide the real architecture.
+- In derived design, describe the Effect abstractions actually used before recommending alternatives.
+- Recover concrete Effect architecture details such as `Layer.mergeAll`, `Layer.provideMerge`, `ServiceMap.Service`, `Schema.TaggedErrorClass`, `effect/unstable/cli`, scoped resources, and runtime helpers when the repository shows them.
+- Capture where the implementation uses direct Node or Bun APIs, direct child-process calls, or direct thrown errors instead of idealized Effect-only boundaries.
 - Mark weakly supported design claims as `TODO: Confirm` instead of turning hunches into architecture.
 
 ## Constraints
@@ -25,6 +28,7 @@ metadata:
 - Do not collapse domain contracts, capability boundaries, and reactive read seams into one module category.
 - Do not mirror repository folders as architecture unless the caller-visible boundary is real.
 - Do not describe recomposition as “just provide the layers”; name concrete composition points and ownership.
+- Do not rewrite a derived architecture into the preferred architecture if the code proves a different implementation.
 
 ## Requirements
 
@@ -34,12 +38,13 @@ Use this skill to supply:
 - recomposition rules for wiring those modules into one runtime architecture
 - abstraction-selection guidance for `Schema.Class`, plain `Schema`, `ServiceMap.Service`, `ServiceMap.Reference`, `Layer`, `LayerMap.Service`, feature read modules, `Atom`, runtime edge modules, toolkits, and helpers
 - guardrails that keep technical designs focused on ownership instead of library enthusiasm
+- derived-design guidance that names the abstractions, runtime wiring, and escape hatches actually in use
 
 Inputs expected from the calling skill or task:
 
 - approved requirements or repo evidence
 - runtime context: CLI, server, browser, worker, or mixed
-- known integrations, persistence model, and UI/reactive state needs
+- known integrations, persistence model, and UI or reactive state needs
 - unresolved boundary questions that need explicit decisions
 
 Outputs to the calling skill:
@@ -47,11 +52,13 @@ Outputs to the calling skill:
 - Effect-specific module decomposition guidance
 - Effect-specific recomposition guidance
 - abstraction rationale tied to ownership and lifecycle
+- observed architecture notes for derived design
 - `TODO: Confirm` markers for unresolved high-impact seams
 
 In scope:
 
 - Effect-aware technical design authoring guidance
+- Effect-aware technical design reconstruction guidance
 - boundary selection for common Effect abstractions
 - translating implementation evidence into reusable architecture rules
 
@@ -84,12 +91,17 @@ Resolve these before finalizing guidance. If evidence is missing, keep the item 
 ## Workflow
 
 1. Confirm the technical-design task is for a TypeScript system using Effect.
-2. Identify the decision type: decomposition, recomposition, or abstraction selection.
-3. Load [`references/decompose-recompose.md`](./references/decompose-recompose.md) to break the system into candidate modules by owned capability, lifecycle, contract, and runtime seam.
-4. Load [`references/abstraction-selection.md`](./references/abstraction-selection.md) to choose the smallest stable abstraction for each candidate boundary.
-5. Load [`references/pattern-notes.md`](./references/pattern-notes.md) only when you need reusable pattern reminders to support or reject a design choice.
-6. Return guidance in ownership terms: what the module owns, what it hides, what callers rely on, how it recomposes, and why a heavier or lighter abstraction would be wrong.
-7. Mark unresolved high-impact seams as `TODO: Confirm`.
+2. Inspect imports, runtime wiring, and entrypoints before proposing abstractions.
+3. Identify the decision type: decomposition, recomposition, abstraction selection, or derived-architecture recovery.
+4. For decomposition or recomposition work, load [`references/decompose-recompose.md`](./references/decompose-recompose.md) to break the system into candidate modules by owned capability, lifecycle, contract, and runtime seam.
+5. For abstraction selection work, load [`references/abstraction-selection.md`](./references/abstraction-selection.md) to choose the smallest stable abstraction for each candidate boundary.
+6. Load [`references/pattern-notes.md`](./references/pattern-notes.md) only when you need reusable pattern reminders to support or reject a design choice.
+7. For derived design, identify the actual abstractions and runtime composition in use, including services, layers, scoped resources, schema types, CLI wiring, and runtime helpers.
+8. Classify each observed abstraction by ownership, lifecycle, visibility to callers, and recomposition site.
+9. Note where the implementation bypasses preferred Effect conventions through direct Node or Bun APIs, direct thrown errors, or other escape hatches.
+10. Return guidance in observed-architecture and ownership terms first: what the module owns, what it hides, what callers rely on, how it recomposes, and why a heavier or lighter abstraction would be wrong.
+11. Add optional improvement notes only after the observed architecture is documented clearly.
+12. Mark unresolved high-impact seams as `TODO: Confirm`.
 
 ## Gotchas
 
@@ -99,12 +111,15 @@ Resolve these before finalizing guidance. If evidence is missing, keep the item 
 - If you use read module, schema contract, service, and runtime edge as interchangeable labels, the design reads organized but gives implementers no ownership map. Assign one primary boundary role per module.
 - If decomposition follows current folders instead of stable contracts, the design freezes accidents from today's repo and blocks cleaner recomposition later. Name modules by capability, lifecycle, and caller-visible contract.
 - If recomposition is vague, implementers scatter `Layer.provide` calls through runtime edges, atoms, and helpers until the runtime graph is unreadable. Name the few real composition sites explicitly.
+- If derived guidance rewrites the implementation into preferred architecture, reconstruction becomes fiction. Describe the abstractions actually in use before suggesting alternatives.
+- If direct runtime escape hatches are omitted, downstream planning misses real constraints around lifecycle, failure handling, and portability. Keep those escape hatches visible.
 
 ## Deliverables
 
 - reusable Effect-specific decomposition guidance for technical design work
 - reusable Effect-specific recomposition guidance for technical design work
 - a clear abstraction-selection guide for common Effect boundaries
+- observed-architecture notes for derived Effect designs
 - pattern notes for common Effect architectures
 - explicit `TODO: Confirm` handling for weak seams
 
@@ -119,5 +134,7 @@ Resolve these before finalizing guidance. If evidence is missing, keep the item 
 - the skill stays foundational and does not own the final artifact contract
 - guidance is framed in ownership, lifecycle, and recomposition terms
 - generic Effect syntax guidance is excluded in favor of referencing the Effect source code directly
+- derived guidance names the abstractions actually in use when the repository shows them
+- deviations from preferred Effect practice are documented as observed facts rather than silently erased
 - services, `Atom`, read modules, runtime edges, and schema contracts are not used interchangeably
 - missing high-impact evidence is marked `TODO: Confirm`
