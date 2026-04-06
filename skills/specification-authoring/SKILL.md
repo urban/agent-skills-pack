@@ -5,6 +5,7 @@ metadata:
   version: 0.2.0
   layer: coordination
   dependencies:
+    - document-traceability
     - artifact-naming
     - charter
     - user-story-authoring
