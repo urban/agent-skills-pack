@@ -34,7 +34,7 @@ metadata:
 
 ## Requirements
 
-A valid technical design artifact must include these sections in this order:
+A valid technical-design artifact must include these sections in this order:
 
 1. `Architecture Summary`
 2. `System Context`
@@ -107,7 +107,7 @@ Output:
 
 ## Deliverables
 
-- A Markdown technical design artifact with canonical frontmatter shape and section order.
+- A Markdown technical-design artifact with canonical frontmatter shape and section order.
 - Explicit architecture, component responsibilities, data flow, interfaces, operational concerns, and implementation strategy.
 - The four required diagram slots completed with Mermaid diagrams, `Not needed:` rationales, or `TODO: Confirm`, chosen with `visual-diagramming`.
 - A concrete testing strategy plus explicit risks and tradeoffs.

@@ -67,7 +67,7 @@ Output:
 
 ## Workflow
 
-1. Confirm the approved scope and identify the companion charter, user stories, requirements, and technical design artifacts.
+1. Confirm the approved scope and identify the companion charter, user stories, requirements, and technical-design artifacts.
 2. Draft from [`assets/plan-template.md`](./assets/plan-template.md) so section order stays canonical.
 3. Translate the approved specification into major implementation streams rather than flat tasks.
 4. Use user-story capability areas and story titles to shape stream boundaries and work clusters.

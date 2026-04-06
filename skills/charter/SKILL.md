@@ -57,7 +57,7 @@ Out of scope:
 
 ## Workflow
 
-1. Confirm the user wants a charter artifact before downstream specification or implementation work.
+1. Confirm the user needs charter artifacts captured from product intent before downstream specification or implementation work.
 2. Gather desired outcomes, goals, non-goals, personas / actors, and success signals.
 3. Inspect the repository only when existing code, integrations, or platform boundaries materially affect scope or success criteria.
 4. Draft `charter.md` using the `write-charter` contract rather than inventing a new structure.

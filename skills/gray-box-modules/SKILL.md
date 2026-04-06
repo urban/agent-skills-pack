@@ -71,7 +71,7 @@ Use the bundled references only when the task specifically needs Effect guidance
 
 ## Deliverables
 
-- A reusable contract for describing gray-box modules in technical design artifacts.
+- A reusable contract for describing gray-box modules in technical-design artifacts.
 - Explicit expectations for boundary, contract, invariants, lifecycle ownership, and hidden internals.
 - Evidence rules for authored versus derived module claims.
 - On-demand Effect references for tasks that need implementation-specific guidance.

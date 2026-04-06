@@ -97,7 +97,7 @@ Out of scope:
 
 ## Workflow
 
-1. Confirm the repository scope to analyze, defaulting to the whole repository when the user does not narrow it.
+1. Confirm the user needs reconstruction of a specification pack from repository evidence, then confirm the scope to analyze, defaulting to the whole repository when the user does not narrow it.
 2. Resolve `<project-name>` once with `artifact-naming`, honoring an explicit artifact slug or preferred basename when provided.
 3. Resolve the reconstruction spec-pack root once for the full run, defaulting to `.specs/<project-name>-reconstructed/` unless the user provides explicit destinations.
 4. Establish `root_skill = specification-reconstruction` for all reconstructed artifacts in this run.
@@ -114,7 +114,7 @@ Out of scope:
    - derived `technical-design.md` explains the implemented system
    - every reconstructed artifact carries canonical provenance and the `source_artifacts` artifact-type keys required by this workflow
    - weakly supported conclusions remain marked `TODO: Confirm`
-12. Deliver the reconstructed pack for documentation recovery, planning, or future implementation work.
+12. Deliver the reconstructed specification pack for documentation recovery, planning, or future implementation work.
 
 ## Gotchas
 

@@ -78,7 +78,7 @@ Use `source_artifacts: {}` when the active coordination workflow requires an emp
 
 ## Deliverables
 
-- canonical package-artifact frontmatter contract
+- canonical provenance and source-artifact lineage contract for package artifacts
 - deterministic provenance assembly rules
 - canonical `source_artifacts` field shape
 - shared provenance validator script

@@ -69,7 +69,7 @@ Out of scope:
 
 ## Workflow
 
-1. Confirm the user wants user stories authored after product framing and before requirements, design, or implementation work.
+1. Confirm the user needs user-stories artifacts from approved product framing before detailed requirements, technical design, or execution planning.
 2. Gather approved framing from available inputs and `./charter.md` when present.
 3. Determine the system purpose in user-facing terms.
 4. Identify and prioritize real actors before drafting any stories.

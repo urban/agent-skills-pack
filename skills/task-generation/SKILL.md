@@ -61,7 +61,7 @@ Out of scope:
 
 ## Workflow
 
-1. Confirm the user wants local implementation tasks created from an approved execution plan.
+1. Confirm the user needs local task-tracking artifacts created from an approved execution plan.
 2. Load the parent plan from `./execution-plan.md`, then read [`references/tracer-bullets.md`](./references/tracer-bullets.md).
 3. Extract implementation streams, work breakdown items, sequencing constraints, validation checkpoints, runtime-edge obligations, and upstream traceability anchors from the plan.
 4. Use companion specification artifacts only when task boundaries or dependencies need clarification.

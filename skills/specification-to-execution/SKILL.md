@@ -68,7 +68,7 @@ Inputs:
 - approved charter artifact
 - approved user stories artifact
 - approved requirements artifact
-- approved technical design artifact
+- approved technical-design artifact
 - repository context when local structure affects sequencing or task slicing
 - known constraints, milestones, dependencies, or validation expectations
 - optional explicit execution destination root
@@ -78,7 +78,7 @@ Outputs:
 
 - `.specs/<project-name>/execution-plan.md`
 - `.specs/<project-name>/execution-tasks.md`
-- one execution coordination pack aligned to the approved specification artifacts
+- one execution artifacts pack aligned to the approved specification artifacts
 
 In scope:
 
@@ -97,7 +97,7 @@ Out of scope:
 
 ## Workflow
 
-1. Confirm the user wants execution coordination artifacts created from an approved specification pack.
+1. Confirm the user needs execution artifacts created from an approved specification pack.
 2. Resolve `<project-name>` once with `artifact-naming`, honoring an explicit artifact slug or preferred basename when provided.
 3. Resolve the execution spec-pack root once for the full run, defaulting to `.specs/<project-name>/` unless the user provides an explicit destination.
 4. Establish `root_skill = specification-to-execution` for the execution artifacts in this run.
@@ -110,7 +110,7 @@ Out of scope:
    - runtime-edge tasks include both structural and behavior-verifying acceptance criteria
    - task groups and task references map back to the execution plan
    - unresolved sequencing or task-boundary issues remain marked `TODO: Confirm`
-8. Deliver the execution coordination pack for implementation.
+8. Deliver the execution artifacts pack for implementation.
 
 ## Gotchas
 
@@ -130,7 +130,7 @@ Out of scope:
 - explicit traceability from approved specification artifacts through plan and tasks
 - deterministic provenance and source-artifact lineage on both execution artifacts
 - explicit `TODO: Confirm` markers for unresolved execution ambiguity
-- an execution coordination pack ready for implementation
+- an execution artifacts pack ready for implementation
 
 ## Validation Checklist
 

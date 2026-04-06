@@ -59,7 +59,7 @@ Out of scope:
 
 ## Workflow
 
-1. Confirm analysis scope, defaulting to the full repository when the user does not narrow it.
+1. Confirm the user needs requirements artifacts reconstructed from repository evidence and user-visible behavior, then confirm analysis scope, defaulting to the full repository when the user does not narrow it.
 2. Inventory user-visible behaviors, interfaces, constraints, and dependencies from code and tests.
 3. Use reconstructed stories from `./user-stories.md` when available to preserve behavioral traceability.
 4. Infer missing rationale only as far as the evidence supports and mark weak points as `TODO: Confirm`.

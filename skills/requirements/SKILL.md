@@ -59,7 +59,7 @@ Out of scope:
 
 ## Workflow
 
-1. Confirm the user wants a requirements artifact after approved charter and approved user stories.
+1. Confirm the user needs requirements artifacts from approved product framing and approved user stories before technical design or implementation.
 2. Gather the approved charter, approved user stories, constraints, integrations, data rules, dependencies, and success boundaries that the requirements must satisfy from available inputs, `./charter.md`, and `./user-stories.md` when present.
 3. Inspect the repository only when existing code, integrations, or platform boundaries materially affect the requirements.
 4. Draft `requirements.md` using the `write-requirements` contract rather than inventing a new structure.

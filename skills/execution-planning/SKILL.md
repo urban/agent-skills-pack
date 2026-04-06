@@ -29,7 +29,7 @@ Turn an approved specification pack into an execution-oriented plan.
 
 - Output must be one Markdown artifact named `execution-plan.md`.
 - The artifact must stay compatible with the `write-execution-plan` contract.
-- `Scope Alignment` must reference the companion charter, user stories, requirements, and technical design artifacts.
+- `Scope Alignment` must reference the companion charter, user stories, requirements, and technical-design artifacts.
 - If the approved source artifacts describe a runtime edge, the plan must preserve operator-facing runtime behavior rather than reducing the work to package or command existence.
 - Do not restate full charter, copied five-field user stories, requirements, or technical design as if the plan owns them.
 - Do not turn the plan into commit-by-commit instructions, file inventories, or code snippets.
@@ -41,7 +41,7 @@ Inputs:
 - approved charter artifact
 - approved user stories artifact
 - approved requirements artifact
-- approved technical design artifact
+- approved technical-design artifact
 - repository context when local structure affects sequencing or validation
 - known constraints, dependencies, milestones, or validation expectations
 
@@ -66,7 +66,7 @@ Out of scope:
 
 ## Workflow
 
-1. Confirm the user wants an execution plan before coding and gather the approved companion artifacts.
+1. Confirm the user needs execution-plan artifacts from an approved specification pack before coding begins, then gather the approved companion artifacts.
 2. Inspect repository structure, integration points, and test surfaces when they materially affect sequencing or validation.
 3. Read the approved user stories for capability areas, boundary/failure stories, and observable outcomes.
 4. Read the approved requirements for concrete obligation IDs and verifiable constraints.

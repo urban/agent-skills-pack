@@ -55,7 +55,7 @@ Out of scope:
 
 ## Workflow
 
-1. Confirm analysis scope, defaulting to the full repository when the user does not narrow it.
+1. Confirm the user needs charter artifacts reconstructed from repository evidence, then confirm analysis scope, defaulting to the full repository when the user does not narrow it.
 2. Inventory user-visible surfaces, constraints, role boundaries, and measurable outcomes from code and tests.
 3. Infer candidate goals, non-goals, personas, and success criteria only as far as the evidence supports and mark weak conclusions as `TODO: Confirm`.
 4. Write `charter.md` to the chosen destination.

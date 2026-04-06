@@ -47,7 +47,7 @@ Inputs:
 
 Output:
 
-- one derived technical design artifact named `technical-design.md`
+- one derived technical-design artifact named `technical-design.md`
 
 In scope:
 
@@ -65,7 +65,7 @@ Out of scope:
 
 ## Workflow
 
-1. Confirm analysis scope, defaulting to the full repository when the user does not narrow it.
+1. Confirm the user needs technical-design artifacts reconstructed from repository evidence and specification context, then confirm analysis scope, defaulting to the full repository when the user does not narrow it.
 2. Inspect code, tests, configuration, and repo layout for architecture signals.
 3. Inventory major modules, interfaces, data flow, integrations, failure handling, and test surfaces.
 4. Use reconstructed stories from `./user-stories.md` and requirements from `./requirements.md` when available to preserve behavioral traceability.

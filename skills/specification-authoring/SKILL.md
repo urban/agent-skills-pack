@@ -92,13 +92,13 @@ In scope:
 Out of scope:
 
 - redefining specialist-level artifact contracts in this workflow
-- producing execution coordination artifacts
+- producing execution artifacts
 - doing implementation work
 - hiding unresolved scope or intent behind polished prose
 
 ## Workflow
 
-1. Confirm the user wants a specification pack authored before downstream coordination or implementation.
+1. Confirm the user needs authored specification work for a new product or major feature before downstream coordination or implementation.
 2. Resolve `<project-name>` once with `artifact-naming`, honoring an explicit artifact slug or preferred basename when provided.
 3. Resolve the authored spec-pack root once for the full run, defaulting to `.specs/<project-name>/` unless the user provides an explicit destination.
 4. Establish `root_skill = specification-authoring` for all authored artifacts in this run.

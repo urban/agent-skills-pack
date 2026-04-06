@@ -48,7 +48,7 @@ Inputs:
 
 Output:
 
-- one complete technical design artifact named `technical-design.md`
+- one complete technical-design artifact named `technical-design.md`
 
 In scope:
 
@@ -67,7 +67,7 @@ Out of scope:
 
 ## Workflow
 
-1. Confirm the user wants a technical design artifact and gather the approved charter, user stories, and requirements context.
+1. Confirm the user needs technical-design artifacts from approved specification context and repository evidence, then gather the approved charter, user stories, and requirements context.
 2. Inspect repository structure, code, and integration boundaries when existing implementation constrains the design.
 3. Identify major components, responsibilities, interfaces, operational seams, and runtime surfaces needed to satisfy the approved scope.
 4. Translate approved upstream behavior into design consequences:

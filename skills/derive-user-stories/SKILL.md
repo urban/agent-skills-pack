@@ -75,7 +75,7 @@ Out of scope:
 
 ## Workflow
 
-1. Define analysis scope, defaulting to the full repository when the user does not narrow it.
+1. Confirm the user needs user-stories artifacts reconstructed from repository evidence, then define analysis scope, defaulting to the full repository when the user does not narrow it.
 2. Inventory user-facing surfaces such as UI routes, API endpoints, CLI commands, workflows, and integrations.
 3. Trace those surfaces into handlers, services, and domain logic and collect `path:line` evidence.
 4. Use tests to strengthen or weaken confidence about each inferred outcome.
