@@ -2,7 +2,7 @@
 name: technical-design
 description: Produce technical-design artifacts from approved specification context and repository evidence. Use when a user needs architecture, boundaries, interfaces, and implementation strategy documented before coding.
 metadata:
-  version: 0.2.0
+  version: 0.2.1
   layer: specialist
   archetype: design
   domain: specification-authoring
@@ -18,7 +18,8 @@ metadata:
 - Keep this role focused on technical design because approved scope, actors, and success criteria belong in the charter, requirements own product obligations, and execution sequencing belongs in planning.
 - Produce the artifact as `technical-design.md`.
 - Use the `write-technical-design` contract for section order, content boundaries, shared validation, and diagram slot requirements because downstream planning expects that canonical shape.
-- Use `visual-diagramming` to choose Mermaid diagrams when architecture, interactions, behavior, or data relationships will be understood faster visually than through prose alone.
+- Use `visual-diagramming` to choose and author Mermaid diagrams when architecture, interactions, behavior, or data relationships will be understood faster visually than through prose alone.
+- When diagram wording, syntax safety, or slot-specific completeness is unclear, load the relevant `visual-diagramming` references instead of improvising local conventions.
 - Ground the design in approved charter, approved requirements, approved stories, and repository evidence because architecture without scope alignment becomes speculative.
 - Use approved upstream context from `./charter.md`, `./user-stories.md`, and `./requirements.md`.
 - Apply `gray-box-modules` only when the system exposes meaningful bounded capabilities with durable caller-visible seams.
@@ -78,11 +79,12 @@ Out of scope:
    - use requirements to formalize contracts, constraints, and implementation obligations
 5. If the target system uses Effect, load `../effect-technical-design/SKILL.md` before finalizing boundaries so decomposition, recomposition, and abstraction choices stay consistent with the shared Effect guidance.
 6. Use `visual-diagramming` to fill the four required diagram slots with either the expected Mermaid diagram, a `Not needed:` rationale, or `TODO: Confirm` when applicability is unresolved.
-7. Apply `gray-box-modules` only to capabilities with durable caller-visible boundaries; otherwise describe the observed structure without forcing the pattern.
-8. Draft `technical-design.md` using the `write-technical-design` contract.
-9. Record implementation strategy, testing strategy, risks, tradeoffs, and `TODO: Confirm` markers for unresolved high-impact design decisions.
-10. Validate with `bash ../write-technical-design/scripts/validate_technical_design.sh <resolved-technical-design-path>`.
-11. Deliver the draft and request approval before implementation proceeds.
+7. Load the relevant `visual-diagramming` references when syntax safety, interaction sequencing, flowchart mode, ERD scope, or state naming is unclear.
+8. Apply `gray-box-modules` only to capabilities with durable caller-visible boundaries; otherwise describe the observed structure without forcing the pattern.
+9. Draft `technical-design.md` using the `write-technical-design` contract.
+10. Record implementation strategy, testing strategy, risks, tradeoffs, and `TODO: Confirm` markers for unresolved high-impact design decisions.
+11. Validate with `bash ../write-technical-design/scripts/validate_technical_design.sh <resolved-technical-design-path>`.
+12. Deliver the draft and request approval before implementation proceeds.
 
 ## Gotchas
 

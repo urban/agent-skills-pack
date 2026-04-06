@@ -2,7 +2,7 @@
 name: derive-technical-design
 description: Reconstruct technical-design artifacts from repository evidence and reconstructed specification context. Use when a user needs as-built architecture, boundaries, and implementation strategy documented for an existing system.
 metadata:
-  version: 0.2.0
+  version: 0.2.1
   layer: specialist
   archetype: research
   domain: specification-reconstruction
@@ -17,7 +17,8 @@ metadata:
 - Treat code, tests, configuration, and repository structure as the primary evidence because this role documents the system that exists today.
 - Produce the artifact as `technical-design.md`.
 - Use the `write-technical-design` contract so the derived artifact stays compatible with authored technical design.
-- Use `visual-diagramming` to choose Mermaid diagrams when observed architecture, interactions, behavior, or data relationships will be understood faster visually than through prose alone.
+- Use `visual-diagramming` to choose and author Mermaid diagrams when observed architecture, interactions, behavior, or data relationships will be understood faster visually than through prose alone.
+- When diagram wording, syntax safety, or slot-specific completeness is unclear, load the relevant `visual-diagramming` references instead of inventing local conventions.
 - Distinguish observed architecture from inferred rationale because code often shows structure more clearly than intent.
 - Use context from `./charter.md`, `./user-stories.md`, and `./requirements.md` when they exist because reconstructed design should stay aligned to reconstructed framing, outcomes, and obligations.
 - Apply `gray-box-modules` only when repository evidence supports a real bounded capability with a caller-visible seam.
@@ -77,13 +78,14 @@ Out of scope:
    - use reconstructed requirements to anchor obligations and constraints the code appears to implement
 6. Evaluate whether any bounded capability meets the gray-box evidence threshold before documenting it as a module boundary.
 7. Use `visual-diagramming` to fill the four required diagram slots with either the expected Mermaid diagram, a `Not needed:` rationale, or `TODO: Confirm` when applicability is unresolved, while avoiding claims the evidence cannot support.
-8. Load `references/diagram-evidence.md` when diagram wording, slot applicability, or evidence thresholds are unclear.
-9. Draft the chosen destination with the `write-technical-design` contract.
-10. Write `technical-design.md` to the chosen destination.
-11. If the destination artifact already exists, create a timestamped backup in the same directory before overwrite.
-12. Mark inferred rationale, weak seams, or ambiguous ownership as `TODO: Confirm` rather than upgrading them to confident design facts.
-13. Validate with `bash ../write-technical-design/scripts/validate_technical_design.sh <resolved-technical-design-path>`.
-14. Deliver the artifact as as-built architecture documentation, not as a cleanup proposal.
+8. Load the relevant `visual-diagramming` references when syntax safety, interaction sequencing, flowchart mode, ERD scope, or state naming is unclear.
+9. Load `references/diagram-evidence.md` when diagram wording, slot applicability, or evidence thresholds are unclear.
+10. Draft the chosen destination with the `write-technical-design` contract.
+11. Write `technical-design.md` to the chosen destination.
+12. If the destination artifact already exists, create a timestamped backup in the same directory before overwrite.
+13. Mark inferred rationale, weak seams, or ambiguous ownership as `TODO: Confirm` rather than upgrading them to confident design facts.
+14. Validate with `bash ../write-technical-design/scripts/validate_technical_design.sh <resolved-technical-design-path>`.
+15. Deliver the artifact as as-built architecture documentation, not as a cleanup proposal.
 
 ## Gotchas
 

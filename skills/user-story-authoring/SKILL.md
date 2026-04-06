@@ -2,7 +2,7 @@
 name: user-story-authoring
 description: Produce user-stories artifacts from approved product framing and relevant repository context. Use when a user needs user-visible behavior captured before detailed requirements, technical design, or execution planning.
 metadata:
-  version: 0.2.0
+  version: 0.2.1
   layer: specialist
   archetype: planning
   domain: specification-authoring
@@ -21,6 +21,7 @@ metadata:
 - Ask for clarification when missing detail materially changes actors, situations, actions, outcomes, observations, or scope; otherwise continue and mark uncertainty as `TODO: Confirm`.
 - Inspect repository context only when existing behavior, integrations, or constraints materially shape the authored stories.
 - Use `visual-diagramming` only when persona journeys, actor touchpoints, or branching paths are clearer in a diagram than in prose.
+- When journey or actor-flow wording, syntax safety, or readability is unclear, load the relevant `visual-diagramming` guidance instead of inventing one-off diagram conventions.
 - Do not turn functional requirements, technical constraints, engineering tasks, or architecture decisions into user stories.
 
 ## Constraints
@@ -80,9 +81,10 @@ Out of scope:
 9. Add boundary and failure stories for invalid inputs, visible errors, forbidden writes, review gates, provenance needs, controllability limits, and other visible trust boundaries when relevant.
 10. For AI-assisted systems, keep human agency primary when possible and include stories for reviewability, provenance, controllability, and human-authored versus machine-generated boundaries.
 11. Use `visual-diagramming` only when a journey or actor-flow diagram clarifies the capability set.
-12. Review the draft against `../write-user-stories/references/story-quality-checklist.md` and `../write-user-stories/references/anti-patterns.md`.
-13. Validate with `bash ../write-user-stories/scripts/validate_user_stories.sh <resolved-user-stories-path>` and use `bash ../write-user-stories/scripts/validate_story.sh <story-file>` for story-level debugging when needed.
-14. Deliver the draft and request approval before downstream requirements, design, or planning proceeds.
+12. Load the relevant `visual-diagramming` guidance when journey structure, branching flow, or Mermaid syntax safety is unclear.
+13. Review the draft against `../write-user-stories/references/story-quality-checklist.md` and `../write-user-stories/references/anti-patterns.md`.
+14. Validate with `bash ../write-user-stories/scripts/validate_user_stories.sh <resolved-user-stories-path>` and use `bash ../write-user-stories/scripts/validate_story.sh <story-file>` for story-level debugging when needed.
+15. Deliver the draft and request approval before downstream requirements, design, or planning proceeds.
 
 ## Gotchas
 
