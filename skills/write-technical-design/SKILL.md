@@ -11,7 +11,7 @@ metadata:
 - Keep technical design separate from product requirements and execution task breakdowns because architecture should explain solution shape, not product scope or local sequencing.
 - Preserve canonical frontmatter shape and validate created artifacts with the shared provenance validator when the workflow stamps provenance.
 - Treat the approved charter, user stories, and requirements as the source of truth for scope, user-visible behavior, and obligations; reference them instead of restating them in the design.
-- Use `visual-diagramming` when a Mermaid diagram communicates structure, interaction, behavior, or data relationships faster than prose because technical design is for humans making implementation decisions.
+- Use Mermaid diagram-authoring guidance when a Mermaid diagram communicates structure, interaction, behavior, or data relationships faster than prose because technical design is for humans making implementation decisions.
 - Describe the system in terms of responsibilities, boundaries, interactions, and tradeoffs because component lists without relationships do not guide implementation.
 - Keep interfaces, data flow, and operational concerns concrete enough to implement because vague design prose fails downstream.
 - Use prose around diagrams to add constraints, assumptions, exceptions, and tradeoffs; do not paraphrase the diagram.
@@ -84,7 +84,7 @@ Output:
    - user-story `Observation` shapes externally visible signals, state transitions, or interaction feedback that design must support
    - requirements shape explicit obligations, constraints, and contracts
 4. Define major components or subsystems and state their responsibilities and interactions.
-5. Use `visual-diagramming` to fill the required diagram slots with either the right Mermaid diagram, a `Not needed:` rationale, or `TODO: Confirm` when applicability is unresolved.
+5. Use Mermaid diagram-authoring guidance to fill the required diagram slots with either the right Mermaid diagram, a `Not needed:` rationale, or `TODO: Confirm` when applicability is unresolved.
 6. Describe data flow, interfaces, integration points, and failure handling in enough detail to guide implementation.
 7. Record security, reliability, performance, implementation strategy, and testing strategy decisions.
 8. Surface risks, tradeoffs, and unresolved questions rather than burying them in narrative.
@@ -109,7 +109,7 @@ Output:
 
 - A Markdown technical-design artifact with canonical frontmatter shape and section order.
 - Explicit architecture, component responsibilities, data flow, interfaces, operational concerns, and implementation strategy.
-- The four required diagram slots completed with Mermaid diagrams, `Not needed:` rationales, or `TODO: Confirm`, chosen with `visual-diagramming`.
+- The four required diagram slots completed with Mermaid diagrams, `Not needed:` rationales, or `TODO: Confirm`, chosen with Mermaid diagram-authoring guidance.
 - A concrete testing strategy plus explicit risks and tradeoffs.
 - Clear `TODO: Confirm` markers for unresolved high-impact design details.
 

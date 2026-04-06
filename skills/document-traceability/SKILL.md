@@ -46,7 +46,7 @@ Use `source_artifacts: {}` when the active coordination workflow requires an emp
 - `skill_graph` is the adjacency map derived from each participating skill's declared `metadata.dependencies`.
 - traversal order is deterministic: root skill first, then depth-first traversal in declared dependency order.
 - include only participating skills from the producing branch, including foundational leaf contracts when they actually participate in that branch.
-- participating foundational skills may include `artifact-naming`, `document-traceability`, and the relevant `write-*` contract skill when used by the producing branch.
+- participating foundational skills may include shared naming guidance, shared provenance assembly and validation, and the relevant shared artifact contract when used by the producing branch.
 - exclude sibling specialist branches that did not participate in the specific artifact.
 - fail closed on missing skill files, missing declared dependencies, malformed metadata, or dependency cycles.
 
