@@ -25,7 +25,7 @@ source_artifacts:
 ## System Context
 
 - [TODO: upstream system, user surface, runtime environment, or external boundary]
-- Story or requirements traceability: [TODO: relevant capability areas, story titles, or requirement IDs]
+- Story or requirements traceability: [TODO: relevant `US1.x` story IDs, capability areas, or requirement IDs]
 
 ### Context Flowchart
 
@@ -58,7 +58,7 @@ Or:
 - Hidden depth: [TODO: policy, workflow, or lifecycle complexity hidden behind the boundary]
 - Inputs: [TODO: upstream inputs]
 - Outputs: [TODO: downstream outputs]
-- Story impact: [TODO: relevant story behavior or requirement IDs]
+- Story impact: [TODO: relevant `US1.x` story IDs, observable behavior, or requirement IDs]
 
 ## Data Model and Data Flow
 

@@ -68,11 +68,15 @@ for section in "${required_sections[@]}"; do
 done
 
 scope_alignment_block="$(section_block "Scope Alignment")"
-for required_ref in "Charter:" "User Stories:" "Requirements:" "Technical Design:" "Runtime-edge obligations:"; do
+for required_ref in "Charter:" "User Stories:" "Requirements:" "Technical Design:" "Story capability areas:" "Story anchors:" "Runtime-edge obligations:"; do
   if ! printf "%s\n" "$scope_alignment_block" | grep -Fq "$required_ref"; then
     fail "Scope Alignment must reference companion artifact or obligation field: ${required_ref}"
   fi
 done
+
+if ! printf "%s\n" "$scope_alignment_block" | grep -Eq '^[[:space:]]*-[[:space:]]Story anchors:[[:space:]]*(TODO: Confirm|.*US1\.[0-9]+.*)$'; then
+  fail "Scope Alignment must include 'Story anchors:' with one or more US1.x story IDs or TODO: Confirm"
+fi
 
 implementation_streams_block="$(section_block "Implementation Streams")"
 if ! printf "%s\n" "$implementation_streams_block" | grep -Eq '^### '; then

@@ -24,6 +24,7 @@ source_artifacts:
 - Requirements: [TODO: resolved requirements path]
 - Technical Design: [TODO: resolved technical-design path]
 - Story capability areas: [TODO: relevant capability areas from user-stories.md]
+- Story anchors: [TODO: relevant `US1.x` story IDs]
 - Requirement anchors: [TODO: relevant requirement IDs]
 - Design anchors: [TODO: relevant interfaces, components, or failure-strategy sections]
 - Runtime-edge obligations: [TODO: preserved operator-facing runtime behavior or `None in approved spec`]
@@ -35,7 +36,7 @@ source_artifacts:
 
 - Objective: [TODO: what this stream delivers]
 - Implements:
-  - [TODO: relevant capability area, story title, requirement ID, or design anchor]
+  - [TODO: relevant capability area, `US1.x` story ID, requirement ID, or design anchor]
 - Interfaces / failure concerns: [TODO: relevant boundary, integration point, or recovery concern]
 - Notes: [TODO: constraints, integration boundary, or coordination note]
 
@@ -44,10 +45,10 @@ source_artifacts:
 ### [TODO: Stream name]
 
 - [ ] [TODO: grouped implementation task]
-  - Traceability: [TODO: capability area, story title, requirement ID, or design anchor]
+  - Traceability: [TODO: capability area, `US1.x` story ID, requirement ID, or design anchor]
   - Verification focus: [TODO: key validation checkpoint or visible behavior]
 - [ ] [TODO: grouped implementation task]
-  - Traceability: [TODO: capability area, story title, requirement ID, or design anchor]
+  - Traceability: [TODO: capability area, `US1.x` story ID, requirement ID, or design anchor]
   - Verification focus: [TODO: key validation checkpoint or visible behavior]
 
 ## Dependency and Sequencing Strategy

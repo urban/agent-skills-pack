@@ -2,7 +2,7 @@
 name: technical-design
 description: Produce technical-design artifacts from approved specification context and repository evidence. Use when a user needs architecture, boundaries, interfaces, and implementation strategy documented before coding.
 metadata:
-  version: 0.2.1
+  version: 0.3.0
   layer: specialist
   archetype: design
   domain: specification-authoring
@@ -17,7 +17,8 @@ metadata:
 
 - Keep this role focused on technical design because approved scope, actors, and success criteria belong in the charter, requirements own product obligations, and execution sequencing belongs in planning.
 - Produce the artifact as `technical-design.md`.
-- Use the `write-technical-design` contract for section order, content boundaries, shared validation, and diagram slot requirements because downstream planning expects that canonical shape.
+- Use the `write-technical-design` contract for section order, content boundaries, shared validation, diagram slot requirements, and traceability expectations because downstream planning expects that canonical shape.
+- When `./user-stories.md` includes canonical story IDs, carry those `US1.x` identifiers into design traceability notes instead of relying on story titles alone.
 - Use `visual-diagramming` to choose and author Mermaid diagrams when architecture, interactions, behavior, or data relationships will be understood faster visually than through prose alone.
 - When diagram wording, syntax safety, or slot-specific completeness is unclear, load the relevant `visual-diagramming` references instead of improvising local conventions.
 - Ground the design in approved charter, approved requirements, approved stories, and repository evidence because architecture without scope alignment becomes speculative.
@@ -72,6 +73,7 @@ Out of scope:
 2. Inspect repository structure, code, and integration boundaries when existing implementation constrains the design.
 3. Identify major components, responsibilities, interfaces, operational seams, and runtime surfaces needed to satisfy the approved scope.
 4. Translate approved upstream behavior into design consequences:
+   - use story `US1.x` identifiers to anchor design traceability notes and component impact notes
    - use story `Actor` and `Action` to identify interaction surfaces and owned responsibilities
    - use story `Situation` to preserve triggers, lifecycle entry points, and boundary conditions
    - use story `Outcome` to preserve the value-bearing result the design must support
@@ -91,6 +93,7 @@ Out of scope:
 - If the artifact mostly restates the charter or requirements, implementers still have to invent the architecture from scratch. Use upstream artifacts as scope anchors, then spend the document on boundaries and interactions.
 - If components are named without owned responsibilities, the design becomes a directory tour instead of a system model. State what each component owns and how it interacts with others.
 - If you force every design into gray-box modules, weak seams get documented as facts and later work ossifies around speculation. Use the pattern only when evidence supports a real boundary.
+- If design traceability relies on story titles instead of canonical `US1.x` IDs, later story renames break downstream planning anchors. Carry story IDs forward.
 - If you only carry story actions forward and ignore situations or observations, the design misses triggers, feedback, and edge behavior. Preserve those signals.
 - If data flow and interface contracts stay vague, integration bugs show up during coding when assumptions finally collide. Make boundary shape explicit before handing the design downstream.
 - If implementation strategy turns into a task list, execution planning gets duplicated and the design becomes noisy fast. Capture rollout shape and sequencing constraints, not every work item.
@@ -101,6 +104,7 @@ Out of scope:
 
 - `technical-design.md`
 - architecture aligned to approved charter, user stories, and requirements
+- traceability notes that reference relevant `US1.x` story IDs or requirement IDs
 - explicit components, interfaces, data flow, implementation strategy, testing strategy, risks, and tradeoffs
 - the four required diagram slots completed with the expected Mermaid diagrams, `Not needed:` rationales, or `TODO: Confirm`, aligned with `visual-diagramming`
 - validation passing via the shared technical-design validator
@@ -113,6 +117,7 @@ Out of scope:
 - at least one component or subsystem is named explicitly
 - testing strategy and risks/tradeoffs are explicit
 - all four required diagram slots are present and intentionally completed
+- design traceability uses relevant `US1.x` story IDs or requirement IDs where those anchors clarify scope
 - approved story behavior influences interaction paths, state, feedback, or failure handling where relevant
 - unresolved high-impact details are marked `TODO: Confirm`
 

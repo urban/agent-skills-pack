@@ -18,7 +18,7 @@ source_artifacts:
 - Parent plan: [TODO: resolved execution-plan path]
 - Scope: [TODO: summarize the implementation slice covered by these tasks]
 - Tracking intent: [TODO: describe how this document should be used during implementation]
-- Capability / requirement / design anchors: [TODO: main capability areas, requirement IDs, or design anchors carried through the plan]
+- Story / requirement / design anchors: [TODO: main capability areas, `US1.x` story IDs, requirement IDs, or design anchors carried through the plan]
 - Runtime-edge obligations: [TODO: preserved operator-facing runtime behavior or `None in parent plan`]
 
 ## Stream Groups
@@ -34,7 +34,7 @@ Objective: [TODO: what this stream delivers]
 - Blocked by: [TODO: comma-separated task IDs or `None`]
 - Plan references:
   - [TODO: stable anchor from parent plan]
-  - [TODO: capability area, requirement ID, or design anchor when useful]
+  - [TODO: capability area, `US1.x` story ID, requirement ID, or design anchor when useful]
 - What to build: [TODO: smallest independently verifiable end-to-end behavior]
 - Acceptance criteria:
   - [TODO: structural completion criterion]

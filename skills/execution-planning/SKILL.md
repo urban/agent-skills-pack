@@ -2,7 +2,7 @@
 name: execution-planning
 description: Produce execution-plan artifacts from an approved specification pack. Use when a user needs implementation coordination documented before coding begins.
 metadata:
-  version: 0.2.0
+  version: 0.3.0
   layer: specialist
   archetype: planning
   domain: implementation-planning
@@ -19,7 +19,7 @@ Turn an approved specification pack into an execution-oriented plan.
 - Use the `write-execution-plan` contract for section order, traceability, runtime-edge preservation, and validation because downstream task tracking depends on that shape.
 - Group work into meaningful implementation streams because flat work lists hide sequencing and dependency structure.
 - Explicitly inspect approved source artifacts from `./charter.md`, `./user-stories.md`, `./requirements.md`, and `./technical-design.md` for operator-facing runtime-edge obligations and preserve that behavior into streams, work breakdown, and validation checkpoints.
-- Use user-story capability areas and story titles to shape implementation streams.
+- Use user-story capability areas and `US1.x` story IDs to shape implementation streams and traceability notes.
 - Use requirement IDs to anchor execution obligations.
 - Use technical-design interfaces, integration points, and failure strategy to shape sequencing and checkpoints.
 - Mark unresolved execution ambiguity as `TODO: Confirm` instead of forcing false certainty into the plan.
@@ -56,7 +56,7 @@ In scope:
 - documenting dependency order, validation checkpoints, risks, and progress tracking
 - preserving explicit traceability back to the spec pack
 - preserving runtime-edge behavioral obligations when they exist upstream
-- carrying forward user-story capability areas, requirements traceability, and technical-design interfaces or failure strategy into execution structure
+- carrying forward user-story capability areas, `US1.x` story IDs, requirements traceability, and technical-design interfaces or failure strategy into execution structure
 
 Out of scope:
 
@@ -68,7 +68,7 @@ Out of scope:
 
 1. Confirm the user needs execution-plan artifacts from an approved specification pack before coding begins, then gather the approved companion artifacts.
 2. Inspect repository structure, integration points, and test surfaces when they materially affect sequencing or validation.
-3. Read the approved user stories for capability areas, boundary/failure stories, and observable outcomes.
+3. Read the approved user stories for capability areas, `US1.x` story IDs, boundary/failure stories, and observable outcomes.
 4. Read the approved requirements for concrete obligation IDs and verifiable constraints.
 5. Read the approved technical design for interfaces, integration points, implementation strategy, and failure/recovery strategy.
 6. Read the approved technical design and requirements explicitly for operator-facing runtime-edge obligations such as input decoding, service assembly, runner invocation, and outcome rendering.
@@ -85,7 +85,7 @@ Out of scope:
 - If the plan starts rewriting charter, requirements, or design, downstream execution loses the boundary between approved scope and implementation choices. Keep the companion artifacts as references, not editable content.
 - If work is emitted as a flat backlog, dependency reasoning disappears and parallelization becomes guesswork. Build stream structure first, then place work inside it.
 - If `Scope Alignment` does not point back to the charter, user stories, requirements, and technical design, later task generation cannot prove what the plan is implementing. Keep traceability explicit.
-- If execution streams ignore capability areas, requirement IDs, or technical-design boundaries, the plan looks organized but downstream tasks drift from the spec pack. Keep those anchors visible.
+- If execution streams ignore capability areas, story IDs, requirement IDs, or technical-design boundaries, the plan looks organized but downstream tasks drift from the spec pack. Keep those anchors visible.
 - If runtime-edge obligations from the approved spec get flattened into bootstrap chores, the plan loses the operator-facing behavior that implementation must prove. Keep decode, composition, invocation, rendering, and verification visible when they are in scope.
 - If validation checkpoints are generic, implementation can look complete while missing the only tests that matter. Tie checkpoints to the actual streams, obligations, interfaces, and risk areas.
 - If progress tracking is vague or absent, later updates turn the artifact into narrative notes instead of a coordination surface. Add explicit tracking fields from the first draft.
@@ -95,6 +95,7 @@ Out of scope:
 
 - `execution-plan.md`
 - explicit scope alignment references to charter, user stories, requirements, and technical design
+- scope and work traceability that references relevant `US1.x` story IDs when stories are available
 - named implementation streams with grouped work breakdown
 - explicit runtime-edge obligations field with preserved operator-facing behavior or `None in approved spec`
 - dependency strategy, validation checkpoints, risks, and progress tracking
@@ -108,7 +109,7 @@ Out of scope:
 - runtime-edge obligations are recorded explicitly
 - at least one implementation stream exists
 - work breakdown, sequencing, validation checkpoints, and progress tracking are explicit
-- streams and checkpoints visibly trace to capability areas, requirement IDs, and design concerns where relevant
+- streams and checkpoints visibly trace to capability areas, `US1.x` story IDs, requirement IDs, and design concerns where relevant
 - unresolved high-impact details are marked `TODO: Confirm`
 
 ## Deterministic Validation

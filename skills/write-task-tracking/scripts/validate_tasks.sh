@@ -59,7 +59,7 @@ for section in "${required_sections[@]}"; do
 done
 
 task_summary_block="$(section_block "Task Summary")"
-for field in "Parent plan:" "Scope:" "Tracking intent:" "Runtime-edge obligations:"; do
+for field in "Parent plan:" "Scope:" "Tracking intent:" "Story / requirement / design anchors:" "Runtime-edge obligations:"; do
   if ! printf "%s\n" "$task_summary_block" | grep -Fq "$field"; then
     fail "Task Summary must include field: ${field}"
   fi

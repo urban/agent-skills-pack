@@ -2,7 +2,7 @@
 name: derive-technical-design
 description: Reconstruct technical-design artifacts from repository evidence and reconstructed specification context. Use when a user needs as-built architecture, boundaries, and implementation strategy documented for an existing system.
 metadata:
-  version: 0.3.0
+  version: 0.4.0
   layer: specialist
   archetype: research
   domain: specification-reconstruction
@@ -28,6 +28,7 @@ metadata:
 - Recover the observed error model, including direct thrown errors or direct host-runtime API usage, instead of rewriting the implementation into a preferred future-state style.
 - Distinguish observed architecture from inferred rationale because code often shows structure more clearly than intent.
 - Use context from `./charter.md`, `./user-stories.md`, and `./requirements.md` when they exist because reconstructed design should stay aligned to reconstructed framing, outcomes, and obligations.
+- When reconstructed stories include canonical `US1.x` identifiers, use those IDs in design traceability notes so downstream plans can anchor on stable reconstructed story references.
 - Use `TODO: Confirm` when rationale, ownership, boundary strength, or visible behavior cannot be proved from the repository.
 - Do not define workflow-wide `source_artifacts` lineage policy here.
 
@@ -92,6 +93,7 @@ Out of scope:
 7. Inventory the observed error model, including tagged errors, schema errors, platform errors, direct thrown errors, degraded modes, and operator-visible recovery behavior.
 8. Use reconstructed stories from `./user-stories.md` and requirements from `./requirements.md` when available to preserve behavioral traceability.
 9. Translate observed upstream behavior into as-built design consequences:
+   - use story `US1.x` identifiers to anchor design traceability notes and component impact notes
    - use story `Actor` and `Action` to identify observed entry points and interaction surfaces
    - use story `Situation` to capture triggers, boundary conditions, and lifecycle entry points visible in the code
    - use story `Outcome` to identify the result the implementation is trying to produce
@@ -118,6 +120,7 @@ Out of scope:
 - If direct thrown errors, direct host-runtime APIs, or other runtime escape hatches are normalized away, the report stops matching the implementation. Record observed facts first.
 - If directory names alone are treated as module boundaries, gray-box documentation looks tidy but collapses under inspection. Require evidence of caller-visible seams, ownership, or boundary tests.
 - If inferred rationale is written in the same voice as observed structure, reviewers cannot tell fact from interpretation. Separate the two and use `TODO: Confirm` for weak conclusions.
+- If design traceability relies on story titles instead of canonical `US1.x` IDs, downstream planning loses stable reconstructed anchors when titles change. Carry the story IDs forward.
 - If you only reconstruct action flows and ignore situations or observations, the design misses triggers, boundary handling, and visible feedback behavior. Preserve those signals when evidence supports them.
 - If data flow is skipped because the codebase is large, the final document names parts without explaining how the system actually works. Trace the important paths end to end.
 - If contradictory evidence between tests, config, and implementation is smoothed over, the report hides the repo's real design risk. Preserve the ambiguity instead of cleaning it up.
@@ -130,6 +133,7 @@ Out of scope:
 - `technical-design.md`
 - a timestamped backup when overwriting an existing artifact
 - as-built architecture, implementation-strategy, and testing-strategy documentation
+- traceability notes that reference relevant reconstructed `US1.x` story IDs or requirement IDs
 - explicit composition-root, runtime-profile, boundary, resource-ownership, and error-model coverage when source-backed
 - the four required diagram slots completed with evidence-backed Mermaid diagrams, `Not needed:` rationales, or `TODO: Confirm`
 - validation passing via the shared technical-design validator
@@ -148,6 +152,7 @@ Out of scope:
 - named components include concrete boundary types when observable
 - parser, validation, resource, and error boundaries are documented when source-backed
 - named components, interfaces, testing strategy, and risks or tradeoffs are explicit
+- design traceability uses relevant reconstructed `US1.x` story IDs or requirement IDs where those anchors clarify scope
 - all four required diagram slots are present and completed without overstating certainty
 - reconstructed story behavior influences observed interfaces, state, feedback, or failure handling where relevant
 - gray-box module claims are tied to concrete repository evidence

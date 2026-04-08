@@ -2,7 +2,7 @@
 name: write-technical-design
 description: Write and validate canonical technical-design artifacts. Use when a task creates, derives, reviews, or validates architecture and implementation strategy documentation that must stay compatible across workflows.
 metadata:
-  version: 0.3.0
+  version: 0.4.0
   layer: foundational
 ---
 
@@ -11,6 +11,7 @@ metadata:
 - Keep technical design separate from product requirements and execution task breakdowns because architecture should explain solution shape, not product scope or local sequencing.
 - Preserve canonical frontmatter shape and validate created artifacts with the shared provenance validator when the workflow stamps provenance.
 - Treat the approved charter, user stories, and requirements as the source of truth for scope, user-visible behavior, and obligations; reference them instead of restating them in the design.
+- When canonical user stories are available, use their `US1.x` identifiers in design traceability notes and component impact notes so downstream planning can link back to stable story anchors.
 - Use Mermaid diagram-authoring guidance when a Mermaid diagram communicates structure, interaction, behavior, or data relationships faster than prose because technical design is for humans making implementation decisions.
 - Describe the system in terms of responsibilities, boundaries, interactions, and tradeoffs because component lists without relationships do not guide implementation.
 - Keep interfaces, data flow, and operational concerns concrete enough to implement because vague design prose fails downstream.
@@ -61,6 +62,7 @@ Minimum content expectations:
 - interfaces and contracts include accepted grammars, validation rules, and error surfaces when they materially affect callers
 - failure and recovery includes typed versus thrown failures, degraded modes, and operator-visible recovery paths when present
 - implementation strategy explains recomposition sites and ownership, not only rollout prose
+- traceability notes use relevant `US1.x` story IDs or requirement IDs where those anchors clarify design scope
 - explicit testing strategy
 - explicit risks and tradeoffs
 - a `### Context Flowchart` subsection using `flowchart`, `Not needed:`, or `TODO: Confirm`
@@ -85,6 +87,7 @@ Output:
 1. Identify the approved charter, user stories, requirements, or implemented behavior the design must satisfy and use them as referenced scope anchors.
 2. Draft from [`assets/technical-design-template.md`](./assets/technical-design-template.md) so canonical ordering stays intact.
 3. Translate upstream behavior into design consequences:
+   - carry forward relevant story `US1.x` identifiers into design traceability notes and component impact notes
    - user-story `Actor` and `Action` shape primary interfaces and interaction paths
    - user-story `Situation` shapes triggers, lifecycle entry points, and boundary conditions
    - user-story `Outcome` shapes success criteria the architecture must preserve
@@ -109,6 +112,7 @@ Output:
 - If you silently skip a required diagram slot because the system seems simple, validation will fail and reviewers will not know whether the omission was intentional. Fill every slot with a diagram, `Not needed:`, or `TODO: Confirm`.
 - If implementation strategy ignores composition roots, dependency-wiring sites, or resource ownership, layered and multi-boundary designs become too vague to guide change work. Name recomposition and ownership explicitly.
 - If implementation strategy turns into a task list, planning gets duplicated and the design ages badly. Explain rollout approach and sequencing constraints, not every work item.
+- If design traceability relies on story titles instead of canonical `US1.x` IDs, later story renames break downstream references. Use story IDs whenever stories are available.
 - If derived design smooths over contradictions in the codebase, later planning treats speculation as architecture fact. Report implemented reality and mark weak seams `TODO: Confirm`.
 - If failure and recovery strategy is skipped, reliability bugs get deferred until production because no one owned them in design. Capture degraded modes, typed and thrown failures, and recovery paths explicitly.
 - If risks and tradeoffs are generic, reviewers cannot challenge the real decision points. Record the concrete tensions this design is actually choosing between.
@@ -118,6 +122,7 @@ Output:
 ## Deliverables
 
 - A Markdown technical-design artifact with canonical frontmatter shape and section order.
+- Traceability notes that reference canonical `US1.x` story IDs or requirement IDs where relevant.
 - Explicit architecture, component responsibilities, data flow, interfaces, operational concerns, and implementation strategy.
 - The four required diagram slots completed with Mermaid diagrams, `Not needed:` rationales, or `TODO: Confirm`, chosen with Mermaid diagram-authoring guidance.
 - A concrete testing strategy plus explicit risks and tradeoffs.
@@ -135,6 +140,7 @@ Output:
 - Resource and lifecycle ownership is explicit when it materially affects behavior.
 - Testing strategy and risks or tradeoffs are explicit.
 - All four required diagram slots exist and each uses the expected Mermaid type, `Not needed:`, or `TODO: Confirm`.
+- Traceability notes use relevant `US1.x` story IDs or requirement IDs where those anchors clarify the design.
 - User-story behavior influences interfaces, triggers, state, or feedback where relevant rather than being copied verbatim.
 - Mermaid diagrams are chosen to clarify rather than decorate and their prose does not simply restate them.
 - The artifact remains technical design rather than a task list or code dump.

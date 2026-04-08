@@ -59,11 +59,22 @@ if (( component_count < 1 )); then
   exit 1
 fi
 
+traceability_pattern='US1\.[0-9]+|FR1\.[0-9]+|NFR2\.[0-9]+|TC3\.[0-9]+|DR4\.[0-9]+|IR5\.[0-9]+|DEP6\.[0-9]+'
+
 extract_heading_block() {
   local heading="$1"
   awk -v heading="$heading" '
     $0 == heading { in_block = 1; next }
     in_block && ($0 ~ /^## / || $0 ~ /^### /) { exit }
+    in_block { print }
+  ' "$FILE"
+}
+
+extract_section_block() {
+  local heading="$1"
+  awk -v heading="$heading" '
+    $0 == heading { in_block = 1; next }
+    in_block && /^## / { exit }
     in_block { print }
   ' "$FILE"
 }
@@ -102,6 +113,18 @@ validate_diagram_slot() {
     exit 1
   fi
 }
+
+system_context_block="$(extract_heading_block '## System Context')"
+if ! grep -Eq "^[[:space:]]*-[[:space:]]+Story or requirements traceability:[[:space:]]*(TODO: Confirm|.*(${traceability_pattern}).*)$" <<<"$system_context_block"; then
+  echo "System Context must include story or requirements traceability with one or more US1.x or requirement IDs, or TODO: Confirm" >&2
+  exit 1
+fi
+
+components_block="$(extract_section_block '## Components and Responsibilities')"
+if ! grep -Eq "^[[:space:]]*-[[:space:]]+Story impact:[[:space:]]*(TODO: Confirm|.*(${traceability_pattern}).*)$" <<<"$components_block"; then
+  echo "Components and Responsibilities must include at least one Story impact line with one or more US1.x or requirement IDs, or TODO: Confirm" >&2
+  exit 1
+fi
 
 validate_diagram_slot '### Context Flowchart' 'flowchart'
 validate_diagram_slot '### Behavior State Diagram' 'stateDiagram-v2'
