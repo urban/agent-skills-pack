@@ -68,6 +68,12 @@ Or:
 - Flow: [TODO: how data moves through the system]
 - Observation support: [TODO: how visible outcomes, feedback, or state signals are produced]
 
+Representative code example when it clarifies a core data shape, persisted record, or result model:
+
+```ts
+[TODO: add a short representative example and explain it in surrounding prose]
+```
+
 ### Entity Relationship Diagram
 
 ```mermaid
@@ -86,6 +92,12 @@ Or:
 - Validation rules: [TODO: strict, tolerant, required fields, or boundary checks]
 - Boundary errors: [TODO: tagged errors, schema errors, thrown errors, or `TODO: Confirm`]
 - Trigger and boundary conditions: [TODO: relevant situations, preconditions, or edge cases]
+
+Representative code example when it clarifies a service contract, schema, error model, or composition seam:
+
+```ts
+[TODO: add a short representative example and explain it in surrounding prose]
+```
 
 ### Interaction Diagram
 

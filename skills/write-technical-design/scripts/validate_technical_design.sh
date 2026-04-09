@@ -59,6 +59,28 @@ if (( component_count < 1 )); then
   exit 1
 fi
 
+non_mermaid_code_block_count="$({
+  awk '
+    !in_block && /^```/ {
+      in_block = 1
+      lang = substr($0, 4)
+      if (lang != "mermaid") {
+        count++
+      }
+      next
+    }
+    in_block && /^```$/ {
+      in_block = 0
+      next
+    }
+  END { print count + 0 }
+  ' "$FILE"
+} || true)"
+if (( non_mermaid_code_block_count < 1 )); then
+  echo "Technical design must include at least one short non-Mermaid fenced code block" >&2
+  exit 1
+fi
+
 if ! awk '
   function fail(msg, line) {
     printf("%s at line %d\n", msg, line) > "/dev/stderr"
