@@ -2,7 +2,7 @@
 name: write-technical-design
 description: Write and validate canonical technical-design artifacts. Use when a task creates, derives, reviews, or validates architecture and implementation strategy documentation that must stay compatible across workflows.
 metadata:
-  version: 0.4.0
+  version: 0.4.1
   layer: foundational
 ---
 
@@ -14,6 +14,7 @@ metadata:
 - When canonical user stories are available, use their `US1.x` identifiers in design traceability notes and component impact notes so downstream planning can link back to stable story anchors.
 - Use Mermaid diagram-authoring guidance when a Mermaid diagram communicates structure, interaction, behavior, or data relationships faster than prose because technical design is for humans making implementation decisions.
 - Describe the system in terms of responsibilities, boundaries, interactions, and tradeoffs because component lists without relationships do not guide implementation.
+- Start each named component subsection with one orienting sentence immediately below the heading and before any bullets so readers can understand the component before scanning structured detail.
 - Keep interfaces, data flow, and operational concerns concrete enough to implement because vague design prose fails downstream.
 - When observable, name the composition root, runtime profile, boundary types, resource ownership, and error model explicitly.
 - For derived design, record the actual abstractions and runtime escape hatches the code uses, even when they differ from preferred style.
@@ -31,6 +32,7 @@ metadata:
 - Required sections must appear in canonical order.
 - Include architecture and implementation strategy, but do not expand into commit sequencing or atomic task lists.
 - Code snippets are optional and must stay short; they cannot replace architectural explanation.
+- Under `Components and Responsibilities`, each named component subsection must contain a one-sentence definition paragraph directly below the `###` heading and before the structured bullet list.
 - The artifact must explicitly address four diagram slots: context flowchart, behavior state diagram, entity relationship diagram, and interaction diagram.
 - Each diagram slot must contain either a Mermaid diagram of the expected type, a `Not needed:` rationale, or `TODO: Confirm` when applicability is still unresolved.
 - If a required section is not yet confirmed, keep the section and mark it `TODO: Confirm`.
@@ -58,6 +60,7 @@ Minimum content expectations:
 - canonical frontmatter shape when provenance is stamped for the workflow
 - a concrete architecture summary that names the runtime model and composition root when observable
 - at least one named component or subsystem
+- each named component begins with a one-sentence definition paragraph directly below its heading
 - named components include concrete boundary types when observable
 - interfaces and contracts include accepted grammars, validation rules, and error surfaces when they materially affect callers
 - failure and recovery includes typed versus thrown failures, degraded modes, and operator-visible recovery paths when present
@@ -95,17 +98,19 @@ Output:
    - requirements shape explicit obligations, constraints, and contracts
 4. Distinguish runtime edges, domain or service boundaries, parser or decoder boundaries, validator boundaries, and integration adapters before filling sections.
 5. Define major components or subsystems and state their responsibilities, boundary types, ownership, and interactions.
-6. Use Mermaid diagram-authoring guidance to fill the required diagram slots with either the right Mermaid diagram, a `Not needed:` rationale, or `TODO: Confirm` when applicability is unresolved.
-7. Describe data flow, interfaces, integration points, grammars, validation rules, and failure handling in enough detail to guide implementation.
-8. Record security, reliability, performance, implementation strategy, resource ownership, and testing strategy decisions.
-9. Surface risks, tradeoffs, and unresolved questions rather than burying them in narrative.
-10. For derived design, separate observed architecture from inferred intent and use `TODO: Confirm` for weak conclusions.
-11. Validate the finished artifact with [`scripts/validate_technical_design.sh`](./scripts/validate_technical_design.sh).
+6. For each named component subsection, write one sentence directly below the heading that orients the reader before the structured bullets begin.
+7. Use Mermaid diagram-authoring guidance to fill the required diagram slots with either the right Mermaid diagram, a `Not needed:` rationale, or `TODO: Confirm` when applicability is unresolved.
+8. Describe data flow, interfaces, integration points, grammars, validation rules, and failure handling in enough detail to guide implementation.
+9. Record security, reliability, performance, implementation strategy, resource ownership, and testing strategy decisions.
+10. Surface risks, tradeoffs, and unresolved questions rather than burying them in narrative.
+11. For derived design, separate observed architecture from inferred intent and use `TODO: Confirm` for weak conclusions.
+12. Validate the finished artifact with [`scripts/validate_technical_design.sh`](./scripts/validate_technical_design.sh).
 
 ## Gotchas
 
 - If the document repeats charter, user-story, or requirements content instead of explaining boundaries and interactions, implementers still have to invent the architecture. Reference upstream artifacts, then spend the document on solution shape.
 - If components are listed without boundary type, owned capability, or ownership, the design becomes a directory tour rather than a system model. Name what each component owns and how it interacts with others.
+- If the first line under a component heading is a bullet list, the section becomes harder to skim and reviewers have to infer the component's purpose from fragments. Start with one orienting sentence, then move into the bullets.
 - If interfaces omit accepted grammars, validation rules, or boundary errors, important contracts stay implicit and change risk hides until coding. Make those seams explicit when they matter.
 - If interfaces and data flow stay vague, teams discover incompatible assumptions only during coding. Make boundary contracts and major data movement explicit.
 - If you add a diagram and then repeat it in prose, the document gets longer without adding signal. Use the surrounding text for constraints, caveats, and decisions the diagram cannot show.
@@ -135,6 +140,7 @@ Output:
 - Architecture and implementation strategy are both present.
 - Runtime model and composition root are present when observable.
 - At least one component or subsystem is named explicitly.
+- Each named component begins with one orienting sentence directly below its heading.
 - Named components include boundary type and owned capability when observable.
 - Validation and error seams are explicit when source-backed.
 - Resource and lifecycle ownership is explicit when it materially affects behavior.

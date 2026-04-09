@@ -59,6 +59,49 @@ if (( component_count < 1 )); then
   exit 1
 fi
 
+if ! awk '
+  function fail(msg, line) {
+    printf("%s at line %d\n", msg, line) > "/dev/stderr"
+    exit 1
+  }
+  /^## Components and Responsibilities$/ { in_components = 1; next }
+  in_components && /^## / {
+    if (expecting_definition) {
+      fail("Component subsection must include a one-sentence definition before bullets", heading_line)
+    }
+    exit 0
+  }
+  in_components && /^### Behavior State Diagram$/ {
+    expecting_definition = 0
+    next
+  }
+  in_components && /^### / {
+    if (expecting_definition) {
+      fail("Component subsection must include a one-sentence definition before bullets", heading_line)
+    }
+    expecting_definition = 1
+    heading_line = NR
+    next
+  }
+  expecting_definition {
+    if ($0 ~ /^[[:space:]]*$/) {
+      next
+    }
+    if ($0 ~ /^[[:space:]]*-/ || $0 ~ /^```/) {
+      fail("Component subsection must start with a one-sentence definition paragraph before bullets or code blocks", heading_line)
+    }
+    expecting_definition = 0
+    next
+  }
+  END {
+    if (expecting_definition) {
+      fail("Component subsection must include a one-sentence definition before bullets", heading_line)
+    }
+  }
+' "$FILE"; then
+  exit 1
+fi
+
 traceability_pattern='US1\.[0-9]+|FR1\.[0-9]+|NFR2\.[0-9]+|TC3\.[0-9]+|DR4\.[0-9]+|IR5\.[0-9]+|DEP6\.[0-9]+'
 
 extract_heading_block() {

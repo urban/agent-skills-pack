@@ -53,6 +53,8 @@ Or:
 
 ### [TODO: Component name]
 
+[TODO: one-sentence definition of what this component does]
+
 - Boundary type: [TODO: command handler / service / layer / parser / validator / adapter]
 - Owned capability: [TODO: bounded responsibility]
 - Hidden depth: [TODO: policy, workflow, or lifecycle complexity hidden behind the boundary]

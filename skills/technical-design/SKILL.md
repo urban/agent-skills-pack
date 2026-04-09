@@ -2,7 +2,7 @@
 name: technical-design
 description: Produce technical-design artifacts from approved specification context and repository evidence. Use when a user needs architecture, boundaries, interfaces, and implementation strategy documented before coding.
 metadata:
-  version: 0.3.0
+  version: 0.3.1
   layer: specialist
   archetype: design
   domain: specification-authoring
@@ -17,7 +17,8 @@ metadata:
 
 - Keep this role focused on technical design because approved scope, actors, and success criteria belong in the charter, requirements own product obligations, and execution sequencing belongs in planning.
 - Produce the artifact as `technical-design.md`.
-- Use the `write-technical-design` contract for section order, content boundaries, shared validation, diagram slot requirements, and traceability expectations because downstream planning expects that canonical shape.
+- Use the `write-technical-design` contract for section order, content boundaries, shared validation, diagram slot requirements, traceability expectations, and component-definition formatting because downstream planning expects that canonical shape.
+- Under each named component heading, write one orienting sentence before any bullet list so readers can understand the component at a glance before scanning its structured details.
 - When `./user-stories.md` includes canonical story IDs, carry those `US1.x` identifiers into design traceability notes instead of relying on story titles alone.
 - Use `visual-diagramming` to choose and author Mermaid diagrams when architecture, interactions, behavior, or data relationships will be understood faster visually than through prose alone.
 - When diagram wording, syntax safety, or slot-specific completeness is unclear, load the relevant `visual-diagramming` references instead of improvising local conventions.
@@ -37,6 +38,7 @@ metadata:
 - Use diagrams to support understanding, then use prose to add detail the diagrams cannot show without repeating them.
 - Do not collapse the design into requirements restatement, copied five-field story blocks, a file inventory, or a flat task list.
 - Do not invent module boundaries that are not supported by approved scope and repository evidence.
+- For each named component subsection, place the one-sentence definition directly below the heading and before the structured bullets.
 
 ## Requirements
 
@@ -84,13 +86,15 @@ Out of scope:
 7. Load the relevant `visual-diagramming` references when syntax safety, interaction sequencing, flowchart mode, ERD scope, or state naming is unclear.
 8. Apply `gray-box-modules` only to capabilities with durable caller-visible boundaries; otherwise describe the observed structure without forcing the pattern.
 9. Draft `technical-design.md` using the `write-technical-design` contract.
-10. Record implementation strategy, testing strategy, risks, tradeoffs, and `TODO: Confirm` markers for unresolved high-impact design decisions.
-11. Validate with `bash ../write-technical-design/scripts/validate_technical_design.sh <resolved-technical-design-path>`.
-12. Deliver the draft and request approval before implementation proceeds.
+10. For each named component subsection, add a one-sentence definition immediately below the heading before listing boundary type, owned capability, hidden depth, inputs, outputs, and impact notes.
+11. Record implementation strategy, testing strategy, risks, tradeoffs, and `TODO: Confirm` markers for unresolved high-impact design decisions.
+12. Validate with `bash ../write-technical-design/scripts/validate_technical_design.sh <resolved-technical-design-path>`.
+13. Deliver the draft and request approval before implementation proceeds.
 
 ## Gotchas
 
 - If the artifact mostly restates the charter or requirements, implementers still have to invent the architecture from scratch. Use upstream artifacts as scope anchors, then spend the document on boundaries and interactions.
+- If the first line under a component heading is a bullet list, readers have to infer the component's purpose from fragments and the section becomes harder to skim. Start each component with one orienting sentence before the bullets.
 - If components are named without owned responsibilities, the design becomes a directory tour instead of a system model. State what each component owns and how it interacts with others.
 - If you force every design into gray-box modules, weak seams get documented as facts and later work ossifies around speculation. Use the pattern only when evidence supports a real boundary.
 - If design traceability relies on story titles instead of canonical `US1.x` IDs, later story renames break downstream planning anchors. Carry story IDs forward.
@@ -105,7 +109,7 @@ Out of scope:
 - `technical-design.md`
 - architecture aligned to approved charter, user stories, and requirements
 - traceability notes that reference relevant `US1.x` story IDs or requirement IDs
-- explicit components, interfaces, data flow, implementation strategy, testing strategy, risks, and tradeoffs
+- explicit components, each introduced by a one-sentence definition before their structured bullets, plus interfaces, data flow, implementation strategy, testing strategy, risks, and tradeoffs
 - the four required diagram slots completed with the expected Mermaid diagrams, `Not needed:` rationales, or `TODO: Confirm`, aligned with `visual-diagramming`
 - validation passing via the shared technical-design validator
 
@@ -114,7 +118,7 @@ Out of scope:
 - artifact filename is `technical-design.md`
 - section order follows the `write-technical-design` contract
 - architecture and implementation strategy are both present
-- at least one component or subsystem is named explicitly
+- at least one component or subsystem is named explicitly and begins with a one-sentence definition before its bullets
 - testing strategy and risks/tradeoffs are explicit
 - all four required diagram slots are present and intentionally completed
 - design traceability uses relevant `US1.x` story IDs or requirement IDs where those anchors clarify scope
