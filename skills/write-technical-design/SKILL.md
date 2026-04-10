@@ -1,8 +1,10 @@
 ---
 name: write-technical-design
 description: Write and validate canonical technical-design artifacts. Use when a task creates, derives, reviews, or validates architecture and implementation strategy documentation that must stay compatible across workflows.
+license: MIT
 metadata:
   version: 0.5.2
+  author: "urban (https://github.com)"
   layer: foundational
 ---
 

@@ -1,8 +1,10 @@
 ---
 name: execution-planning
 description: Produce execution-plan artifacts from an approved specification pack. Use when a user needs implementation coordination documented before coding begins.
+license: MIT
 metadata:
   version: 0.3.0
+  author: "urban (https://github.com)"
   layer: specialist
   archetype: planning
   domain: implementation-planning

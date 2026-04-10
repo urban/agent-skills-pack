@@ -1,8 +1,10 @@
 ---
 name: specification-to-execution
 description: Orchestrate execution artifacts from an approved specification pack. Use when a user needs an execution plan and local task tracking created from approved specification context.
+license: MIT
 metadata:
   version: 0.2.0
+  author: "urban (https://github.com)"
   layer: coordination
   dependencies:
     - document-traceability

@@ -1,8 +1,10 @@
 ---
 name: technical-design
 description: Produce technical-design artifacts from approved specification context and repository evidence. Use when a user needs architecture, boundaries, interfaces, and implementation strategy documented before coding.
+license: MIT
 metadata:
   version: 0.3.4
+  author: "urban (https://github.com)"
   layer: specialist
   archetype: design
   domain: specification-authoring

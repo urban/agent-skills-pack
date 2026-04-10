@@ -1,8 +1,10 @@
 ---
 name: write-requirements
 description: Write and validate canonical requirements artifacts. Use when a task creates, derives, reviews, or validates product obligations that must stay stable for downstream design and planning.
+license: MIT
 metadata:
   version: 0.4.0
+  author: "urban (https://github.com)"
   layer: foundational
 ---
 

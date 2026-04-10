@@ -1,8 +1,10 @@
 ---
 name: requirements
 description: Produce requirements artifacts from approved product framing, approved user stories, and repository context. Use when a user needs product obligations, constraints, and dependencies defined before technical design or implementation.
+license: MIT
 metadata:
   version: 0.3.0
+  author: "urban (https://github.com)"
   layer: specialist
   archetype: planning
   domain: specification-authoring

@@ -1,8 +1,10 @@
 ---
 name: task-generation
 description: Produce local task-tracking artifacts from an approved execution plan. Use when a user needs execution-ready tasks with explicit dependencies and plan traceability.
+license: MIT
 metadata:
   version: 0.3.0
+  author: "urban (https://github.com)"
   layer: specialist
   archetype: planning
   domain: implementation-planning

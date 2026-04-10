@@ -1,8 +1,10 @@
 ---
 name: gray-box-modules
 description: Define the shared contract for describing bounded gray-box modules in technical design. Use when a technical-design task needs durable module boundaries, contracts, invariants, or lifecycle ownership described.
+license: MIT
 metadata:
   version: 0.2.0
+  author: "urban (https://github.com)"
   layer: foundational
 ---
 

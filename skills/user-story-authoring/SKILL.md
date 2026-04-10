@@ -1,8 +1,10 @@
 ---
 name: user-story-authoring
 description: Produce user-stories artifacts from approved product framing and relevant repository context. Use when a user needs user-visible behavior captured before detailed requirements, technical design, or execution planning.
+license: MIT
 metadata:
   version: 0.3.0
+  author: "urban (https://github.com)"
   layer: specialist
   archetype: planning
   domain: specification-authoring

@@ -1,8 +1,10 @@
 ---
 name: derive-charter
 description: Reconstruct charter artifacts from repository evidence. Use when a user needs implemented goals, boundaries, personas, and success criteria inferred from an existing system with explicit uncertainty.
+license: MIT
 metadata:
   version: 0.2.0
+  author: "urban (https://github.com)"
   layer: specialist
   archetype: research
   domain: specification-reconstruction
