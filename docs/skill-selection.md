@@ -107,6 +107,7 @@ Before creating a skill, confirm that:
 - it does not redefine adjacent artifacts
 - it can declare dependencies instead of copying their rules
 - it fits exactly one layer
+- `metadata.internal: true` is set when the skill is a helper or support dependency rather than a user-selectable entry point
 
 ## Split signals
 
