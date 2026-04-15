@@ -13,6 +13,10 @@
 
 - [TODO: concise artifact summary for approvers]
 
+### Visual Evidence
+
+- [TODO: copy in-scope Mermaid or other visual sections here, especially for technical-design approvals; delete this subsection if no visual evidence is in scope]
+
 ## Scope
 
 - In scope:

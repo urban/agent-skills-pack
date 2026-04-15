@@ -14,6 +14,10 @@
 
 - [TODO: concise pack summary for approvers]
 
+### Visual Evidence
+
+- [TODO: copy in-scope Mermaid or other visual sections here; delete this subsection if no visual evidence is needed for pack approval]
+
 ## Scope
 
 - In scope:
