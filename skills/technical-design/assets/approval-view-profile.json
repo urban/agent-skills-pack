@@ -1,0 +1,137 @@
+{
+  "profile_id": "technical-design-approval-v1",
+  "display_name": "Technical Design Approval",
+  "subtitle": "Review architecture, boundaries, and implementation seams before coding starts.",
+  "review_type": "artifact",
+  "sections": [
+    {
+      "key": "architecture-and-runtime-model",
+      "title": "Architecture and Runtime Model",
+      "kind": "summary",
+      "label": "Architecture",
+      "style": "hero",
+      "why": "Lead with the runtime shape and composition model.",
+      "empty_state": "Add the architecture summary that frames the design review."
+    },
+    {
+      "key": "boundaries-interfaces-and-data-flow",
+      "title": "Boundaries, Interfaces, and Data Flow",
+      "kind": "cards",
+      "label": "Boundaries",
+      "style": "default",
+      "item_label": "Boundary",
+      "why": "Surface the interfaces and flow seams that most affect implementation."
+    },
+    {
+      "key": "implementation-strategy-and-operational-seams",
+      "title": "Implementation Strategy and Operational Seams",
+      "kind": "cards",
+      "label": "Implementation",
+      "style": "elevated",
+      "item_label": "Seam",
+      "why": "Show recomposition sites, ownership seams, and operator-visible consequences."
+    },
+    {
+      "key": "major-risks-and-tradeoffs",
+      "title": "Major Risks and Tradeoffs",
+      "kind": "cards",
+      "label": "Risk Review",
+      "style": "default",
+      "item_label": "Risk",
+      "why": "Keep major design tradeoffs explicit before build starts."
+    },
+    {
+      "key": "decisions-required-for-approval",
+      "title": "Decisions Required for Approval",
+      "kind": "cards",
+      "label": "Decision Gate",
+      "style": "default",
+      "item_label": "Decision",
+      "why": "State the architecture calls the reviewer is approving."
+    },
+    {
+      "key": "open-questions-and-todo-confirm-items",
+      "title": "Open Questions and TODO: Confirm Items",
+      "kind": "callouts",
+      "label": "Open Issues",
+      "style": "elevated",
+      "item_label": "Question",
+      "why": "Expose unresolved design seams before implementation begins."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "why": "Tie approval claims to exact technical-design evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "why": "Show design and approval-view validation status."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "item_label": "Impact",
+      "why": "Clarify what coding and planning may now treat as fixed."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Architecture",
+      "section_title": "Architecture and Runtime Model",
+      "metric": "groups",
+      "hint": "Runtime-model anchors under review.",
+      "tone": "accent"
+    },
+    {
+      "label": "Boundaries",
+      "section_title": "Boundaries, Interfaces, and Data Flow",
+      "metric": "groups",
+      "hint": "Interface and flow seams.",
+      "tone": "info"
+    },
+    {
+      "label": "Implementation seams",
+      "section_title": "Implementation Strategy and Operational Seams",
+      "metric": "groups",
+      "hint": "Ownership and recomposition pressure points.",
+      "tone": "muted"
+    },
+    {
+      "label": "Risks",
+      "section_title": "Major Risks and Tradeoffs",
+      "metric": "groups",
+      "hint": "Major tradeoffs or design risks.",
+      "tone": "warning"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact design quotes.",
+      "tone": "info"
+    },
+    {
+      "label": "Visuals",
+      "metric": "visuals",
+      "hint": "Carried-forward diagrams or visuals.",
+      "tone": "info"
+    }
+  ]
+}

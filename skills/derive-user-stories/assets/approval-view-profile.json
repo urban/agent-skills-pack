@@ -1,0 +1,127 @@
+{
+  "profile_id": "derive-user-stories-approval-v1",
+  "display_name": "Derived User Stories Approval",
+  "subtitle": "Review recovered user-visible behavior with confidence, gaps, and inference pressure in the open.",
+  "review_type": "artifact",
+  "sections": [
+    {
+      "key": "capability-map-and-highest-value-recovered-stories",
+      "title": "Capability Map and Highest-Value Recovered Stories",
+      "kind": "summary",
+      "label": "Recovered Value",
+      "style": "hero",
+      "why": "Lead with the strongest recovered behavior map before weak areas."
+    },
+    {
+      "key": "boundary-and-failure-coverage",
+      "title": "Boundary and Failure Coverage",
+      "kind": "cards",
+      "label": "Boundary Coverage",
+      "style": "default",
+      "item_label": "Boundary",
+      "why": "Show where operator-visible edge behavior is actually evidenced."
+    },
+    {
+      "key": "coverage-gaps-and-evidence-weakness",
+      "title": "Coverage Gaps and Evidence Weakness",
+      "kind": "callouts",
+      "label": "Evidence Gaps",
+      "style": "elevated",
+      "item_label": "Gap",
+      "why": "Expose missing or weak support around likely user-facing behavior."
+    },
+    {
+      "key": "low-confidence-stories-and-inferred-vs-observed-pressure-points",
+      "title": "Low-Confidence Stories and Inferred-vs-Observed Pressure Points",
+      "kind": "callouts",
+      "label": "Confidence",
+      "style": "elevated",
+      "item_label": "Hotspot",
+      "why": "Separate inferred stories from directly observed behavior."
+    },
+    {
+      "key": "decisions-required-for-approval",
+      "title": "Decisions Required for Approval",
+      "kind": "cards",
+      "label": "Decision Gate",
+      "style": "default",
+      "item_label": "Decision",
+      "why": "State what the reviewer must accept despite recovery uncertainty."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "why": "Tie recovered story claims to exact repository evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "why": "Show validation status for the derived report and approval view."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "item_label": "Impact",
+      "why": "Clarify what derived requirements may now treat as stable behavior."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Recovered anchors",
+      "section_title": "Capability Map and Highest-Value Recovered Stories",
+      "metric": "groups",
+      "hint": "Strongest recovered capability or story anchors.",
+      "tone": "accent"
+    },
+    {
+      "label": "Boundary coverage",
+      "section_title": "Boundary and Failure Coverage",
+      "metric": "groups",
+      "hint": "Observed edge and failure behavior.",
+      "tone": "muted"
+    },
+    {
+      "label": "Evidence gaps",
+      "section_title": "Coverage Gaps and Evidence Weakness",
+      "metric": "groups",
+      "hint": "Likely user-facing areas with weak support.",
+      "tone": "warning"
+    },
+    {
+      "label": "Low-confidence",
+      "section_title": "Low-Confidence Stories and Inferred-vs-Observed Pressure Points",
+      "metric": "groups",
+      "hint": "Stories that depend on inference.",
+      "tone": "warning"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact evidence quotes.",
+      "tone": "info"
+    },
+    {
+      "label": "Validators",
+      "metric": "validator_checks",
+      "hint": "Recorded validator passes.",
+      "tone": "success"
+    }
+  ]
+}

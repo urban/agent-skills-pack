@@ -69,3 +69,4 @@ Produce `charter.md` from repository evidence. Reconstruct plausible goals, non-
 - weakly supported goals, non-goals, or personas
 - evidence basis for success criteria and obvious scope boundaries
 - any `TODO: Confirm` item that would distort downstream reconstruction if treated as settled
+- approval-shell layout lives in `./assets/approval-view-profile.json`; use it instead of the generic approval template

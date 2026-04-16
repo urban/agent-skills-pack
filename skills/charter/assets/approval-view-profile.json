@@ -1,0 +1,136 @@
+{
+  "profile_id": "charter-approval-v1",
+  "display_name": "Charter Approval",
+  "subtitle": "Review scope edges, actors, and done criteria before downstream stories or requirements.",
+  "review_type": "artifact",
+  "sections": [
+    {
+      "key": "goals-at-a-glance",
+      "title": "Goals at a Glance",
+      "kind": "summary",
+      "label": "Goals",
+      "style": "hero",
+      "why": "Lead with the intended outcomes under approval."
+    },
+    {
+      "key": "non-goals-scope-exclusions",
+      "title": "Non-Goals / Scope Exclusions",
+      "kind": "cards",
+      "label": "Boundary",
+      "style": "elevated",
+      "item_label": "Non-goal",
+      "why": "Make scope edges explicit before approval."
+    },
+    {
+      "key": "personas-actors-that-matter",
+      "title": "Personas / Actors that Matter",
+      "kind": "cards",
+      "label": "Actors",
+      "style": "default",
+      "item_label": "Actor",
+      "why": "Show who receives value or constrains scope."
+    },
+    {
+      "key": "success-criteria-that-define-done",
+      "title": "Success Criteria that Define Done",
+      "kind": "timeline",
+      "label": "Done",
+      "style": "default",
+      "item_label": "Criterion",
+      "why": "Keep measurable done criteria scan-friendly."
+    },
+    {
+      "key": "decisions-required-for-approval",
+      "title": "Decisions Required for Approval",
+      "kind": "cards",
+      "label": "Decision Gate",
+      "style": "default",
+      "item_label": "Decision",
+      "why": "State the exact yes/no calls tied to this charter."
+    },
+    {
+      "key": "scope-risks-and-open-questions",
+      "title": "Scope Risks and Open Questions",
+      "kind": "callouts",
+      "label": "Open Issues",
+      "style": "elevated",
+      "item_label": "Risk",
+      "why": "Keep risky or unresolved framing visible before downstream work."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "why": "Tie approval claims to exact charter evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "why": "Show canonical and approval validation status."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "item_label": "Impact",
+      "why": "Clarify what later artifacts may now treat as settled."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Goals",
+      "section_title": "Goals at a Glance",
+      "metric": "groups",
+      "hint": "Scope-setting outcomes under review.",
+      "tone": "accent"
+    },
+    {
+      "label": "Non-goals",
+      "section_title": "Non-Goals / Scope Exclusions",
+      "metric": "groups",
+      "hint": "Explicit exclusions that protect scope.",
+      "tone": "muted"
+    },
+    {
+      "label": "Actors",
+      "section_title": "Personas / Actors that Matter",
+      "metric": "groups",
+      "hint": "People or roles shaping downstream work.",
+      "tone": "info"
+    },
+    {
+      "label": "Success criteria",
+      "section_title": "Success Criteria that Define Done",
+      "metric": "groups",
+      "hint": "Measurable done checks in scope.",
+      "tone": "success"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact charter quotes.",
+      "tone": "info"
+    },
+    {
+      "label": "Visuals",
+      "metric": "visuals",
+      "hint": "Visual evidence carried into review.",
+      "tone": "info"
+    }
+  ]
+}

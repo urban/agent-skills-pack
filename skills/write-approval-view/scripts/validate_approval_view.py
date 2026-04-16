@@ -11,6 +11,8 @@ from datetime import datetime
 from html import unescape
 from pathlib import Path
 
+from approval_profiles import load_review_profile, section_spec_by_kind, section_specs
+
 
 USAGE = """Usage:
   validate_approval_view.py artifact <canonical-file> <approval-md> <approval-html>
@@ -18,19 +20,6 @@ USAGE = """Usage:
   validate_approval_view.py pack <approval-md> <approval-html> <canonical-file>...
   validate_approval_view.py pack-revised <approval-md> <approval-html> <canonical-file>...
 """
-
-SECTION_STYLES = {
-    "Change Summary": "hero",
-    "Executive Summary": "hero",
-    "Scope": "elevated",
-    "Decisions Required for Approval": "default",
-    "Risks and Tradeoffs": "default",
-    "Blockers and Unresolved Items": "elevated",
-    "Traceability Map": "default",
-    "Validator Status": "elevated",
-    "Downstream Impact if Approved": "default",
-    "Snapshot Identity": "recessed",
-}
 
 MERMAID_FENCE_PATTERN = re.compile(r"^```mermaid\s*$", re.IGNORECASE | re.MULTILINE)
 
@@ -130,26 +119,14 @@ def section_map(markdown_text: str) -> dict[str, list[str]]:
     return mapping
 
 
-def require_sections(markdown_text: str, revised: bool) -> list[str]:
+def require_sections(markdown_text: str, expected_specs: list[dict[str, object]]) -> list[str]:
     sections = parse_sections(markdown_text)
     titles = [title for title, _ in sections]
-    expected = [
-        "Executive Summary",
-        "Scope",
-        "Decisions Required for Approval",
-        "Risks and Tradeoffs",
-        "Blockers and Unresolved Items",
-        "Traceability Map",
-        "Validator Status",
-        "Downstream Impact if Approved",
-        "Snapshot Identity",
-    ]
-    if revised:
-        expected.insert(0, "Change Summary")
+    expected = [str(spec["title"]) for spec in expected_specs]
 
     if titles != expected:
         fail(
-            "Approval-view sections must match the shared contract exactly. "
+            "Approval-view sections must match the selected approval profile exactly. "
             f"Expected {expected}; found {titles}"
         )
 
@@ -528,41 +505,80 @@ def count_visual_evidence_items(markdown_text: str) -> int:
     return len(re.findall(r"^- Source: ", markdown_text, re.MULTILINE))
 
 
-def derive_expected_rich_metadata(markdown_text: str, required_titles: list[str], sections: dict[str, list[str]]) -> dict[str, object]:
+def glance_metric_value(card: dict[str, object], markdown_text: str, sections: dict[str, list[str]], expected_specs: list[dict[str, object]]) -> int:
+    metric = str(card.get("metric") or "groups")
+    section_title = str(card.get("section_title") or "")
+
+    if metric == "groups":
+        return count_meaningful_groups(sections.get(section_title, []))
+    if metric == "traceability_claims":
+        lines = sections.get(section_title, []) if section_title else []
+        if not lines:
+            traceability_spec = next(spec for spec in expected_specs if spec["kind"] == "traceability")
+            lines = sections[traceability_spec["title"]]
+        return len(parse_traceability(lines))
+    if metric == "validator_checks":
+        lines = sections.get(section_title, []) if section_title else []
+        if not lines:
+            validator_spec = next(spec for spec in expected_specs if spec["kind"] == "validator")
+            lines = sections[validator_spec["title"]]
+        return validator_pass_count(lines)
+    if metric == "visuals":
+        return count_visual_evidence_items(markdown_text)
+    return 0
+
+
+def derive_expected_rich_metadata(
+    markdown_text: str,
+    expected_specs: list[dict[str, object]],
+    sections: dict[str, list[str]],
+    profile: dict[str, object],
+) -> dict[str, object]:
+    glance = {}
+    for raw_card in profile.get("glance_cards", []):
+        card = dict(raw_card)
+        glance[str(card.get("label") or "Review")] = str(glance_metric_value(card, markdown_text, sections, expected_specs))
     return {
-        "sections": [{"id": f"section-{slugify(title)}", "title": title} for title in required_titles],
-        "glance": {
-            "decisions": count_meaningful_groups(sections["Decisions Required for Approval"]),
-            "risks": count_meaningful_groups(sections["Risks and Tradeoffs"]),
-            "blockers": count_meaningful_groups(sections["Blockers and Unresolved Items"]),
-            "traceability_claims": len(parse_traceability(sections["Traceability Map"])),
-            "validator_checks_passed": validator_pass_count(sections["Validator Status"]),
-            "visual_evidence_items": count_visual_evidence_items(markdown_text),
-        },
+        "sections": [
+            {
+                "id": f"section-{spec['key']}",
+                "key": spec["key"],
+                "title": spec["title"],
+                "kind": spec["kind"],
+            }
+            for spec in expected_specs
+        ],
+        "glance": glance,
         "has_mermaid": bool(MERMAID_FENCE_PATTERN.search(markdown_text)),
-        "has_toc": len(required_titles) >= 4,
+        "has_toc": len(expected_specs) >= 4,
     }
 
 
 def validate_html(
     html_text: str,
     markdown_text: str,
-    required_titles: list[str],
+    expected_specs: list[dict[str, object]],
     sections: dict[str, list[str]],
     expected_metadata: dict[str, object],
     expected_title: str,
     review_type: str,
+    profile: dict[str, object],
 ) -> None:
     metadata = extract_html_metadata(html_text)
     for key, value in expected_metadata.items():
         if metadata.get(key) != value:
             fail(f"HTML metadata mismatch for {key}")
 
+    if metadata.get("profile_id") != profile.get("profile_id"):
+        fail("HTML metadata mismatch for profile_id")
+    if metadata.get("profile_source") != profile.get("source"):
+        fail("HTML metadata mismatch for profile_source")
+
     derived = metadata.get("derived")
     if not isinstance(derived, dict):
         fail("HTML metadata missing derived rich-view metadata")
 
-    expected_derived = derive_expected_rich_metadata(markdown_text, required_titles, sections)
+    expected_derived = derive_expected_rich_metadata(markdown_text, expected_specs, sections, profile)
     for key, value in expected_derived.items():
         if derived.get(key) != value:
             fail(f"HTML derived metadata mismatch for {key}")
@@ -583,20 +599,21 @@ def validate_html(
         fail("HTML approval view missing one or more glance summary cards")
 
     section_markup = re.findall(
-        r'<section[^>]+id="([^"]+)"[^>]+data-section-role="([^"]+)"[^>]+data-section-style="([^"]+)"',
+        r'<section[^>]+id="([^"]+)"[^>]+data-section-role="([^"]+)"[^>]+data-section-kind="([^"]+)"[^>]+data-section-style="([^"]+)"',
         html_text,
     )
     expected_section_markup = [
-        (f"section-{slugify(title)}", slugify(title), SECTION_STYLES[title])
-        for title in required_titles
+        (f"section-{spec['key']}", spec["key"], spec["kind"], spec["style"])
+        for spec in expected_specs
     ]
     if section_markup != expected_section_markup:
         fail(
-            "HTML section order or section-specific style markers do not match the shared contract. "
+            "HTML section order or section markers do not match the selected approval profile. "
             f"Expected {expected_section_markup}; found {section_markup}"
         )
 
-    for title in required_titles:
+    for spec in expected_specs:
+        title = str(spec["title"])
         if title not in html_text:
             fail(f"HTML approval view missing section title: {title}")
 
@@ -604,22 +621,33 @@ def validate_html(
         if 'id="approval-toc"' not in html_text:
             fail("HTML approval view missing responsive section navigation")
         toc_links = re.findall(r'<a[^>]+href="#([^"]+)"[^>]+data-toc-link', html_text)
-        expected_ids = [f"section-{slugify(title)}" for title in required_titles]
+        expected_ids = [f"section-{spec['key']}" for spec in expected_specs]
         if toc_links != expected_ids:
-            fail("HTML approval view TOC links do not match the required sections")
+            fail("HTML approval view TOC links do not match the selected approval profile")
 
-    if 'data-scope-grid' not in html_text:
-        fail("HTML approval view missing scope split layout")
-    if 'data-validator-grid' not in html_text or html_text.count('data-validator-card') < 2:
-        fail("HTML approval view missing validator status cards")
-    if 'data-impact-timeline' not in html_text:
-        fail("HTML approval view missing downstream impact timeline")
-    if 'data-snapshot-panel' not in html_text:
-        fail("HTML approval view missing recessed snapshot panel")
-
-    traceability_count = len(parse_traceability(sections["Traceability Map"]))
-    if 'data-traceability-list' not in html_text or html_text.count('data-traceability-item') < traceability_count:
-        fail("HTML approval view missing traceability details accordions")
+    for spec in expected_specs:
+        kind = str(spec["kind"])
+        key = str(spec["key"])
+        title = str(spec["title"])
+        if kind == "scope" and f'data-scope-grid="{key}"' not in html_text:
+            fail(f"HTML approval view missing scope split layout for {title}")
+        if kind == "validator":
+            if f'data-validator-grid="{key}"' not in html_text or html_text.count('data-validator-card') < 2:
+                fail(f"HTML approval view missing validator status cards for {title}")
+        if kind == "timeline" and f'data-timeline="{key}"' not in html_text:
+            fail(f"HTML approval view missing timeline layout for {title}")
+        if kind == "snapshot" and f'data-snapshot-panel="{key}"' not in html_text:
+            fail(f"HTML approval view missing recessed snapshot panel for {title}")
+        if kind == "traceability":
+            traceability_count = len(parse_traceability(sections[title]))
+            if f'data-traceability-list="{key}"' not in html_text or html_text.count('data-traceability-item') < traceability_count:
+                fail(f"HTML approval view missing traceability accordions for {title}")
+        if kind == "cards" and f'data-card-grid="{key}"' not in html_text and count_meaningful_groups(sections[title]) > 0:
+            fail(f"HTML approval view missing card grid for {title}")
+        if kind == "callouts" and f'data-callout-stack="{key}"' not in html_text and count_meaningful_groups(sections[title]) > 0:
+            fail(f"HTML approval view missing callout stack for {title}")
+        if kind == "summary" and f'data-summary-section="{key}"' not in html_text:
+            fail(f"HTML approval view missing summary layout for {title}")
 
     if review_type == "Pack" and 'data-snapshot-table' not in html_text:
         fail("Pack approval HTML must render included snapshots as a semantic table")
@@ -637,15 +665,27 @@ def validate_html(
                 fail(f"HTML approval view missing Mermaid rich-render marker: {marker}")
 
 
-def validate_common_sections(sections: dict[str, list[str]], mode: str, revised: bool) -> list[TraceEntry]:
-    if revised:
-        validate_change_summary(sections["Change Summary"])
-    validate_scope(sections["Scope"])
-    traceability = parse_traceability(sections["Traceability Map"])
-    validate_validator_status(sections["Validator Status"], mode)
+def validate_common_sections(
+    sections: dict[str, list[str]],
+    mode: str,
+    expected_specs: list[dict[str, object]],
+) -> list[TraceEntry]:
+    traceability: list[TraceEntry] = []
 
-    for title, lines in sections.items():
+    for spec in expected_specs:
+        title = str(spec["title"])
+        kind = str(spec["kind"])
+        lines = sections[title]
         nonempty_section(lines, title)
+
+        if kind == "change-summary":
+            validate_change_summary(lines)
+        elif kind == "scope":
+            validate_scope(lines)
+        elif kind == "traceability":
+            traceability = parse_traceability(lines)
+        elif kind == "validator":
+            validate_validator_status(lines, mode)
 
     return traceability
 
@@ -663,9 +703,12 @@ def validate_artifact_mode(mode: str, canonical_file: Path, approval_md: Path, a
     approval_html_text = read_text(approval_html)
     validate_placeholders(approval_md_text)
 
-    required_titles = require_sections(approval_md_text, revised)
+    profile = load_review_profile("artifact", canonical_file)
+    expected_specs = section_specs(profile, revised)
+    require_sections(approval_md_text, expected_specs)
     sections = section_map(approval_md_text)
-    snapshot = parse_snapshot_identity_artifact(sections["Snapshot Identity"], canonical_file, revised)
+    snapshot_title = str(section_spec_by_kind(profile, revised)["snapshot"]["title"])
+    snapshot = parse_snapshot_identity_artifact(sections[snapshot_title], canonical_file, revised)
 
     expected_hash = sha256_file(canonical_file)
     expected_updated_at = parse_frontmatter_updated_at(canonical_text, canonical_file)
@@ -674,7 +717,7 @@ def validate_artifact_mode(mode: str, canonical_file: Path, approval_md: Path, a
     if snapshot["canonical_updated_at"] != expected_updated_at:
         fail("Canonical updated_at does not match canonical artifact frontmatter")
 
-    traceability = validate_common_sections(sections, mode, revised)
+    traceability = validate_common_sections(sections, mode, expected_specs)
     allowed_path = str(canonical_file.resolve())
     validate_traceability(traceability, {allowed_path}, {allowed_path: canonical_text})
 
@@ -685,16 +728,19 @@ def validate_artifact_mode(mode: str, canonical_file: Path, approval_md: Path, a
         "snapshot_sha256": snapshot["snapshot_sha256"],
         "canonical_updated_at": snapshot["canonical_updated_at"],
         "approval_view_generated_at": snapshot["approval_view_generated_at"],
+        "profile_id": profile["profile_id"],
+        "profile_source": profile["source"],
     }
     expected_title = approval_view_title("Artifact", canonical_artifact=snapshot["canonical_artifact"])
     validate_html(
         approval_html_text,
         approval_md_text,
-        required_titles,
+        expected_specs,
         sections,
         expected_metadata,
         expected_title,
         "Artifact",
+        profile,
     )
 
 
@@ -713,10 +759,13 @@ def validate_pack_mode(mode: str, approval_md: Path, approval_html: Path, canoni
     approval_html_text = read_text(approval_html)
     validate_placeholders(approval_md_text)
 
-    required_titles = require_sections(approval_md_text, revised)
+    profile = load_review_profile("pack")
+    expected_specs = section_specs(profile, revised)
+    require_sections(approval_md_text, expected_specs)
     sections = section_map(approval_md_text)
-    snapshot = parse_snapshot_identity_pack(sections["Snapshot Identity"], canonical_files, revised)
-    traceability = validate_common_sections(sections, mode, revised)
+    snapshot_title = str(section_spec_by_kind(profile, revised)["snapshot"]["title"])
+    snapshot = parse_snapshot_identity_pack(sections[snapshot_title], canonical_files, revised)
+    traceability = validate_common_sections(sections, mode, expected_specs)
 
     canonical_texts = {str(path.resolve()): read_text(path) for path in canonical_files}
     validate_traceability(traceability, set(canonical_texts.keys()), canonical_texts)
@@ -728,16 +777,19 @@ def validate_pack_mode(mode: str, approval_md: Path, approval_html: Path, canoni
         "pack_snapshot_sha256": snapshot["pack_snapshot_sha256"],
         "approval_view_generated_at": snapshot["approval_view_generated_at"],
         "included_snapshots": snapshot["included_snapshots"],
+        "profile_id": profile["profile_id"],
+        "profile_source": profile["source"],
     }
     expected_title = approval_view_title("Pack", spec_pack_root=str(snapshot["spec_pack_root"]))
     validate_html(
         approval_html_text,
         approval_md_text,
-        required_titles,
+        expected_specs,
         sections,
         expected_metadata,
         expected_title,
         "Pack",
+        profile,
     )
 
 

@@ -8,32 +8,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-
-SECTION_STYLES = {
-    "Change Summary": "hero",
-    "Executive Summary": "hero",
-    "Scope": "elevated",
-    "Decisions Required for Approval": "default",
-    "Risks and Tradeoffs": "default",
-    "Blockers and Unresolved Items": "elevated",
-    "Traceability Map": "default",
-    "Validator Status": "elevated",
-    "Downstream Impact if Approved": "default",
-    "Snapshot Identity": "recessed",
-}
-
-SECTION_LABELS = {
-    "Change Summary": "Revision Delta",
-    "Executive Summary": "Approval Brief",
-    "Scope": "Boundary",
-    "Decisions Required for Approval": "Decision Gate",
-    "Risks and Tradeoffs": "Risk Review",
-    "Blockers and Unresolved Items": "Open Issues",
-    "Traceability Map": "Evidence",
-    "Validator Status": "Validation",
-    "Downstream Impact if Approved": "Impact",
-    "Snapshot Identity": "Snapshot",
-}
+from approval_profiles import load_review_profile, section_spec_by_title, section_specs
 
 INLINE_CODE_PATTERN = re.compile(r"`([^`]+)`")
 INLINE_STRONG_PATTERN = re.compile(r"\*\*([^*]+)\*\*")
@@ -152,44 +127,19 @@ def normalize_label(label: str) -> str:
     return normalized
 
 
-def extract_snapshot_metadata(markdown_text: str) -> dict[str, object]:
+def extract_snapshot_metadata(sections: list[Section]) -> dict[str, object]:
     metadata: dict[str, object] = {}
-    lines = markdown_text.splitlines()
-    in_snapshot = False
-    included_snapshots: list[dict[str, str]] = []
+    if not sections:
+        return metadata
 
-    for line in lines:
-        if line == "## Snapshot Identity":
-            in_snapshot = True
-            continue
-        if in_snapshot and line.startswith("## "):
-            break
-        if not in_snapshot:
-            continue
-
-        bullet_match = re.match(r"^- ([^:]+):\s*(.+)$", line)
-        if bullet_match:
-            label, value = bullet_match.groups()
-            metadata[normalize_label(label)] = value.strip()
-            continue
-
-        included_match = re.match(
-            r"^  - (.+?) \| SHA-256: ([0-9a-f]{64}) \| updated_at: (.+)$",
-            line,
-        )
-        if included_match:
-            path_value, sha_value, updated_at = included_match.groups()
-            included_snapshots.append(
-                {
-                    "path": path_value.strip(),
-                    "sha256": sha_value.strip(),
-                    "updated_at": updated_at.strip(),
-                }
-            )
-
-    if included_snapshots:
-        metadata["included_snapshots"] = included_snapshots
-
+    fields, records = parse_snapshot_fields(sections[-1].lines)
+    for label, value in fields:
+        metadata[normalize_label(label)] = value.strip()
+    if records:
+        metadata["included_snapshots"] = [
+            {"path": record.path, "sha256": record.sha256, "updated_at": record.updated_at}
+            for record in records
+        ]
     return metadata
 
 
@@ -210,8 +160,22 @@ def approval_view_title(markdown_text: str, metadata: dict[str, object]) -> str:
     return extract_markdown_title(markdown_text)
 
 
-def approval_view_subtitle() -> str:
-    return "Glance-first approval surface with traceable evidence, structured review gates, and final snapshot metadata."
+def approval_view_subtitle(profile: dict[str, object]) -> str:
+    return str(profile.get("subtitle") or "Glance-first approval surface with traceable evidence, structured review gates, and final snapshot metadata.")
+
+
+def resolve_review_profile(metadata: dict[str, object]) -> tuple[dict[str, object], bool]:
+    review_type_value = str(metadata.get("review_type", "")).strip()
+    revised = str(metadata.get("approval_mode", "")).strip() == "Revised"
+
+    if review_type_value == "Artifact":
+        canonical_artifact = str(metadata.get("canonical_artifact", "")).strip()
+        canonical_path = Path(canonical_artifact).resolve() if canonical_artifact else None
+        return load_review_profile("artifact", canonical_path), revised
+    if review_type_value == "Pack":
+        return load_review_profile("pack"), revised
+
+    return load_review_profile("artifact"), revised
 
 
 def render_inline(text: str) -> str:
@@ -610,7 +574,7 @@ def render_change_summary(lines: list[str]) -> str:
 '''.strip()
 
 
-def render_executive_summary(lines: list[str]) -> str:
+def render_summary_section(lines: list[str], section_key: str, empty_state: str) -> str:
     main_lines, extra_subsections, visual_lines = partition_section_lines(lines)
     intro_lines: list[str] = []
     bullet_lines: list[str] = []
@@ -629,18 +593,18 @@ def render_executive_summary(lines: list[str]) -> str:
     extra_html = render_extra_subsections(extra_subsections)
     text_html = "".join(part for part in [intro_html, summary_points, extra_html] if part)
     if not text_html:
-        text_html = render_empty_state("Add 1–3 concise bullets or a short lead paragraph for approvers.")
+        text_html = render_empty_state(empty_state)
 
     visuals_html = render_visual_evidence(visual_lines)
     if visuals_html:
         return f'''
-<div class="split-hero">
+<div class="split-hero" data-summary-section="{html.escape(section_key)}">
   <div class="split-hero__main">{text_html}</div>
   <div class="split-hero__visual">{visuals_html}</div>
 </div>
 '''.strip()
 
-    return f'<div class="hero-stack" data-hero-section>{text_html}</div>'
+    return f'<div class="hero-stack" data-hero-section data-summary-section="{html.escape(section_key)}">{text_html}</div>'
 
 
 def parse_scope(lines: list[str]) -> tuple[list[str], list[str]]:
@@ -663,10 +627,10 @@ def parse_scope(lines: list[str]) -> tuple[list[str], list[str]]:
     return trim_blank_lines(in_scope), trim_blank_lines(out_scope)
 
 
-def render_scope(lines: list[str]) -> str:
+def render_scope(lines: list[str], section_key: str) -> str:
     in_scope, out_scope = parse_scope(lines)
     return f'''
-<div class="scope-grid" data-scope-grid>
+<div class="scope-grid" data-scope-grid="{html.escape(section_key)}">
   <article class="scope-card scope-card--in">
     <div class="scope-card__label">In scope</div>
     <div class="scope-card__body">{render_fragment(in_scope, heading_level=5) if in_scope else render_empty_state("None")}</div>
@@ -679,13 +643,13 @@ def render_scope(lines: list[str]) -> str:
 '''.strip()
 
 
-def render_card_grid_section(lines: list[str], label_prefix: str, grid_class: str) -> str:
+def render_card_grid_section(lines: list[str], label_prefix: str, grid_class: str, section_key: str, empty_state: str) -> str:
     main_lines, extra_subsections, visual_lines = partition_section_lines(lines)
     groups = group_top_level_bullets(main_lines)
     meaningful_groups = [group for group in groups if not is_none_group(group)]
 
     if not meaningful_groups:
-        cards_html = render_empty_state("None")
+        cards_html = render_empty_state(empty_state)
     else:
         cards = []
         for index, group in enumerate(meaningful_groups, start=1):
@@ -697,45 +661,45 @@ def render_card_grid_section(lines: list[str], label_prefix: str, grid_class: st
 </article>
 '''.strip()
             )
-        cards_html = f'<div class="review-card-grid review-card-grid--{grid_class}" data-card-grid="{html.escape(grid_class)}">{"".join(cards)}</div>'
+        cards_html = f'<div class="review-card-grid review-card-grid--{grid_class}" data-card-grid="{html.escape(section_key)}">{"".join(cards)}</div>'
 
     extras_html = render_extra_subsections(extra_subsections)
     visuals_html = render_visual_evidence(visual_lines)
     return "".join(part for part in [cards_html, extras_html, visuals_html] if part)
 
 
-def render_blockers(lines: list[str]) -> str:
+def render_callout_section(lines: list[str], label_prefix: str, section_key: str, empty_state: str) -> str:
     main_lines, extra_subsections, visual_lines = partition_section_lines(lines)
     groups = group_top_level_bullets(main_lines)
     meaningful_groups = [group for group in groups if not is_none_group(group)]
 
     if not meaningful_groups:
-        stack_html = render_empty_state("None")
+        stack_html = render_empty_state(empty_state)
     else:
         callouts = []
         for index, group in enumerate(meaningful_groups, start=1):
             callouts.append(
                 f'''
 <article class="callout callout--warning">
-  <div class="callout__label">Blocker {index:02d}</div>
+  <div class="callout__label">{html.escape(label_prefix)} {index:02d}</div>
   <div class="callout__body">{render_fragment(group, heading_level=5)}</div>
 </article>
 '''.strip()
             )
-        stack_html = f'<div class="callout-stack">{"".join(callouts)}</div>'
+        stack_html = f'<div class="callout-stack" data-callout-stack="{html.escape(section_key)}">{"".join(callouts)}</div>'
 
     extras_html = render_extra_subsections(extra_subsections)
     visuals_html = render_visual_evidence(visual_lines)
     return "".join(part for part in [stack_html, extras_html, visuals_html] if part)
 
 
-def render_downstream_impact(lines: list[str]) -> str:
+def render_timeline_section(lines: list[str], section_key: str, empty_state: str) -> str:
     main_lines, extra_subsections, visual_lines = partition_section_lines(lines)
     groups = group_top_level_bullets(main_lines)
     meaningful_groups = [group for group in groups if not is_none_group(group)]
 
     if not meaningful_groups:
-        timeline_html = render_empty_state("None")
+        timeline_html = render_empty_state(empty_state)
     else:
         items = []
         for index, group in enumerate(meaningful_groups, start=1):
@@ -747,7 +711,7 @@ def render_downstream_impact(lines: list[str]) -> str:
 </article>
 '''.strip()
             )
-        timeline_html = f'<div class="impact-timeline" data-impact-timeline>{"".join(items)}</div>'
+        timeline_html = f'<div class="impact-timeline" data-timeline="{html.escape(section_key)}">{"".join(items)}</div>'
 
     extras_html = render_extra_subsections(extra_subsections)
     visuals_html = render_visual_evidence(visual_lines)
@@ -784,7 +748,7 @@ def parse_traceability(lines: list[str]) -> list[TraceEntry]:
     return entries
 
 
-def render_traceability(lines: list[str]) -> str:
+def render_traceability(lines: list[str], section_key: str) -> str:
     entries = parse_traceability(lines)
     if not entries:
         return render_empty_state("No traceability claims.")
@@ -812,7 +776,7 @@ def render_traceability(lines: list[str]) -> str:
 '''.strip()
         )
 
-    return f'<div class="traceability-list" data-traceability-list>{"".join(parts)}</div>'
+    return f'<div class="traceability-list" data-traceability-list="{html.escape(section_key)}">{"".join(parts)}</div>'
 
 
 def parse_validator_entries(lines: list[str]) -> list[ValidatorEntry]:
@@ -826,7 +790,7 @@ def parse_validator_entries(lines: list[str]) -> list[ValidatorEntry]:
     return entries
 
 
-def render_validator_status(lines: list[str]) -> str:
+def render_validator_status(lines: list[str], section_key: str) -> str:
     entries = parse_validator_entries(lines)
     cards = []
     for entry in entries:
@@ -845,7 +809,7 @@ def render_validator_status(lines: list[str]) -> str:
 </article>
 '''.strip()
         )
-    return f'<div class="validator-grid" data-validator-grid>{"".join(cards)}</div>'
+    return f'<div class="validator-grid" data-validator-grid="{html.escape(section_key)}">{"".join(cards)}</div>'
 
 
 def parse_snapshot_fields(lines: list[str]) -> tuple[list[tuple[str, str]], list[SnapshotRecord]]:
@@ -881,7 +845,7 @@ def parse_snapshot_fields(lines: list[str]) -> tuple[list[tuple[str, str]], list
     return fields, records
 
 
-def render_snapshot_identity(lines: list[str]) -> str:
+def render_snapshot_identity(lines: list[str], section_key: str) -> str:
     fields, records = parse_snapshot_fields(lines)
     rows = []
     for label, value in fields:
@@ -928,44 +892,68 @@ def render_snapshot_identity(lines: list[str]) -> str:
 '''.strip()
 
     return f'''
-<div class="snapshot-panel" data-snapshot-panel>
+<div class="snapshot-panel" data-snapshot-panel="{html.escape(section_key)}">
   <dl class="snapshot-grid">{"".join(rows)}</dl>
   {table_html}
 </div>
 '''.strip()
 
 
-def render_section(section: Section, index: int) -> str:
-    title = section.title
-    role = slugify(title)
-    style = SECTION_STYLES.get(title, "default")
-    label = SECTION_LABELS.get(title, title)
+def fallback_section_spec(title: str) -> dict[str, object]:
+    for review_type in ("artifact", "pack"):
+        for revised in (False, True):
+            mapping = section_spec_by_title(load_review_profile(review_type), revised)
+            spec = mapping.get(title)
+            if spec is not None:
+                return spec
+    return {
+        "key": slugify(title),
+        "title": title,
+        "kind": "fragment",
+        "label": title,
+        "style": "default",
+        "item_label": "Item",
+        "empty_state": "None",
+    }
 
-    if title == "Change Summary":
+
+def profile_section_spec(profile: dict[str, object], revised: bool, title: str) -> dict[str, object]:
+    return section_spec_by_title(profile, revised).get(title) or fallback_section_spec(title)
+
+
+def render_section(section: Section, index: int, profile: dict[str, object], revised: bool) -> str:
+    spec = profile_section_spec(profile, revised, section.title)
+    title = section.title
+    role = str(spec["key"])
+    kind = str(spec["kind"])
+    style = str(spec.get("style") or "default")
+    label = str(spec.get("label") or title)
+    item_label = str(spec.get("item_label") or "Item")
+    empty_state = str(spec.get("empty_state") or "None")
+
+    if kind == "change-summary":
         body_html = render_change_summary(section.lines)
-    elif title == "Executive Summary":
-        body_html = render_executive_summary(section.lines)
-    elif title == "Scope":
-        body_html = render_scope(section.lines)
-    elif title == "Decisions Required for Approval":
-        body_html = render_card_grid_section(section.lines, "Decision", "decision")
-    elif title == "Risks and Tradeoffs":
-        body_html = render_card_grid_section(section.lines, "Risk", "risk")
-    elif title == "Blockers and Unresolved Items":
-        body_html = render_blockers(section.lines)
-    elif title == "Traceability Map":
-        body_html = render_traceability(section.lines)
-    elif title == "Validator Status":
-        body_html = render_validator_status(section.lines)
-    elif title == "Downstream Impact if Approved":
-        body_html = render_downstream_impact(section.lines)
-    elif title == "Snapshot Identity":
-        body_html = render_snapshot_identity(section.lines)
+    elif kind == "summary":
+        body_html = render_summary_section(section.lines, role, empty_state)
+    elif kind == "scope":
+        body_html = render_scope(section.lines, role)
+    elif kind == "cards":
+        body_html = render_card_grid_section(section.lines, item_label, role, role, empty_state)
+    elif kind == "callouts":
+        body_html = render_callout_section(section.lines, item_label, role, empty_state)
+    elif kind == "traceability":
+        body_html = render_traceability(section.lines, role)
+    elif kind == "validator":
+        body_html = render_validator_status(section.lines, role)
+    elif kind == "timeline":
+        body_html = render_timeline_section(section.lines, role, empty_state)
+    elif kind == "snapshot":
+        body_html = render_snapshot_identity(section.lines, role)
     else:
         body_html = render_fragment(section.lines, heading_level=5)
 
     return f'''
-<section class="approval-section approval-section--{role}" id="section-{role}" data-section-role="{role}" data-section-style="{style}" style="--section-index:{index}">
+<section class="approval-section approval-section--{role}" id="section-{role}" data-section-role="{role}" data-section-kind="{kind}" data-section-style="{style}" style="--section-index:{index}">
   <div class="section-top">
     <div class="section-heading">
       <div class="section-kicker">
@@ -991,46 +979,47 @@ def count_visual_evidence_items(sections: list[Section]) -> int:
     return count
 
 
-def derive_glance_cards(sections: list[Section]) -> list[dict[str, str]]:
+def glance_metric_value(card: dict[str, str], section_map: dict[str, list[str]], sections: list[Section]) -> int:
+    metric = str(card.get("metric") or "groups")
+    section_title = str(card.get("section_title") or "")
+
+    if metric == "groups":
+        return count_meaningful_groups(section_map.get(section_title, []))
+    if metric == "traceability_claims":
+        traceability_lines = section_map.get(section_title, []) if section_title else []
+        if not traceability_lines:
+            for section in sections:
+                if fallback_section_spec(section.title)["kind"] == "traceability":
+                    traceability_lines = section.lines
+                    break
+        return len(parse_traceability(traceability_lines))
+    if metric == "validator_checks":
+        validator_lines = section_map.get(section_title, []) if section_title else []
+        if not validator_lines:
+            for section in sections:
+                if fallback_section_spec(section.title)["kind"] == "validator":
+                    validator_lines = section.lines
+                    break
+        return validator_pass_count(validator_lines)
+    if metric == "visuals":
+        return count_visual_evidence_items(sections)
+    return 0
+
+
+def derive_glance_cards(profile: dict[str, object], sections: list[Section]) -> list[dict[str, str]]:
     section_map = {section.title: section.lines for section in sections}
-    return [
-        {
-            "label": "Decisions",
-            "value": str(count_meaningful_groups(section_map.get("Decisions Required for Approval", []))),
-            "hint": "Approval calls requiring an explicit yes/no.",
-            "tone": "accent",
-        },
-        {
-            "label": "Risks",
-            "value": str(count_meaningful_groups(section_map.get("Risks and Tradeoffs", []))),
-            "hint": "Tradeoffs or material concerns to scan fast.",
-            "tone": "muted",
-        },
-        {
-            "label": "Blockers",
-            "value": str(count_meaningful_groups(section_map.get("Blockers and Unresolved Items", []))),
-            "hint": "Open items that can stall or limit approval.",
-            "tone": "warning",
-        },
-        {
-            "label": "Evidence claims",
-            "value": str(len(parse_traceability(section_map.get("Traceability Map", [])))),
-            "hint": "Trace-linked claims backed by verbatim source quotes.",
-            "tone": "info",
-        },
-        {
-            "label": "Validator checks",
-            "value": str(validator_pass_count(section_map.get("Validator Status", []))),
-            "hint": "Recorded validator passes carried from the review inputs.",
-            "tone": "success",
-        },
-        {
-            "label": "Visuals",
-            "value": str(count_visual_evidence_items(sections)),
-            "hint": "Carried-forward visual evidence sections in this review.",
-            "tone": "info",
-        },
-    ]
+    cards: list[dict[str, str]] = []
+    for raw_card in profile.get("glance_cards", []):
+        card = dict(raw_card)
+        cards.append(
+            {
+                "label": str(card.get("label") or "Review"),
+                "value": str(glance_metric_value(card, section_map, sections)),
+                "hint": str(card.get("hint") or ""),
+                "tone": str(card.get("tone") or "info"),
+            }
+        )
+    return cards
 
 
 def render_glance_cards(cards: list[dict[str, str]]) -> str:
@@ -1048,29 +1037,37 @@ def render_glance_cards(cards: list[dict[str, str]]) -> str:
     return "".join(rendered)
 
 
-def render_toc(sections: list[Section]) -> str:
+def render_toc(sections: list[Section], profile: dict[str, object], revised: bool) -> str:
     links = []
     for index, section in enumerate(sections, start=1):
-        section_id = f"section-{slugify(section.title)}"
+        spec = profile_section_spec(profile, revised, section.title)
+        section_id = f"section-{spec['key']}"
         links.append(
             f'<a href="#{section_id}" data-toc-link><span class="toc-index">{index:02d}</span><span>{html.escape(section.title)}</span></a>'
         )
     return "".join(links)
 
 
-def build_metadata(markdown_text: str, sections: list[Section]) -> dict[str, object]:
-    metadata = extract_snapshot_metadata(markdown_text)
-    section_map = {section.title: section.lines for section in sections}
+def build_metadata(markdown_text: str, sections: list[Section], profile: dict[str, object], revised: bool) -> dict[str, object]:
+    metadata = extract_snapshot_metadata(sections)
+    metadata["profile_id"] = profile.get("profile_id")
+    metadata["profile_source"] = profile.get("source")
+
+    derived_sections = []
+    for section in sections:
+        spec = profile_section_spec(profile, revised, section.title)
+        derived_sections.append(
+            {
+                "id": f"section-{spec['key']}",
+                "key": spec["key"],
+                "title": section.title,
+                "kind": spec["kind"],
+            }
+        )
+
     metadata["derived"] = {
-        "sections": [{"id": f"section-{slugify(section.title)}", "title": section.title} for section in sections],
-        "glance": {
-            "decisions": count_meaningful_groups(section_map.get("Decisions Required for Approval", [])),
-            "risks": count_meaningful_groups(section_map.get("Risks and Tradeoffs", [])),
-            "blockers": count_meaningful_groups(section_map.get("Blockers and Unresolved Items", [])),
-            "traceability_claims": len(parse_traceability(section_map.get("Traceability Map", []))),
-            "validator_checks_passed": validator_pass_count(section_map.get("Validator Status", [])),
-            "visual_evidence_items": count_visual_evidence_items(sections),
-        },
+        "sections": derived_sections,
+        "glance": {card["label"]: card["value"] for card in derive_glance_cards(profile, sections)},
         "has_mermaid": bool(MERMAID_FENCE_PATTERN.search(markdown_text)),
         "has_toc": len(sections) >= 4,
     }
@@ -1097,15 +1094,19 @@ def main() -> int:
     shell_text = read_text(shell_path)
     markdown_body = first_h1_removed(markdown_text)
     sections = parse_sections(markdown_body)
-    metadata = build_metadata(markdown_body, sections)
+    snapshot_metadata = extract_snapshot_metadata(sections)
+    profile, revised = resolve_review_profile(snapshot_metadata)
+    metadata = build_metadata(markdown_body, sections, profile, revised)
     title = approval_view_title(markdown_text, metadata)
-    subtitle = approval_view_subtitle()
-    toc_html = render_toc(sections)
-    glance_html = render_glance_cards(derive_glance_cards(sections))
-    body_html = "\n".join(render_section(section, index) for index, section in enumerate(sections, start=1))
+    subtitle = approval_view_subtitle(profile)
+    view_label = str(profile.get("display_name") or "Approval View")
+    toc_html = render_toc(sections, profile, revised)
+    glance_html = render_glance_cards(derive_glance_cards(profile, sections))
+    body_html = "\n".join(render_section(section, index, profile, revised) for index, section in enumerate(sections, start=1))
 
     html_text = (
         shell_text.replace("{{TITLE}}", html.escape(title))
+        .replace("{{VIEW_LABEL}}", html.escape(view_label))
         .replace("{{SUBTITLE}}", html.escape(subtitle))
         .replace("{{TOC}}", toc_html)
         .replace("{{GLANCE}}", glance_html)

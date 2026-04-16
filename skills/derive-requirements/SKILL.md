@@ -79,3 +79,4 @@ Produce `requirements.md` from repository evidence. Reconstruct implemented obli
 - evidence-backed constraints on inputs, validation, integrations, and operations
 - low-confidence requirement areas and any inferred-versus-observed distinction
 - findings that pressure reconciliation with reconstructed technical design
+- approval-shell layout lives in `./assets/approval-view-profile.json`; use it instead of the generic approval template

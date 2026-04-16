@@ -93,3 +93,4 @@ Produce `user-stories.md` from repository evidence. Reconstruct implemented user
 - coverage gaps and evidence weakness around likely user-facing behavior
 - low-confidence stories and inferred-versus-observed pressure points
 - any story or ambiguity that would mislead downstream requirements if treated as settled
+- approval-shell layout lives in `./assets/approval-view-profile.json`; use it instead of the generic approval template

@@ -1,0 +1,118 @@
+{
+  "profile_id": "task-generation-approval-v1",
+  "display_name": "Task Tracking Approval",
+  "subtitle": "Review execution slices, dependencies, and drift risks before implementation starts.",
+  "review_type": "artifact",
+  "sections": [
+    {
+      "key": "highest-risk-task-groups",
+      "title": "Highest-Risk Task Groups",
+      "kind": "summary",
+      "label": "Task Groups",
+      "style": "hero",
+      "why": "Lead with the task groups carrying the most execution risk."
+    },
+    {
+      "key": "dependency-chains-and-runtime-edge-work",
+      "title": "Dependency Chains and Runtime-Edge Work",
+      "kind": "cards",
+      "label": "Dependencies",
+      "style": "default",
+      "item_label": "Chain",
+      "why": "Keep the most critical dependency and runtime-edge work visible."
+    },
+    {
+      "key": "ambiguous-boundaries-and-drift-risks",
+      "title": "Ambiguous Boundaries and Drift Risks",
+      "kind": "callouts",
+      "label": "Drift Risks",
+      "style": "elevated",
+      "item_label": "Risk",
+      "why": "Expose ambiguous task boundaries before execution drifts."
+    },
+    {
+      "key": "decisions-required-for-approval",
+      "title": "Decisions Required for Approval",
+      "kind": "cards",
+      "label": "Decision Gate",
+      "style": "default",
+      "item_label": "Decision",
+      "why": "State the execution-slicing calls the reviewer is approving."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "why": "Tie approval claims to exact task-tracking evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "why": "Show validation status for tasks and approval view."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "item_label": "Impact",
+      "why": "Clarify what implementation may now treat as execution-ready."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Task groups",
+      "section_title": "Highest-Risk Task Groups",
+      "metric": "groups",
+      "hint": "Highest-risk slices in scope.",
+      "tone": "accent"
+    },
+    {
+      "label": "Dependencies",
+      "section_title": "Dependency Chains and Runtime-Edge Work",
+      "metric": "groups",
+      "hint": "Critical dependency chains or runtime-edge tasks.",
+      "tone": "info"
+    },
+    {
+      "label": "Drift risks",
+      "section_title": "Ambiguous Boundaries and Drift Risks",
+      "metric": "groups",
+      "hint": "Ambiguity that could stall or skew execution.",
+      "tone": "warning"
+    },
+    {
+      "label": "Decisions",
+      "section_title": "Decisions Required for Approval",
+      "metric": "groups",
+      "hint": "Execution-slicing calls under review.",
+      "tone": "muted"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact task quotes.",
+      "tone": "info"
+    },
+    {
+      "label": "Validators",
+      "metric": "validator_checks",
+      "hint": "Recorded validator passes.",
+      "tone": "success"
+    }
+  ]
+}

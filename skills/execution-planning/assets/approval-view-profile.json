@@ -1,0 +1,128 @@
+{
+  "profile_id": "execution-planning-approval-v1",
+  "display_name": "Execution Plan Approval",
+  "subtitle": "Review stream sequencing, runtime-edge obligations, and validation gates before task generation.",
+  "review_type": "artifact",
+  "sections": [
+    {
+      "key": "implementation-streams-at-a-glance",
+      "title": "Implementation Streams at a Glance",
+      "kind": "summary",
+      "label": "Streams",
+      "style": "hero",
+      "why": "Lead with the major implementation streams before sequencing detail."
+    },
+    {
+      "key": "highest-risk-sequencing-decisions",
+      "title": "Highest-Risk Sequencing Decisions",
+      "kind": "cards",
+      "label": "Sequencing",
+      "style": "default",
+      "item_label": "Sequence",
+      "why": "Show the ordering calls most likely to affect delivery risk."
+    },
+    {
+      "key": "runtime-edge-obligations-to-preserve",
+      "title": "Runtime-Edge Obligations to Preserve",
+      "kind": "cards",
+      "label": "Runtime Edge",
+      "style": "elevated",
+      "item_label": "Obligation",
+      "why": "Keep runtime-edge behavior visible before work is split into tasks."
+    },
+    {
+      "key": "validation-checkpoints-that-catch-false-progress",
+      "title": "Validation Checkpoints that Catch False Progress",
+      "kind": "timeline",
+      "label": "Validation Gates",
+      "style": "default",
+      "item_label": "Checkpoint",
+      "why": "Show the checkpoints that prevent structural work from being mistaken for progress."
+    },
+    {
+      "key": "blockers-and-todo-confirm-items",
+      "title": "Blockers and TODO: Confirm Items",
+      "kind": "callouts",
+      "label": "Open Issues",
+      "style": "elevated",
+      "item_label": "Blocker",
+      "why": "Expose blockers or unresolved plan details before task generation."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "why": "Tie approval claims to exact execution-plan evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "why": "Show validation status for plan and approval view."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "item_label": "Impact",
+      "why": "Clarify what task generation and execution may now assume."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Streams",
+      "section_title": "Implementation Streams at a Glance",
+      "metric": "groups",
+      "hint": "Implementation streams in scope.",
+      "tone": "accent"
+    },
+    {
+      "label": "Sequencing",
+      "section_title": "Highest-Risk Sequencing Decisions",
+      "metric": "groups",
+      "hint": "Highest-risk ordering calls.",
+      "tone": "info"
+    },
+    {
+      "label": "Runtime edge",
+      "section_title": "Runtime-Edge Obligations to Preserve",
+      "metric": "groups",
+      "hint": "Runtime-edge behavior that must survive planning.",
+      "tone": "muted"
+    },
+    {
+      "label": "Checkpoints",
+      "section_title": "Validation Checkpoints that Catch False Progress",
+      "metric": "groups",
+      "hint": "Validation gates guarding against false progress.",
+      "tone": "success"
+    },
+    {
+      "label": "Open issues",
+      "section_title": "Blockers and TODO: Confirm Items",
+      "metric": "groups",
+      "hint": "Blockers or unresolved planning details.",
+      "tone": "warning"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact plan quotes.",
+      "tone": "info"
+    }
+  ]
+}

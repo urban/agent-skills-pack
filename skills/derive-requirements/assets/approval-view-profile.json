@@ -1,0 +1,127 @@
+{
+  "profile_id": "derive-requirements-approval-v1",
+  "display_name": "Derived Requirements Approval",
+  "subtitle": "Review recovered obligations with evidence strength, constraint hotspots, and low-confidence areas exposed.",
+  "review_type": "artifact",
+  "sections": [
+    {
+      "key": "highest-impact-recovered-obligations",
+      "title": "Highest-Impact Recovered Obligations",
+      "kind": "summary",
+      "label": "Recovered Obligations",
+      "style": "hero",
+      "why": "Lead with the strongest recovered obligations before weaker inference-heavy areas."
+    },
+    {
+      "key": "input-validation-data-and-integration-constraints",
+      "title": "Input, Validation, Data, and Integration Constraints",
+      "kind": "cards",
+      "label": "Constraints",
+      "style": "default",
+      "item_label": "Constraint",
+      "why": "Keep source-backed input and integration rules easy to scan."
+    },
+    {
+      "key": "low-confidence-areas-and-inferred-vs-observed-distinctions",
+      "title": "Low-Confidence Areas and Inferred-vs-Observed Distinctions",
+      "kind": "callouts",
+      "label": "Confidence",
+      "style": "elevated",
+      "item_label": "Hotspot",
+      "why": "Expose where recovered requirements lean on inference."
+    },
+    {
+      "key": "findings-that-pressure-technical-design-reconciliation",
+      "title": "Findings that Pressure Technical-Design Reconciliation",
+      "kind": "cards",
+      "label": "Reconciliation",
+      "style": "default",
+      "item_label": "Finding",
+      "why": "Show recovered requirement findings that may force design updates."
+    },
+    {
+      "key": "decisions-required-for-approval",
+      "title": "Decisions Required for Approval",
+      "kind": "cards",
+      "label": "Decision Gate",
+      "style": "default",
+      "item_label": "Decision",
+      "why": "State what the reviewer must accept despite uncertainty."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "why": "Tie derived requirement claims to exact evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "why": "Show validation status for the derived artifact and approval view."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "item_label": "Impact",
+      "why": "Clarify what downstream design or planning may now assume."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Recovered anchors",
+      "section_title": "Highest-Impact Recovered Obligations",
+      "metric": "groups",
+      "hint": "Strongest recovered obligations.",
+      "tone": "accent"
+    },
+    {
+      "label": "Constraints",
+      "section_title": "Input, Validation, Data, and Integration Constraints",
+      "metric": "groups",
+      "hint": "Input or integration rules shaping behavior.",
+      "tone": "info"
+    },
+    {
+      "label": "Low-confidence",
+      "section_title": "Low-Confidence Areas and Inferred-vs-Observed Distinctions",
+      "metric": "groups",
+      "hint": "Requirement areas leaning on inference.",
+      "tone": "warning"
+    },
+    {
+      "label": "Reconciliation",
+      "section_title": "Findings that Pressure Technical-Design Reconciliation",
+      "metric": "groups",
+      "hint": "Findings likely to force design updates.",
+      "tone": "muted"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact evidence quotes.",
+      "tone": "info"
+    },
+    {
+      "label": "Validators",
+      "metric": "validator_checks",
+      "hint": "Recorded validator passes.",
+      "tone": "success"
+    }
+  ]
+}

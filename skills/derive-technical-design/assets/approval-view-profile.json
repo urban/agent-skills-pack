@@ -1,0 +1,136 @@
+{
+  "profile_id": "derive-technical-design-approval-v1",
+  "display_name": "Derived Technical Design Approval",
+  "subtitle": "Review as-built architecture with evidence strength, inferred seams, and requirement pressure left explicit.",
+  "review_type": "artifact",
+  "sections": [
+    {
+      "key": "major-architecture-claims-and-evidence",
+      "title": "Major Architecture Claims and Evidence",
+      "kind": "summary",
+      "label": "Architecture",
+      "style": "hero",
+      "why": "Lead with the strongest as-built architecture claims before weaker inference."
+    },
+    {
+      "key": "runtime-error-and-resource-ownership-seams",
+      "title": "Runtime, Error, and Resource-Ownership Seams",
+      "kind": "cards",
+      "label": "Runtime Seams",
+      "style": "default",
+      "item_label": "Seam",
+      "why": "Show the seams most likely to affect future changes."
+    },
+    {
+      "key": "confidence-hotspots-and-inferred-vs-observed-distinctions",
+      "title": "Confidence Hotspots and Inferred-vs-Observed Distinctions",
+      "kind": "callouts",
+      "label": "Confidence",
+      "style": "elevated",
+      "item_label": "Hotspot",
+      "why": "Make uncertain architecture claims explicit."
+    },
+    {
+      "key": "findings-that-pressure-requirement-reconciliation",
+      "title": "Findings that Pressure Requirement Reconciliation",
+      "kind": "cards",
+      "label": "Reconciliation",
+      "style": "default",
+      "item_label": "Finding",
+      "why": "Show design findings that exceed current requirements."
+    },
+    {
+      "key": "major-risks-and-tradeoffs",
+      "title": "Major Risks and Tradeoffs",
+      "kind": "cards",
+      "label": "Risk Review",
+      "style": "default",
+      "item_label": "Risk",
+      "why": "Keep major as-built tradeoffs visible."
+    },
+    {
+      "key": "decisions-required-for-approval",
+      "title": "Decisions Required for Approval",
+      "kind": "cards",
+      "label": "Decision Gate",
+      "style": "default",
+      "item_label": "Decision",
+      "why": "State what the reviewer is accepting as the as-built technical baseline."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "why": "Tie derived design claims to exact evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "why": "Show validation status for the derived design and approval view."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "item_label": "Impact",
+      "why": "Clarify what follow-on changes may now treat as architecture reality."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Architecture",
+      "section_title": "Major Architecture Claims and Evidence",
+      "metric": "groups",
+      "hint": "Strongest as-built architecture claims.",
+      "tone": "accent"
+    },
+    {
+      "label": "Runtime seams",
+      "section_title": "Runtime, Error, and Resource-Ownership Seams",
+      "metric": "groups",
+      "hint": "Runtime or ownership seams shaping changes.",
+      "tone": "info"
+    },
+    {
+      "label": "Confidence",
+      "section_title": "Confidence Hotspots and Inferred-vs-Observed Distinctions",
+      "metric": "groups",
+      "hint": "Claims that lean on inference.",
+      "tone": "warning"
+    },
+    {
+      "label": "Reconciliation",
+      "section_title": "Findings that Pressure Requirement Reconciliation",
+      "metric": "groups",
+      "hint": "Findings likely to force requirement updates.",
+      "tone": "muted"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact evidence quotes.",
+      "tone": "info"
+    },
+    {
+      "label": "Visuals",
+      "metric": "visuals",
+      "hint": "Carried-forward diagrams or visuals.",
+      "tone": "info"
+    }
+  ]
+}

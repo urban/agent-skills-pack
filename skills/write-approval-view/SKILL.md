@@ -3,7 +3,7 @@ name: write-approval-view
 description: "Write and validate derived approval views for canonical package artifacts. Use when a workflow needs human approval of an exact canonical artifact snapshot through Markdown or HTML review surfaces."
 license: MIT
 metadata:
-  version: "0.2.0"
+  version: "0.3.0"
   author: "urban (https://github.com)"
   layer: foundational
   internal: true
@@ -24,21 +24,16 @@ Own the shared approval-view contract: derived Markdown and HTML review surfaces
   - pack -> `<spec-pack-root>/approval/pack.md` and `<spec-pack-root>/approval/pack.html`
 - Markdown contract:
   - no frontmatter
-  - required sections, in order:
-    1. `Change Summary` when the view is revised; otherwise omit
-    2. `Executive Summary`
-    3. `Scope`
-    4. `Decisions Required for Approval`
-    5. `Risks and Tradeoffs`
-    6. `Blockers and Unresolved Items`
-    7. `Traceability Map`
-    8. `Validator Status`
-    9. `Downstream Impact if Approved`
-    10. `Snapshot Identity`
-  - keep the top-level `##` section order exact; `Snapshot Identity` must be the final top-level section. Place carried-forward visuals inside the relevant required section as subsections or fenced blocks, not as new top-level sections
+  - pack reviews use the shared pack profile owned here
+  - artifact reviews use the producing skill's profile at `../<producing-skill>/assets/approval-view-profile.json`, resolved from canonical frontmatter `generated_by.producing_skill`; if none exists, fall back to the built-in generic artifact profile
+  - required top-level `##` sections must match the selected profile exactly, in order
+  - revised views prepend `Change Summary`; the selected profile's snapshot section must remain the final top-level section
+  - specialist profiles own artifact-specific section titles, order, glance emphasis, and why; this skill owns shared rendering, traceability, validation, and snapshot rules
+  - scaffold from `python3 ./scripts/scaffold_approval_view.py <mode> <canonical-file>` for artifact review or `python3 ./scripts/scaffold_approval_view.py <mode>` for pack review unless the caller has an equivalent deterministic scaffold
+  - place carried-forward visuals inside the relevant required section as subsections or fenced blocks, not as new top-level sections
 - Visual carry-forward rules:
   - when the canonical artifact or pack snapshot contains in-scope diagrams or other visual sections that materially affect approval, copy them into the Markdown approval view
-  - place carried-forward visuals in a `### Visual Evidence` subsection inside the most relevant required section; for technical-design artifact approvals, default to `## Executive Summary` unless another required section is a better fit
+  - place carried-forward visuals in a `### Visual Evidence` subsection inside the most relevant required section; for technical-design artifact approvals, default to the profile's lead architecture-summary section unless another required section is a better fit
   - precede each carried-forward visual with `- Source: <resolved canonical path> :: <exact heading>` so approvers can match the visual to the canonical section
   - copy Mermaid fence contents exactly; do not redraw, rename, or reinterpret the diagram
   - for technical-design artifact approvals, carry forward every required diagram slot present in the canonical artifact and any populated optional `Interaction Diagram`
@@ -61,7 +56,7 @@ Own the shared approval-view contract: derived Markdown and HTML review surfaces
     - `Included snapshots:` with one bullet per canonical artifact in this exact form:
       - `<resolved path> | SHA-256: <hash> | updated_at: <timestamp>`
 - Revised view rules:
-  - `Change Summary` must be the first required section, immediately before `Executive Summary`
+  - `Change Summary` must be the first required section, immediately before the profile's first non-revision section
   - revised views are diff-first, then full current summary
   - `Change Summary` must include `Previous snapshot SHA-256:` and at least one delta bullet or `- None`
 - Traceability map rules:
@@ -80,17 +75,16 @@ Own the shared approval-view contract: derived Markdown and HTML review surfaces
   - do not repeat snapshot identity fields elsewhere in visible HTML; keep them in the final `## Snapshot Identity` section, except for the required review-target title
   - surface a top-of-page `At a Glance` summary derived from approval content without repeating full snapshot identity fields there
   - when the page has 4+ top-level sections, include responsive section navigation: sticky desktop TOC and sticky horizontal mobile nav
-  - use section-specific presentation patterns, not visually identical cards:
+  - use section-kind-specific presentation patterns, not visually identical cards:
     - `Change Summary` -> hero delta panel
-    - `Executive Summary` -> hero summary with dominant first-paint treatment
-    - `Scope` -> split `In scope` / `Out of scope` panels
-    - `Decisions Required for Approval` -> numbered decision cards
-    - `Risks and Tradeoffs` -> scan-friendly risk cards
-    - `Blockers and Unresolved Items` -> warning callouts
-    - `Traceability Map` -> details/accordion claim entries
-    - `Validator Status` -> side-by-side validator status cards
-    - `Downstream Impact if Approved` -> ordered impact timeline or impact cards
-    - `Snapshot Identity` -> visually recessed final metadata panel
+    - `summary` sections -> hero summary with dominant first-paint treatment
+    - `scope` sections -> split `In scope` / `Out of scope` panels
+    - `cards` sections -> numbered scan-friendly cards using the profile's item label
+    - `callouts` sections -> warning callouts
+    - `traceability` sections -> details/accordion claim entries
+    - `validator` sections -> side-by-side validator status cards
+    - `timeline` sections -> ordered timelines or impact cards
+    - `snapshot` sections -> visually recessed final metadata panel
   - use depth tiers so primary sections dominate and reference sections recede: hero / elevated / default / recessed
   - include all carried-forward visuals from the Markdown view
   - when a required section contains `### Visual Evidence`, prefer a split or otherwise clearly separated layout so prose and visual review can happen side by side or with strong visual separation
@@ -113,7 +107,8 @@ Own the shared approval-view contract: derived Markdown and HTML review surfaces
 - review mode: `artifact` | `artifact-revised` | `pack` | `pack-revised`
 - one canonical artifact path or an explicit canonical artifact set
 - resolved approval output paths
-- artifact-specific review emphasis, decisions, risks, blockers, and downstream impact derived from the canonical artifact or pack snapshot
+- selected approval profile, either specialist-owned or the built-in fallback profile
+- artifact-specific review emphasis, decisions, risks, blockers, gaps, and downstream impact derived from the canonical artifact or pack snapshot
 - canonical diagram or visual sections, or explicit confirmation that none are in scope
 - canonical validator command and result
 
@@ -121,20 +116,20 @@ Own the shared approval-view contract: derived Markdown and HTML review surfaces
 
 - one Markdown approval view, including carried-forward visuals when in scope
 - one HTML approval view for the same snapshot, preserving the same carried-forward visuals and using the shared glance-first review layout
-- templates under `./assets/`
-- deterministic rendering and validation helpers under `./scripts/`
+- built-in generic fallback templates under `./assets/`
+- deterministic scaffold, rendering, and validation helpers under `./scripts/`
 
 ## Workflow
 
 1. Confirm the canonical artifact or explicit pack snapshot already passed its validator.
-2. Choose the matching Markdown template under `./assets/`.
+2. Resolve the approval profile. For artifact review, read canonical frontmatter `generated_by.producing_skill` and load `../<producing-skill>/assets/approval-view-profile.json`; if none exists, use the built-in generic artifact profile. For pack review, use the built-in pack profile. Scaffold with `python3 ./scripts/scaffold_approval_view.py ...` when helpful.
 3. Compute snapshot hashes from the exact canonical bytes:
    - artifact view -> SHA-256 of the canonical file
    - pack view -> SHA-256 of the sorted `<resolved-path><TAB><file-sha>` list
-4. Identify any in-scope diagrams or other visual sections in the canonical artifact or pack snapshot. When present, carry them forward into a `### Visual Evidence` subsection inside the most relevant required section, preceding each with `- Source: <resolved canonical path> :: <exact heading>`.
+4. Identify any in-scope diagrams or other visual sections in the canonical artifact or pack snapshot. When present, carry them forward into a `### Visual Evidence` subsection inside the most relevant profile section, preceding each with `- Source: <resolved canonical path> :: <exact heading>`.
 5. For technical-design artifact approvals, include every required diagram slot and any populated optional `Interaction Diagram`; if a slot is `Not needed:` or `TODO: Confirm`, copy that exact slot status instead of inventing a diagram.
 6. Copy only claims backed by the canonical artifact or pack snapshot; record each substantive claim in `Traceability Map` with an exact heading and verbatim evidence quote.
-7. If the view is revised, add `Change Summary` as the first required section, immediately before `Executive Summary`, and anchor it to the previous approved snapshot hash.
+7. If the view is revised, add `Change Summary` as the first required section, immediately before the profile's first non-revision section, and anchor it to the previous approved snapshot hash.
 8. Render the HTML companion with `python3 ./scripts/render_approval_view_html.py <approval-md> <approval-html>`, making sure the HTML `<title>` and page title surface the approved artifact basename or pack name, the page includes glance summary + responsive nav + section-specific layout treatments, and carried-forward Mermaid blocks survive as rendered interactive shells plus preserved source in HTML.
 9. Validate with the correct mode:
    - artifact: `bash ./scripts/validate_approval_view.sh artifact <canonical-file> <approval-md> <approval-html>`
@@ -146,7 +141,7 @@ Own the shared approval-view contract: derived Markdown and HTML review surfaces
 
 ## Validation
 
-- Confirm the Markdown view contains the required sections in order, with `Snapshot Identity` last.
+- Confirm the Markdown view contains the selected profile's required sections in order, with the profile's snapshot section last.
 - Confirm any carried-forward visuals stay inside required top-level sections and use a `### Visual Evidence` subsection when present.
 - Confirm snapshot hash fields match the current canonical bytes exactly.
 - Confirm `updated_at` values match canonical frontmatter exactly.
@@ -157,7 +152,7 @@ Own the shared approval-view contract: derived Markdown and HTML review surfaces
 - Confirm HTML and Markdown point to the same snapshot.
 - Confirm HTML includes a top-of-page glance summary derived from the approval content.
 - Confirm approval pages with 4+ sections include responsive section navigation.
-- Confirm section-specific HTML layouts are present and `Snapshot Identity` is visually recessed in the final section.
+- Confirm profile-specific HTML layouts are present and the snapshot section is visually recessed in the final section.
 - Confirm HTML preserves the same carried-forward visual content as the Markdown view, including Mermaid blocks.
 - Confirm Mermaid visual evidence renders in an interactive shell and still preserves raw Mermaid source in the HTML.
 - Confirm semantic tables are used where row/column scanning materially improves review speed, including pack `Included snapshots`.

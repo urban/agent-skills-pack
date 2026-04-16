@@ -1,0 +1,127 @@
+{
+  "profile_id": "user-story-authoring-approval-v1",
+  "display_name": "User Stories Approval",
+  "subtitle": "Review capability coverage and observable outcomes before translating them into requirements.",
+  "review_type": "artifact",
+  "sections": [
+    {
+      "key": "capability-areas-at-a-glance",
+      "title": "Capability Areas at a Glance",
+      "kind": "summary",
+      "label": "Capabilities",
+      "style": "hero",
+      "why": "Lead with the stable capability map before story detail."
+    },
+    {
+      "key": "story-anchors-and-observable-outcomes",
+      "title": "Story Anchors and Observable Outcomes",
+      "kind": "cards",
+      "label": "Story Anchors",
+      "style": "default",
+      "item_label": "Story",
+      "why": "Keep the highest-value behaviors and outcomes scannable."
+    },
+    {
+      "key": "boundary-and-failure-coverage",
+      "title": "Boundary and Failure Coverage",
+      "kind": "cards",
+      "label": "Boundary Coverage",
+      "style": "elevated",
+      "item_label": "Boundary",
+      "why": "Show where visible edge and failure behavior is covered."
+    },
+    {
+      "key": "decisions-required-for-approval",
+      "title": "Decisions Required for Approval",
+      "kind": "cards",
+      "label": "Decision Gate",
+      "style": "default",
+      "item_label": "Decision",
+      "why": "State the approval calls that lock the story set."
+    },
+    {
+      "key": "story-gaps-and-todo-confirm-items",
+      "title": "Story Gaps and TODO: Confirm Items",
+      "kind": "callouts",
+      "label": "Gaps",
+      "style": "elevated",
+      "item_label": "Gap",
+      "why": "Expose vague or missing story coverage before it distorts requirements."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "why": "Tie approval claims to exact story evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "why": "Show validation status for stories and approval view."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "item_label": "Impact",
+      "why": "Clarify what requirements may now treat as settled behavior."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Capabilities",
+      "section_title": "Capability Areas at a Glance",
+      "metric": "groups",
+      "hint": "Capability areas in scope.",
+      "tone": "accent"
+    },
+    {
+      "label": "Story anchors",
+      "section_title": "Story Anchors and Observable Outcomes",
+      "metric": "groups",
+      "hint": "Highest-value observable behaviors.",
+      "tone": "info"
+    },
+    {
+      "label": "Boundary coverage",
+      "section_title": "Boundary and Failure Coverage",
+      "metric": "groups",
+      "hint": "Visible edge and failure coverage.",
+      "tone": "muted"
+    },
+    {
+      "label": "Gaps",
+      "section_title": "Story Gaps and TODO: Confirm Items",
+      "metric": "groups",
+      "hint": "Vague or missing story coverage.",
+      "tone": "warning"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact story quotes.",
+      "tone": "info"
+    },
+    {
+      "label": "Validators",
+      "metric": "validator_checks",
+      "hint": "Recorded validator passes.",
+      "tone": "success"
+    }
+  ]
+}
