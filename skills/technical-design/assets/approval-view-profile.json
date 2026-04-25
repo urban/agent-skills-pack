@@ -1,0 +1,206 @@
+{
+  "profile_id": "technical-design-approval-v2",
+  "display_name": "Technical Design Approval",
+  "subtitle": "Review architecture, boundaries, diagrams, and implementation seams before coding starts.",
+  "review_type": "artifact",
+  "default_visual_section": "architecture-and-runtime-model",
+  "revised": {
+    "section_overrides": {
+      "change-summary": {
+        "tone": "accent",
+        "emphasis": "dominant"
+      },
+      "architecture-and-runtime-model": {
+        "emphasis": "dominant"
+      }
+    },
+    "glance_cards": [
+      {
+        "label": "Deltas",
+        "metric": "groups",
+        "hint": "Material changes since the prior approved snapshot.",
+        "tone": "accent",
+        "source": "approval",
+        "section_title": "Change Summary"
+      },
+      {
+        "label": "Components",
+        "metric": "count-heading-prefix",
+        "hint": "Named design components in scope.",
+        "tone": "info",
+        "source": "canonical",
+        "extractor": {
+          "heading_level": 3,
+          "heading_prefix": ""
+        }
+      },
+      {
+        "label": "Seams",
+        "metric": "groups",
+        "hint": "Implementation seams or handoffs called out explicitly.",
+        "tone": "neutral",
+        "source": "approval",
+        "section_title": "Implementation Seams and Operational Hand-Offs"
+      },
+      {
+        "label": "Open issues",
+        "metric": "groups",
+        "hint": "Questions or TODO: Confirm items still active.",
+        "tone": "warning",
+        "source": "approval",
+        "section_title": "Open Questions and TODO: Confirm Items"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "key": "architecture-and-runtime-model",
+      "title": "Architecture and Runtime Model",
+      "kind": "diagram-led-summary",
+      "label": "Architecture",
+      "style": "hero",
+      "tone": "accent",
+      "emphasis": "dominant",
+      "why": "Lead with runtime shape and visual evidence before implementation details.",
+      "empty_state": "Add the architecture summary that frames the design review."
+    },
+    {
+      "key": "boundaries-interfaces-and-data-flow",
+      "title": "Boundaries, Interfaces, and Data Flow",
+      "kind": "matrix",
+      "label": "Boundaries",
+      "style": "elevated",
+      "tone": "info",
+      "why": "Use a matrix when interface seams and data flow need side-by-side review."
+    },
+    {
+      "key": "implementation-seams-and-operational-hand-offs",
+      "title": "Implementation Seams and Operational Hand-Offs",
+      "kind": "ledger",
+      "label": "Seam",
+      "style": "default",
+      "tone": "neutral",
+      "item_label": "Seam",
+      "why": "Keep ownership seams and operational hand-offs dense and comparable."
+    },
+    {
+      "key": "major-risks-and-tradeoffs",
+      "title": "Major Risks and Tradeoffs",
+      "kind": "checklist",
+      "label": "Risk Review",
+      "style": "elevated",
+      "tone": "warning",
+      "item_label": "Risk",
+      "why": "Frame design risks as explicit review checks before coding starts."
+    },
+    {
+      "key": "decisions-required-for-approval",
+      "title": "Decisions Required for Approval",
+      "kind": "ledger",
+      "label": "Decision Gate",
+      "style": "default",
+      "tone": "neutral",
+      "item_label": "Decision",
+      "why": "State the architecture calls the reviewer is approving."
+    },
+    {
+      "key": "open-questions-and-todo-confirm-items",
+      "title": "Open Questions and TODO: Confirm Items",
+      "kind": "callouts",
+      "label": "Open Issues",
+      "style": "elevated",
+      "tone": "warning",
+      "item_label": "Question",
+      "why": "Expose unresolved seams before implementation begins."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "tone": "info",
+      "why": "Tie substantive approval claims to exact canonical evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "tone": "success",
+      "why": "Show canonical and approval-view validation status together."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "tone": "info",
+      "item_label": "Impact",
+      "why": "Clarify what downstream work may now treat as fixed."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "tone": "neutral",
+      "emphasis": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Components",
+      "metric": "count-heading-prefix",
+      "hint": "Named design components in scope.",
+      "tone": "info",
+      "source": "canonical",
+      "extractor": {
+        "heading_level": 3,
+        "heading_prefix": ""
+      }
+    },
+    {
+      "label": "Seams",
+      "metric": "groups",
+      "hint": "Implementation seams and operational hand-offs.",
+      "tone": "neutral",
+      "source": "approval",
+      "section_title": "Implementation Seams and Operational Hand-Offs"
+    },
+    {
+      "label": "Risk checks",
+      "metric": "groups",
+      "hint": "Major risks or tradeoffs to confirm.",
+      "tone": "warning",
+      "source": "approval",
+      "section_title": "Major Risks and Tradeoffs"
+    },
+    {
+      "label": "Decision gates",
+      "metric": "groups",
+      "hint": "Architecture decisions requiring explicit approval.",
+      "tone": "accent",
+      "source": "approval",
+      "section_title": "Decisions Required for Approval"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact design quotes.",
+      "tone": "info",
+      "source": "approval"
+    },
+    {
+      "label": "Visuals",
+      "metric": "visuals",
+      "hint": "Carried-forward diagrams or visuals.",
+      "tone": "info",
+      "source": "approval"
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "profile_id": "derive-user-stories-approval-v2",
+  "display_name": "Derived User Stories Approval",
+  "subtitle": "Review recovered stories with explicit evidence pressure and confidence gaps before using them downstream.",
+  "review_type": "artifact",
+  "sections": [
+    {
+      "key": "capability-map-and-recovered-stories",
+      "title": "Capability Map and Recovered Stories",
+      "kind": "roster",
+      "label": "Recovered Capability",
+      "style": "hero",
+      "tone": "accent",
+      "emphasis": "dominant",
+      "item_label": "Capability",
+      "why": "Lead with recovered capability areas before individual story detail."
+    },
+    {
+      "key": "recovered-story-anchors",
+      "title": "Recovered Story Anchors",
+      "kind": "ledger",
+      "label": "Recovered Story",
+      "style": "default",
+      "tone": "info",
+      "item_label": "Story",
+      "why": "Keep recovered story anchors dense and evidence-oriented."
+    },
+    {
+      "key": "boundary-and-failure-reconciliation",
+      "title": "Boundary and Failure Reconciliation",
+      "kind": "matrix",
+      "label": "Coverage",
+      "style": "elevated",
+      "tone": "info",
+      "why": "Use a matrix when reviewing recovered edge coverage and missing failure behavior."
+    },
+    {
+      "key": "low-confidence-stories-and-evidence-gaps",
+      "title": "Low-Confidence Stories and Evidence Gaps",
+      "kind": "callouts",
+      "label": "Evidence Gap",
+      "style": "elevated",
+      "tone": "warning",
+      "item_label": "Gap",
+      "why": "Separate weakly supported stories from strong observed behavior."
+    },
+    {
+      "key": "decisions-required-for-approval",
+      "title": "Decisions Required for Approval",
+      "kind": "ledger",
+      "label": "Decision Gate",
+      "style": "default",
+      "tone": "neutral",
+      "item_label": "Decision",
+      "why": "State the calls that let downstream artifacts trust recovered stories."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "tone": "info",
+      "why": "Tie substantive approval claims to exact canonical evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "tone": "success",
+      "why": "Show canonical and approval-view validation status together."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "tone": "info",
+      "item_label": "Impact",
+      "why": "Clarify what downstream work may now treat as fixed."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "tone": "neutral",
+      "emphasis": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Recovered capabilities",
+      "metric": "groups",
+      "hint": "Recovered capability areas in scope.",
+      "tone": "accent",
+      "source": "approval",
+      "section_title": "Capability Map and Recovered Stories"
+    },
+    {
+      "label": "Recovered stories",
+      "metric": "groups",
+      "hint": "Recovered story anchors under review.",
+      "tone": "info",
+      "source": "approval",
+      "section_title": "Recovered Story Anchors"
+    },
+    {
+      "label": "Evidence gaps",
+      "metric": "groups",
+      "hint": "Low-confidence or weakly supported stories.",
+      "tone": "warning",
+      "source": "approval",
+      "section_title": "Low-Confidence Stories and Evidence Gaps"
+    },
+    {
+      "label": "Decision gates",
+      "metric": "groups",
+      "hint": "Approvals that let downstream artifacts trust the set.",
+      "tone": "neutral",
+      "source": "approval",
+      "section_title": "Decisions Required for Approval"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact source quotes.",
+      "tone": "info",
+      "source": "approval"
+    },
+    {
+      "label": "Validators",
+      "metric": "validator_checks",
+      "hint": "Recorded validator passes.",
+      "tone": "success",
+      "source": "approval"
+    }
+  ]
+}

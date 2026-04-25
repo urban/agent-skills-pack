@@ -1,0 +1,144 @@
+{
+  "profile_id": "task-generation-approval-v2",
+  "display_name": "Task Generation Approval",
+  "subtitle": "Review task groupings, hand-offs, and readiness checks before implementation starts from them.",
+  "review_type": "artifact",
+  "sections": [
+    {
+      "key": "task-groups-at-a-glance",
+      "title": "Task Groups at a Glance",
+      "kind": "ledger",
+      "label": "Task Group",
+      "style": "hero",
+      "tone": "accent",
+      "emphasis": "dominant",
+      "item_label": "Task Group",
+      "why": "Lead with the grouped task shape rather than isolated individual tasks."
+    },
+    {
+      "key": "dependency-chains-and-handoffs",
+      "title": "Dependency Chains and Hand-Offs",
+      "kind": "matrix",
+      "label": "Dependency",
+      "style": "elevated",
+      "tone": "info",
+      "why": "Use a matrix when sequencing and hand-offs need side-by-side review."
+    },
+    {
+      "key": "readiness-checks-and-acceptance-handholds",
+      "title": "Readiness Checks and Acceptance Handholds",
+      "kind": "checklist",
+      "label": "Readiness Check",
+      "style": "elevated",
+      "tone": "success",
+      "item_label": "Check",
+      "why": "Frame acceptance handholds as explicit implementation checks."
+    },
+    {
+      "key": "decisions-required-for-approval",
+      "title": "Decisions Required for Approval",
+      "kind": "ledger",
+      "label": "Decision Gate",
+      "style": "default",
+      "tone": "neutral",
+      "item_label": "Decision",
+      "why": "Keep task-level approval calls dense and direct."
+    },
+    {
+      "key": "ambiguous-boundaries-and-drift-risks",
+      "title": "Ambiguous Boundaries and Drift Risks",
+      "kind": "callouts",
+      "label": "Drift Risk",
+      "style": "elevated",
+      "tone": "warning",
+      "item_label": "Risk",
+      "why": "Keep boundary ambiguity and drift risk visible before coding starts."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "tone": "info",
+      "why": "Tie substantive approval claims to exact canonical evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "tone": "success",
+      "why": "Show canonical and approval-view validation status together."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "tone": "info",
+      "item_label": "Impact",
+      "why": "Clarify what downstream work may now treat as fixed."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "tone": "neutral",
+      "emphasis": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Task groups",
+      "metric": "groups",
+      "hint": "Grouped execution slices under review.",
+      "tone": "accent",
+      "source": "approval",
+      "section_title": "Task Groups at a Glance"
+    },
+    {
+      "label": "Readiness checks",
+      "metric": "groups",
+      "hint": "Checks implementation can lean on.",
+      "tone": "success",
+      "source": "approval",
+      "section_title": "Readiness Checks and Acceptance Handholds"
+    },
+    {
+      "label": "Decision gates",
+      "metric": "groups",
+      "hint": "Approvals needed before task execution starts.",
+      "tone": "neutral",
+      "source": "approval",
+      "section_title": "Decisions Required for Approval"
+    },
+    {
+      "label": "Drift risks",
+      "metric": "groups",
+      "hint": "Boundary ambiguity or drift pressure points.",
+      "tone": "warning",
+      "source": "approval",
+      "section_title": "Ambiguous Boundaries and Drift Risks"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact task quotes.",
+      "tone": "info",
+      "source": "approval"
+    },
+    {
+      "label": "Validators",
+      "metric": "validator_checks",
+      "hint": "Recorded validator passes.",
+      "tone": "success",
+      "source": "approval"
+    }
+  ]
+}

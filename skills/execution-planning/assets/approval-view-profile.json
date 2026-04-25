@@ -1,0 +1,144 @@
+{
+  "profile_id": "execution-planning-approval-v2",
+  "display_name": "Execution Planning Approval",
+  "subtitle": "Review sequencing, dependency realism, and blockers before task breakdown hardens around the plan.",
+  "review_type": "artifact",
+  "sections": [
+    {
+      "key": "implementation-streams-and-sequencing",
+      "title": "Implementation Streams and Sequencing",
+      "kind": "timeline",
+      "label": "Execution Stream",
+      "style": "hero",
+      "tone": "accent",
+      "emphasis": "dominant",
+      "item_label": "Stream",
+      "why": "Lead with the sequencing shape of the plan before deep dependency review."
+    },
+    {
+      "key": "dependency-and-ownership-view",
+      "title": "Dependency and Ownership View",
+      "kind": "matrix",
+      "label": "Dependency",
+      "style": "elevated",
+      "tone": "info",
+      "why": "Use a matrix when ownership and ordering pressure need side-by-side review."
+    },
+    {
+      "key": "execution-slices-and-checkpoints",
+      "title": "Execution Slices and Checkpoints",
+      "kind": "ledger",
+      "label": "Execution Slice",
+      "style": "default",
+      "tone": "neutral",
+      "item_label": "Slice",
+      "why": "Keep planned execution slices dense and reviewable."
+    },
+    {
+      "key": "decisions-required-for-approval",
+      "title": "Decisions Required for Approval",
+      "kind": "checklist",
+      "label": "Decision Gate",
+      "style": "elevated",
+      "tone": "success",
+      "item_label": "Decision",
+      "why": "Frame approval as explicit readiness checks before task generation."
+    },
+    {
+      "key": "blockers-and-todo-confirm-items",
+      "title": "Blockers and TODO: Confirm Items",
+      "kind": "callouts",
+      "label": "Blocker",
+      "style": "elevated",
+      "tone": "warning",
+      "item_label": "Blocker",
+      "why": "Keep blockers and uncertain sequencing assumptions in view."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "tone": "info",
+      "why": "Tie substantive approval claims to exact canonical evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "tone": "success",
+      "why": "Show canonical and approval-view validation status together."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "tone": "info",
+      "item_label": "Impact",
+      "why": "Clarify what downstream work may now treat as fixed."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "tone": "neutral",
+      "emphasis": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Streams",
+      "metric": "groups",
+      "hint": "Execution streams or sequence steps under review.",
+      "tone": "accent",
+      "source": "approval",
+      "section_title": "Implementation Streams and Sequencing"
+    },
+    {
+      "label": "Slices",
+      "metric": "groups",
+      "hint": "Execution slices or checkpoints in play.",
+      "tone": "neutral",
+      "source": "approval",
+      "section_title": "Execution Slices and Checkpoints"
+    },
+    {
+      "label": "Readiness checks",
+      "metric": "groups",
+      "hint": "Approval checks before tasks harden.",
+      "tone": "success",
+      "source": "approval",
+      "section_title": "Decisions Required for Approval"
+    },
+    {
+      "label": "Blockers",
+      "metric": "groups",
+      "hint": "Blockers or TODO: Confirm pressure points.",
+      "tone": "warning",
+      "source": "approval",
+      "section_title": "Blockers and TODO: Confirm Items"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact plan quotes.",
+      "tone": "info",
+      "source": "approval"
+    },
+    {
+      "label": "Validators",
+      "metric": "validator_checks",
+      "hint": "Recorded validator passes.",
+      "tone": "success",
+      "source": "approval"
+    }
+  ]
+}

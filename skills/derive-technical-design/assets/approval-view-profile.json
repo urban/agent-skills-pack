@@ -1,0 +1,157 @@
+{
+  "profile_id": "derive-technical-design-approval-v2",
+  "display_name": "Derived Technical Design Approval",
+  "subtitle": "Review recovered architecture claims, seams, and confidence gaps before treating them like approved design intent.",
+  "review_type": "artifact",
+  "default_visual_section": "major-architecture-claims-and-evidence",
+  "sections": [
+    {
+      "key": "major-architecture-claims-and-evidence",
+      "title": "Major Architecture Claims and Evidence",
+      "kind": "diagram-led-summary",
+      "label": "Recovered Architecture",
+      "style": "hero",
+      "tone": "accent",
+      "emphasis": "dominant",
+      "why": "Lead with the recovered architecture claims and their carried-forward visual evidence."
+    },
+    {
+      "key": "runtime-boundary-and-dependency-reconciliation",
+      "title": "Runtime, Boundary, and Dependency Reconciliation",
+      "kind": "matrix",
+      "label": "Reconciliation",
+      "style": "elevated",
+      "tone": "info",
+      "why": "Use a matrix when architecture claims need cross-dimension reconciliation."
+    },
+    {
+      "key": "recovered-components-and-seams",
+      "title": "Recovered Components and Seams",
+      "kind": "ledger",
+      "label": "Recovered Seam",
+      "style": "default",
+      "tone": "neutral",
+      "item_label": "Seam",
+      "why": "Keep recovered components and seams dense and evidence-linked."
+    },
+    {
+      "key": "confidence-hotspots-and-inferred-vs-observed-distinctions",
+      "title": "Confidence Hotspots and Inferred-vs-Observed Distinctions",
+      "kind": "callouts",
+      "label": "Confidence Gap",
+      "style": "elevated",
+      "tone": "warning",
+      "item_label": "Gap",
+      "why": "Keep weakly supported architecture claims explicit."
+    },
+    {
+      "key": "major-risks-and-tradeoffs",
+      "title": "Major Risks and Tradeoffs",
+      "kind": "ledger",
+      "label": "Risk Review",
+      "style": "default",
+      "tone": "warning",
+      "item_label": "Risk",
+      "why": "Show design risks without pretending recovered evidence is intent."
+    },
+    {
+      "key": "decisions-required-for-approval",
+      "title": "Decisions Required for Approval",
+      "kind": "ledger",
+      "label": "Decision Gate",
+      "style": "default",
+      "tone": "neutral",
+      "item_label": "Decision",
+      "why": "State the calls that let downstream work trust the recovered architecture enough to use it."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "tone": "info",
+      "why": "Tie substantive approval claims to exact canonical evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "tone": "success",
+      "why": "Show canonical and approval-view validation status together."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "tone": "info",
+      "item_label": "Impact",
+      "why": "Clarify what downstream work may now treat as fixed."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "tone": "neutral",
+      "emphasis": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Recovered components",
+      "metric": "count-heading-prefix",
+      "hint": "Named recovered components in scope.",
+      "tone": "info",
+      "source": "canonical",
+      "extractor": {
+        "heading_level": 3,
+        "heading_prefix": ""
+      }
+    },
+    {
+      "label": "Recovered seams",
+      "metric": "groups",
+      "hint": "Recovered seams or hand-offs under review.",
+      "tone": "neutral",
+      "source": "approval",
+      "section_title": "Recovered Components and Seams"
+    },
+    {
+      "label": "Confidence gaps",
+      "metric": "groups",
+      "hint": "Low-confidence recovered claims needing extra care.",
+      "tone": "warning",
+      "source": "approval",
+      "section_title": "Confidence Hotspots and Inferred-vs-Observed Distinctions"
+    },
+    {
+      "label": "Decision gates",
+      "metric": "groups",
+      "hint": "Approvals that let downstream work treat claims as stable enough.",
+      "tone": "accent",
+      "source": "approval",
+      "section_title": "Decisions Required for Approval"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact source quotes.",
+      "tone": "info",
+      "source": "approval"
+    },
+    {
+      "label": "Visuals",
+      "metric": "visuals",
+      "hint": "Carried-forward diagrams or visuals.",
+      "tone": "info",
+      "source": "approval"
+    }
+  ]
+}

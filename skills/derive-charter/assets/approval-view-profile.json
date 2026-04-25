@@ -1,0 +1,153 @@
+{
+  "profile_id": "derive-charter-approval-v2",
+  "display_name": "Derived Charter Approval",
+  "subtitle": "Review recovered framing with explicit confidence edges before treating it like settled intent.",
+  "review_type": "artifact",
+  "sections": [
+    {
+      "key": "highest-confidence-framing",
+      "title": "Highest-Confidence Framing",
+      "kind": "summary",
+      "label": "Recovered Framing",
+      "style": "hero",
+      "tone": "accent",
+      "emphasis": "dominant",
+      "why": "Lead with the strongest recovered framing before reviewing weaker edges."
+    },
+    {
+      "key": "recovered-goals-and-exclusions",
+      "title": "Recovered Goals and Exclusions",
+      "kind": "paired-lists",
+      "label": "Recovered Scope Edge",
+      "style": "default",
+      "tone": "info",
+      "why": "Show recovered scope intent as contrasts rather than one blended list."
+    },
+    {
+      "key": "recovered-actors-and-personas",
+      "title": "Recovered Actors and Personas",
+      "kind": "roster",
+      "label": "Recovered Actors",
+      "style": "default",
+      "tone": "info",
+      "item_label": "Actor",
+      "why": "Keep named actors separate from weaker inferred framing."
+    },
+    {
+      "key": "recovered-decisions-and-framing-claims",
+      "title": "Recovered Decisions and Framing Claims",
+      "kind": "ledger",
+      "label": "Recovered Claim",
+      "style": "default",
+      "tone": "neutral",
+      "item_label": "Claim",
+      "why": "Keep recovered framing claims dense and evidence-aware."
+    },
+    {
+      "key": "weak-scope-edges-and-evidence-gaps",
+      "title": "Weak Scope Edges and Evidence Gaps",
+      "kind": "callouts",
+      "label": "Evidence Gap",
+      "style": "elevated",
+      "tone": "warning",
+      "item_label": "Gap",
+      "why": "Surface weakly supported recovered scope edges explicitly."
+    },
+    {
+      "key": "reconstruction-risks-if-treated-as-settled",
+      "title": "Reconstruction Risks if Treated as Settled",
+      "kind": "callouts",
+      "label": "Risk",
+      "style": "elevated",
+      "tone": "warning",
+      "item_label": "Risk",
+      "why": "Keep reviewers from over-trusting low-confidence framing."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "tone": "info",
+      "why": "Tie substantive approval claims to exact canonical evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "tone": "success",
+      "why": "Show canonical and approval-view validation status together."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "tone": "info",
+      "item_label": "Impact",
+      "why": "Clarify what downstream work may now treat as fixed."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "tone": "neutral",
+      "emphasis": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Recovered scope",
+      "metric": "groups",
+      "hint": "Recovered goals and exclusions under review.",
+      "tone": "accent",
+      "source": "approval",
+      "section_title": "Recovered Goals and Exclusions"
+    },
+    {
+      "label": "Recovered actors",
+      "metric": "groups",
+      "hint": "Named actors or personas recovered from evidence.",
+      "tone": "info",
+      "source": "approval",
+      "section_title": "Recovered Actors and Personas"
+    },
+    {
+      "label": "Recovered claims",
+      "metric": "groups",
+      "hint": "Recovered framing claims or decisions.",
+      "tone": "neutral",
+      "source": "approval",
+      "section_title": "Recovered Decisions and Framing Claims"
+    },
+    {
+      "label": "Evidence gaps",
+      "metric": "groups",
+      "hint": "Weak or missing support reviewers should notice fast.",
+      "tone": "warning",
+      "source": "approval",
+      "section_title": "Weak Scope Edges and Evidence Gaps"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact source quotes.",
+      "tone": "info",
+      "source": "approval"
+    },
+    {
+      "label": "Validators",
+      "metric": "validator_checks",
+      "hint": "Recorded validator passes.",
+      "tone": "success",
+      "source": "approval"
+    }
+  ]
+}

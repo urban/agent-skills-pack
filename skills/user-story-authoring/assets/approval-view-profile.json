@@ -1,0 +1,144 @@
+{
+  "profile_id": "user-story-authoring-approval-v2",
+  "display_name": "User Stories Approval",
+  "subtitle": "Review capability coverage, story anchors, and edge-case coverage before requirements harden them.",
+  "review_type": "artifact",
+  "sections": [
+    {
+      "key": "capability-map",
+      "title": "Capability Map in Scope",
+      "kind": "roster",
+      "label": "Capability",
+      "style": "hero",
+      "tone": "accent",
+      "emphasis": "dominant",
+      "item_label": "Capability",
+      "why": "Lead with the capability surface before diving into individual stories."
+    },
+    {
+      "key": "story-anchors-and-observable-outcomes",
+      "title": "Story Anchors and Observable Outcomes",
+      "kind": "ledger",
+      "label": "Story Anchor",
+      "style": "default",
+      "tone": "info",
+      "item_label": "Story",
+      "why": "Keep the highest-value story anchors dense and easy to compare."
+    },
+    {
+      "key": "boundary-and-failure-coverage",
+      "title": "Boundary and Failure Coverage",
+      "kind": "matrix",
+      "label": "Coverage",
+      "style": "elevated",
+      "tone": "info",
+      "why": "Switch to a coverage matrix when edges and failures matter more than prose."
+    },
+    {
+      "key": "decisions-required-for-approval",
+      "title": "Decisions Required for Approval",
+      "kind": "ledger",
+      "label": "Decision Gate",
+      "style": "default",
+      "tone": "neutral",
+      "item_label": "Decision",
+      "why": "State the calls that freeze story intent."
+    },
+    {
+      "key": "story-gaps-and-todo-confirm-items",
+      "title": "Story Gaps and TODO: Confirm Items",
+      "kind": "callouts",
+      "label": "Gaps",
+      "style": "elevated",
+      "tone": "warning",
+      "item_label": "Gap",
+      "why": "Expose vague or missing coverage before it distorts requirements."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "tone": "info",
+      "why": "Tie substantive approval claims to exact canonical evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "tone": "success",
+      "why": "Show canonical and approval-view validation status together."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "tone": "info",
+      "item_label": "Impact",
+      "why": "Clarify what downstream work may now treat as fixed."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "tone": "neutral",
+      "emphasis": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Capabilities",
+      "metric": "groups",
+      "hint": "Capability areas under review.",
+      "tone": "accent",
+      "source": "approval",
+      "section_title": "Capability Map in Scope"
+    },
+    {
+      "label": "Story anchors",
+      "metric": "groups",
+      "hint": "Observable outcomes tied to user value.",
+      "tone": "info",
+      "source": "approval",
+      "section_title": "Story Anchors and Observable Outcomes"
+    },
+    {
+      "label": "Decision gates",
+      "metric": "groups",
+      "hint": "Approvals that lock the story set.",
+      "tone": "neutral",
+      "source": "approval",
+      "section_title": "Decisions Required for Approval"
+    },
+    {
+      "label": "Gaps",
+      "metric": "groups",
+      "hint": "Open gaps or TODO: Confirm pressure points.",
+      "tone": "warning",
+      "source": "approval",
+      "section_title": "Story Gaps and TODO: Confirm Items"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact story quotes.",
+      "tone": "info",
+      "source": "approval"
+    },
+    {
+      "label": "Validators",
+      "metric": "validator_checks",
+      "hint": "Recorded validator passes.",
+      "tone": "success",
+      "source": "approval"
+    }
+  ]
+}

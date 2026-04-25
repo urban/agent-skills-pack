@@ -1,0 +1,154 @@
+{
+  "profile_id": "derive-requirements-approval-v2",
+  "display_name": "Derived Requirements Approval",
+  "subtitle": "Review recovered obligations and reconciliation pressure without hiding uncertainty behind polished prose.",
+  "review_type": "artifact",
+  "sections": [
+    {
+      "key": "highest-impact-recovered-obligations",
+      "title": "Highest-Impact Recovered Obligations",
+      "kind": "ledger",
+      "label": "Recovered Obligation",
+      "style": "hero",
+      "tone": "accent",
+      "emphasis": "dominant",
+      "item_label": "Obligation",
+      "why": "Lead with the recovered obligations most likely to constrain design."
+    },
+    {
+      "key": "validation-integration-and-data-reconciliation",
+      "title": "Validation, Integration, and Data Reconciliation",
+      "kind": "matrix",
+      "label": "Reconciliation",
+      "style": "elevated",
+      "tone": "info",
+      "why": "Use a matrix when recovered requirement pressure spans multiple dimensions."
+    },
+    {
+      "key": "recovered-constraints-and-obligations",
+      "title": "Recovered Constraints and Obligations",
+      "kind": "ledger",
+      "label": "Recovered Constraint",
+      "style": "default",
+      "tone": "neutral",
+      "item_label": "Constraint",
+      "why": "Keep recovered constraints dense and directly reviewable."
+    },
+    {
+      "key": "low-confidence-areas-and-inferred-vs-observed-distinctions",
+      "title": "Low-Confidence Areas and Inferred-vs-Observed Distinctions",
+      "kind": "callouts",
+      "label": "Confidence Gap",
+      "style": "elevated",
+      "tone": "warning",
+      "item_label": "Gap",
+      "why": "Keep uncertainty explicit instead of smoothing it away."
+    },
+    {
+      "key": "findings-that-pressure-technical-design-reconciliation",
+      "title": "Findings that Pressure Technical-Design Reconciliation",
+      "kind": "ledger",
+      "label": "Reconciliation Finding",
+      "style": "default",
+      "tone": "info",
+      "item_label": "Finding",
+      "why": "Highlight recovered findings that should push back on design assumptions."
+    },
+    {
+      "key": "decisions-required-for-approval",
+      "title": "Decisions Required for Approval",
+      "kind": "ledger",
+      "label": "Decision Gate",
+      "style": "default",
+      "tone": "neutral",
+      "item_label": "Decision",
+      "why": "State the calls that let downstream work treat recovered obligations as settled enough."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "tone": "info",
+      "why": "Tie substantive approval claims to exact canonical evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "tone": "success",
+      "why": "Show canonical and approval-view validation status together."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "tone": "info",
+      "item_label": "Impact",
+      "why": "Clarify what downstream work may now treat as fixed."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "tone": "neutral",
+      "emphasis": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Recovered obligations",
+      "metric": "groups",
+      "hint": "Recovered obligations under review.",
+      "tone": "accent",
+      "source": "approval",
+      "section_title": "Highest-Impact Recovered Obligations"
+    },
+    {
+      "label": "Reconciliation findings",
+      "metric": "groups",
+      "hint": "Findings pushing on downstream design assumptions.",
+      "tone": "info",
+      "source": "approval",
+      "section_title": "Findings that Pressure Technical-Design Reconciliation"
+    },
+    {
+      "label": "Confidence gaps",
+      "metric": "groups",
+      "hint": "Low-confidence or inferred-vs-observed pressure points.",
+      "tone": "warning",
+      "source": "approval",
+      "section_title": "Low-Confidence Areas and Inferred-vs-Observed Distinctions"
+    },
+    {
+      "label": "Decision gates",
+      "metric": "groups",
+      "hint": "Approvals that let downstream artifacts trust the recovered baseline.",
+      "tone": "neutral",
+      "source": "approval",
+      "section_title": "Decisions Required for Approval"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact source quotes.",
+      "tone": "info",
+      "source": "approval"
+    },
+    {
+      "label": "Validators",
+      "metric": "validator_checks",
+      "hint": "Recorded validator passes.",
+      "tone": "success",
+      "source": "approval"
+    }
+  ]
+}

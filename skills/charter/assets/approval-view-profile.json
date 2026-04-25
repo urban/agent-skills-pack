@@ -1,0 +1,144 @@
+{
+  "profile_id": "charter-approval-v2",
+  "display_name": "Charter Approval",
+  "subtitle": "Review scope edges, actors, done criteria, and early approval calls before downstream specs branch out.",
+  "review_type": "artifact",
+  "sections": [
+    {
+      "key": "goals-and-non-goals",
+      "title": "Goals and Non-Goals",
+      "kind": "paired-lists",
+      "label": "Scope Edge",
+      "style": "hero",
+      "tone": "accent",
+      "emphasis": "dominant",
+      "why": "Lead with intended outcomes and explicit exclusions in one scan."
+    },
+    {
+      "key": "actors-and-personas",
+      "title": "Actors and Personas in Scope",
+      "kind": "roster",
+      "label": "Actors",
+      "style": "default",
+      "tone": "info",
+      "item_label": "Actor",
+      "why": "Make the named people, roles, or systems shaping scope obvious."
+    },
+    {
+      "key": "success-criteria-that-define-done",
+      "title": "Success Criteria that Define Done",
+      "kind": "checklist",
+      "label": "Done Criteria",
+      "style": "elevated",
+      "tone": "success",
+      "item_label": "Criterion",
+      "why": "Frame approval as explicit done checks, not loose aspirations."
+    },
+    {
+      "key": "decisions-required-for-approval",
+      "title": "Decisions Required for Approval",
+      "kind": "ledger",
+      "label": "Decision Gate",
+      "style": "default",
+      "tone": "neutral",
+      "item_label": "Decision",
+      "why": "Keep approval calls dense and scan-fast."
+    },
+    {
+      "key": "scope-risks-and-open-questions",
+      "title": "Scope Risks and Open Questions",
+      "kind": "callouts",
+      "label": "Open Issues",
+      "style": "elevated",
+      "tone": "warning",
+      "item_label": "Risk",
+      "why": "Keep risky edges and unresolved framing visible."
+    },
+    {
+      "key": "traceability-map",
+      "title": "Traceability Map",
+      "kind": "traceability",
+      "label": "Evidence",
+      "style": "default",
+      "tone": "info",
+      "why": "Tie substantive approval claims to exact canonical evidence."
+    },
+    {
+      "key": "validator-status",
+      "title": "Validator Status",
+      "kind": "validator",
+      "label": "Validation",
+      "style": "elevated",
+      "tone": "success",
+      "why": "Show canonical and approval-view validation status together."
+    },
+    {
+      "key": "downstream-impact-if-approved",
+      "title": "Downstream Impact if Approved",
+      "kind": "timeline",
+      "label": "Impact",
+      "style": "default",
+      "tone": "info",
+      "item_label": "Impact",
+      "why": "Clarify what downstream work may now treat as fixed."
+    },
+    {
+      "key": "snapshot-identity",
+      "title": "Snapshot Identity",
+      "kind": "snapshot",
+      "label": "Snapshot",
+      "style": "recessed",
+      "tone": "neutral",
+      "emphasis": "recessed",
+      "why": "End with exact snapshot identity."
+    }
+  ],
+  "glance_cards": [
+    {
+      "label": "Scope edges",
+      "metric": "groups",
+      "hint": "Goals and exclusions called out explicitly.",
+      "tone": "accent",
+      "source": "approval",
+      "section_title": "Goals and Non-Goals"
+    },
+    {
+      "label": "Actors",
+      "metric": "groups",
+      "hint": "Named actors or personas shaping downstream work.",
+      "tone": "info",
+      "source": "approval",
+      "section_title": "Actors and Personas in Scope"
+    },
+    {
+      "label": "Done checks",
+      "metric": "groups",
+      "hint": "Success criteria the reviewer should confirm.",
+      "tone": "success",
+      "source": "approval",
+      "section_title": "Success Criteria that Define Done"
+    },
+    {
+      "label": "Decision gates",
+      "metric": "groups",
+      "hint": "Explicit approvals needed to lock scope.",
+      "tone": "neutral",
+      "source": "approval",
+      "section_title": "Decisions Required for Approval"
+    },
+    {
+      "label": "Evidence claims",
+      "metric": "traceability_claims",
+      "hint": "Claims backed by exact charter quotes.",
+      "tone": "info",
+      "source": "approval"
+    },
+    {
+      "label": "Visuals",
+      "metric": "visuals",
+      "hint": "Visual evidence carried into review.",
+      "tone": "info",
+      "source": "approval"
+    }
+  ]
+}
