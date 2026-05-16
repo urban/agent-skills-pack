@@ -22,7 +22,7 @@ Coordinate execution artifacts from an approved specification pack into one stab
 
 - Root workflow identity: `specification-to-execution`
 - Workflow source of truth: approved `charter.md`, `user-stories.md`, `requirements.md`, and `technical-design.md`
-- Resolve one stable `<project-name>` and one stable execution spec-pack root for the full run; default root: `.specs/<project-name>/`
+- Resolve one stable `<project-name>` and one stable execution spec-pack root for the full run; default root: `spec/<project-name>/`
 - Use specialist skills in this order: `execution-planning` -> `task-generation`
 - Keep deterministic provenance and the workflow-owned `source_artifacts` map on every execution artifact
 - Keep traceability explicit from the approved spec pack through plan streams and local tasks

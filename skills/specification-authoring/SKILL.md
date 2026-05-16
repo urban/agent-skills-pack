@@ -24,7 +24,7 @@ Coordinate authored specification work from approved product framing into one st
 
 - Root workflow identity: `specification-authoring`
 - Workflow source of truth: approved product framing, then the approved upstream canonical artifacts produced earlier in this workflow
-- Resolve one stable `<project-name>` and one stable authored spec-pack root for the full run; default root: `.specs/<project-name>/`
+- Resolve one stable `<project-name>` and one stable authored spec-pack root for the full run; default root: `spec/<project-name>/`
 - Use specialist skills in this order: `charter` -> `user-story-authoring` -> `requirements` -> `technical-design`
 - Downstream canonical artifacts may not be emitted or presented before upstream approval
 - Keep deterministic provenance and the workflow-owned `source_artifacts` map on every authored artifact

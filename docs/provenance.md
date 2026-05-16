@@ -128,9 +128,9 @@ Most `write-*` validators already call it.
 
 Apply canonical provenance and traceability to:
 
-- authored artifacts under `.specs/<project-name>/`
-- execution artifacts under `.specs/<project-name>/`
-- reconstructed artifacts under `.specs/<project-name>-reconstructed/` when created through the package's canonical contracts
+- authored artifacts under `spec/<project-name>/`
+- execution artifacts under `spec/<project-name>/`
+- reconstructed artifacts under `spec/<project-name>-reconstructed/` when created through the package's canonical contracts
 
 Do not apply this frontmatter contract to derived approval views under `<spec-pack-root>/approval/`. Approval views are secondary review surfaces with no canonical frontmatter; validate them with the shared approval-view contract instead. See [approval-views.md](./approval-views.md).
 

@@ -171,7 +171,7 @@ Treat location as three separate concerns.
 | Concern | Owner | Example |
 | --- | --- | --- |
 | artifact basename | foundational | `<project-name>` |
-| spec-pack root | coordination | `.specs/<project-name>/` |
+| spec-pack root | coordination | `spec/<project-name>/` |
 | artifact filename | specialist | `requirements.md` |
 
 Use that split when writing skill instructions.

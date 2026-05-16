@@ -219,7 +219,7 @@ else
       echo "Invalid source_artifacts artifact-type: $artifact_type" >&2
       exit 1
     fi
-    if [[ ! "$path_value" =~ ^\.specs/.+\.md$ ]]; then
+    if [[ ! "$path_value" =~ (^|/)spec/.+\.md$ ]]; then
       echo "Invalid source_artifacts path for artifact-type ${artifact_type}: $path_value" >&2
       exit 1
     fi

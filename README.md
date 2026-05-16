@@ -53,7 +53,7 @@ The package keeps naming, placement, and artifact identity separate.
 | Concern | Example | Owner |
 | --- | --- | --- |
 | artifact basename | `<project-name>` | foundational |
-| spec-pack root | `.specs/<project-name>/` | coordination |
+| spec-pack root | `spec/<project-name>/` | coordination |
 | artifact filename | `requirements.md` | specialist |
 
 This keeps artifact filenames stable while still allowing different workflows to choose different output roots.
@@ -113,7 +113,7 @@ A skill may also include:
 - `derive-requirements` — reconstructs `requirements.md`
 - `derive-technical-design` — reconstructs `technical-design.md`
 
-By default, authored artifacts live under `.specs/<project-name>/` and reconstructed artifacts live under `.specs/<project-name>-reconstructed/`.
+By default, authored artifacts live under `spec/<project-name>/` and reconstructed artifacts live under `spec/<project-name>-reconstructed/`.
 
 ### Coordination
 
@@ -128,13 +128,13 @@ By default, authored artifacts live under `.specs/<project-name>/` and reconstru
 ```text
 idea / feature request
   -> specification-authoring
-    -> .specs/<project-name>/charter.md
-    -> .specs/<project-name>/user-stories.md
-    -> .specs/<project-name>/requirements.md
-    -> .specs/<project-name>/technical-design.md
+    -> spec/<project-name>/charter.md
+    -> spec/<project-name>/user-stories.md
+    -> spec/<project-name>/requirements.md
+    -> spec/<project-name>/technical-design.md
       -> specification-to-execution
-        -> .specs/<project-name>/execution-plan.md
-        -> .specs/<project-name>/execution-tasks.md
+        -> spec/<project-name>/execution-plan.md
+        -> spec/<project-name>/execution-tasks.md
           -> implementation
 ```
 
@@ -143,13 +143,13 @@ idea / feature request
 ```text
 existing codebase
   -> specification-reconstruction
-    -> .specs/<project-name>-reconstructed/charter.md
-    -> .specs/<project-name>-reconstructed/user-stories.md
-    -> .specs/<project-name>-reconstructed/requirements.md
-    -> .specs/<project-name>-reconstructed/technical-design.md
+    -> spec/<project-name>-reconstructed/charter.md
+    -> spec/<project-name>-reconstructed/user-stories.md
+    -> spec/<project-name>-reconstructed/requirements.md
+    -> spec/<project-name>-reconstructed/technical-design.md
       -> specification-to-execution or execution-planning
-        -> .specs/<project-name>/execution-plan.md
-        -> .specs/<project-name>/execution-tasks.md
+        -> spec/<project-name>/execution-plan.md
+        -> spec/<project-name>/execution-tasks.md
           -> follow-on implementation
 ```
 
@@ -212,6 +212,6 @@ Start with:
 
 - `Use specification-authoring to define the spec for a new feature in @urban/dotai.`
 - `Use specification-to-execution to turn the approved remote-skill-installation spec into an execution plan and local tasks.`
-- `Use execution-planning to refresh .specs/remote-skill-installation/execution-plan.md from the approved spec pack.`
-- `Use task-generation to break .specs/remote-skill-installation/execution-plan.md into local tasks.`
+- `Use execution-planning to refresh spec/remote-skill-installation/execution-plan.md from the approved spec pack.`
+- `Use task-generation to break spec/remote-skill-installation/execution-plan.md into local tasks.`
 - `Use specification-reconstruction to derive the missing spec from this codebase.`

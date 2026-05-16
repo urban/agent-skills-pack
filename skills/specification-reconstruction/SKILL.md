@@ -24,7 +24,7 @@ Coordinate reconstruction of a specification pack from repository evidence into 
 
 - Root workflow identity: `specification-reconstruction`
 - Workflow source of truth: repository code, tests, configs, manifests, entrypoints, schemas, parsers, runtime wiring, and other in-scope evidence; stronger repository evidence wins over reconstructed framing
-- Resolve one stable `<project-name>` and one stable reconstruction spec-pack root for the full run; default root: `.specs/<project-name>-reconstructed/`
+- Resolve one stable `<project-name>` and one stable reconstruction spec-pack root for the full run; default root: `spec/<project-name>-reconstructed/`
 - Use specialist skills in this order: `derive-charter` -> `derive-user-stories` -> `derive-requirements` -> `derive-technical-design`
 - Build two working inventories before downstream derivation: one user-visible behavior inventory and one implementation-constraint inventory
 - Reconcile stronger source-backed findings from technical design back into requirements when needed
@@ -61,7 +61,7 @@ Do not add extra source-artifact keys casually.
 
 ## Outputs
 
-- default canonical outputs at `.specs/<project-name>-reconstructed/{charter.md,user-stories.md,requirements.md,technical-design.md}` when the user does not override destinations
+- default canonical outputs at `spec/<project-name>-reconstructed/{charter.md,user-stories.md,requirements.md,technical-design.md}` when the user does not override destinations
 - derived approval views under `<spec-pack-root>/approval/` for requested review checkpoints and final pack review, in Markdown and HTML
 - one reconstructed specification pack grounded in repository evidence
 - one explicit user-visible behavior inventory and one explicit implementation-constraint inventory used during reconstruction
